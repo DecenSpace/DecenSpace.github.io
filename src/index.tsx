@@ -10,7 +10,7 @@ import SvgIcon from "components/SvgIcon";
 createRoot(document.body).render(
     <StrictMode>
         <ThemeProvider theme={createTheme(theme)}>
-            <Box margin={12} position="relative">
+            <Box margin={12} position="relative" paddingRight="280px">
                 <SvgIcon component={SvgDsLogo} color="text.primary" height={120} />
                 <Typography variant="h1" sx={{ marginTop: 4 }}>Hello space</Typography>
                 <Typography variant="h2">
