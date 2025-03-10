@@ -23,7 +23,7 @@ const palette: ThemeOptions["palette"] = {
 
 const typographyBase = {
     fontFamily: "'Anek Latin', sans-serif",
-    fontSize: 16,
+    fontSize: 14,
     fontWeightLight: 300,
     fontWeightRegular: 400,
     fontWeightBold: 700
@@ -40,39 +40,39 @@ const theme: ThemeOptions = {
             fontFamily: typographyBase.fontFamily,
             fontWeight: typographyBase.fontWeightLight,
             color: palette.text.primary,
-            fontSize: 42,
+            fontSize: 32,
             lineHeight: "1.2"
         },
         h2: {
             fontFamily: typographyBase.fontFamily,
             fontWeight: typographyBase.fontWeightLight,
             color: palette.text.secondary,
-            fontSize: 32,
+            fontSize: 26,
             lineHeight: "1.2"
         },
         h3: {
             fontFamily: typographyBase.fontFamily,
             fontWeight: typographyBase.fontWeightRegular,
             color: palette.text.secondary,
-            fontSize: 24,
+            fontSize: 33,
             lineHeight: "1.2"
         },
         h4: {
             fontFamily: typographyBase.fontFamily,
             fontWeight: typographyBase.fontWeightRegular,
             color: palette.text.primary,
-            fontSize: 20,
+            fontSize: 16,
             lineHeight: "1.2",
             letterSpacing: "0.02em"
         },
         body1: {
-            fontSize: 16,
+            fontSize: 14,
             lineHeight: "1.4",
             letterSpacing: "0.04em",
             color: palette.text.primary
         },
         subtitle1: {
-            fontSize: 16
+            fontSize: 14
         }
     },
     spacing,

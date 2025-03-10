@@ -3,10 +3,10 @@ import { blend, Box, BoxProps, lighten, styled } from "@mui/system";
 const disableGray = "#7782A1";
 
 const ButtonBase = styled(Box)<{ disabled?: boolean }>(({ theme, disabled }) => ({
-    fontSize: 20,
+    fontSize: 16,
     lineHeight: "1.2",
     letterSpacing: "0.04em",
-    padding: theme.spacing(2.5, 4),
+    padding: theme.spacing(2, 4),
     display: "inline-flex",
     borderRadius: 36,
     color: theme.palette.primary.contrastText,
@@ -19,7 +19,7 @@ const ButtonBase = styled(Box)<{ disabled?: boolean }>(({ theme, disabled }) => 
             blend(theme.palette.primary.main, disableGray, 0.5) :
             lighten(theme.palette.primary.main, 0.1)
     },
-    boxShadow: "0 8px 16px rgba(0, 0, 0, 0.15)"
+    boxShadow: "0 6px 12px rgba(0, 0, 0, 0.1)"
 })) as typeof Box;
 
 /**
