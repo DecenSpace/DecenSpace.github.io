@@ -1,4 +1,4 @@
-import type { ThemeOptions } from "@mui/system";
+import type { Theme, ThemeOptions } from "@mui/system";
 
 const palette: ThemeOptions["palette"] = {
     primary: {
@@ -28,6 +28,8 @@ const typographyBase = {
     fontWeightRegular: 400,
     fontWeightBold: 700
 };
+
+const spacing = 8;
 
 // Material UI compatible theme
 const theme: ThemeOptions = {
@@ -73,7 +75,21 @@ const theme: ThemeOptions = {
             fontSize: 16
         }
     },
-    spacing: 8
+    spacing,
+    components: {
+        MuiContainer: {
+            styleOverrides: {
+                root: ({ theme }: { theme: Theme }) => ({
+                    paddingLeft: theme.spacing(4),
+                    paddingRight: theme.spacing(4),
+                    [theme.breakpoints.up("sm")]: {
+                        paddingLeft: theme.spacing(6),
+                        paddingRight: theme.spacing(6)
+                    }
+                })
+            }
+        }
+    }
 };
 
 export default theme;
