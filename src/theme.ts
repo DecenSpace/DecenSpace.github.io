@@ -17,7 +17,7 @@ const palette: ThemeOptions["palette"] = {
     divider: "#FFFFFF",
     background: {
         paper: "#001D73",
-        default: "#010649"
+        default: "#040D28"
     }
 };
 
@@ -54,7 +54,7 @@ const theme: ThemeOptions = {
             fontFamily: typographyBase.fontFamily,
             fontWeight: typographyBase.fontWeightRegular,
             color: palette.text.secondary,
-            fontSize: 33,
+            fontSize: 22,
             lineHeight: "1.2"
         },
         h4: {

@@ -1,4 +1,4 @@
-import { styled, Theme } from "@mui/system";
+import { styled, Theme, type Typography } from "@mui/system";
 import { SxProps } from "@mui/system/styleFunctionSx";
 
 type TypographyVariants = "h1" | "h2" | "h3" | "h4" | "body1" | "subtitle1" | "span" | "strong";
@@ -21,7 +21,7 @@ function getTagName(variant: TypographyVariants) {
 const TypographyBase = styled("span", { skipVariantsResolver: true })<{ variant: TypographyVariants }>(({ variant, theme }) => ({
     display: ["span", "strong"].includes(getTagName(variant)) ? "inline" : "block",
     marginTop: 0,
-    ...(theme.typography as Record<string, object>)[variant]
+    ...((theme.typography && (variant in theme.typography)) ? theme.typography![variant as keyof Typography] as {} : {})
 }));
 
 /**

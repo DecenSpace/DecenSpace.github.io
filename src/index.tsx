@@ -1,77 +1,106 @@
 import { createRoot } from "react-dom/client";
 import { StrictMode } from "react";
-import { Box, Container, createTheme, styled, ThemeProvider } from "@mui/system";
+import { Box, Container, createTheme, Stack, ThemeProvider } from "@mui/system";
 import theme from "theme";
 import Typography from "components/Typography";
 import Button from "components/Button";
 import SvgDsLogo from "icons/DsLogo";
 import SvgIcon from "components/SvgIcon";
-
-enum GridArea {
-    above = "above",
-    head = "head",
-    main = "main",
-    aside = "aside",
-    below = "below"
-}
-
-const PageGridContainer = styled(Container)(({ theme }) => ({
-    marginTop: theme.spacing(4),
-    display: "grid",
-    gridTemplateColumns: "1fr",
-    gridTemplateRows: "auto auto auto auto auto",
-    gap: theme.spacing(3),
-    gridTemplateAreas: `
-        "${GridArea.head}"
-        "${GridArea.main}"
-        "${GridArea.below}"
-        "${GridArea.aside}"
-        "${GridArea.above}"
-    `,
-    [theme.breakpoints.up("sm")]: {
-        gridTemplateColumns: "repeat(6,  minmax(0, 1fr))",
-        gridTemplateAreas: `
-            "${GridArea.head} ${GridArea.head} ${GridArea.head} ${GridArea.head} ${GridArea.above} ${GridArea.above}"
-            "${GridArea.head} ${GridArea.head} ${GridArea.head} ${GridArea.head} ${GridArea.aside} ${GridArea.aside}"
-            "${GridArea.main} ${GridArea.main} ${GridArea.main} . ${GridArea.aside} ${GridArea.aside}"
-            "${GridArea.below} ${GridArea.below} ${GridArea.below} . ${GridArea.aside} ${GridArea.aside}"
-        `
-    }
-}));
+import PageGridContainer, { GridArea } from "components/PageGridContainer";
+import TextSection from "components/TextSection";
+import EnumerationItem from "components/EnumerationItem";
 
 createRoot(document.body).render(
     <StrictMode>
         <ThemeProvider theme={createTheme(theme)}>
             <PageGridContainer>
-                <Box bgcolor="teal" color="white" gridArea="above">
-                    <div>contact us</div>
+                <Box gridArea={GridArea.above} justifySelf="end" marginBottom={10}>
+                    <Button>contact us</Button>
                 </Box>
-                <Box bgcolor="red" color="white" gridArea="head">
-                    <div>Logo</div>
-                    <div>Claim</div>
+                <Box component="header" gridArea={GridArea.head}>
+                    <SvgIcon component={SvgDsLogo} color="text.primary" height={128} marginBottom={5} />
+                    <Typography variant="h2">
+                        Decentralized space communication
+                    </Typography>
                     <Box display="flex" flexDirection="row" gap={3}>
-                        <div>sub-headline</div>
-                        <Box display={{ sm: "none" }}>
-                            Dish Image - mobile
-                        </Box>
+                        <Typography variant="h4">
+                            Bringing satellite companies and ground station operators together using blockchain technology.
+                            Our vision is to provide a protocol for a sustainable and accelerating marketplace for the space industry, where all parties benefit from commitment and long term participation and growth.
+                        </Typography>
+                        <Box
+                            component="img"
+                            src="/assets/dish_vertical.jpg" 
+                            alt="placeholder"
+                            width={250}
+                            display={{ sm: "none" }}
+                            sx={{ objectFit: "cover" }}
+                        />
                     </Box>
                 </Box>
-                <Box bgcolor="blue" color="white" gridArea="main">
-                    <div>paragraph</div>
-                    <div>paragraph</div>
-                    <div>paragraph</div>
+                <Box gridArea={GridArea.main}>
+                    <TextSection heading="Why we built it">
+                        <Typography variant="body1">
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+                        </Typography>
+                        <Typography variant="h3" sx={{ marginTop: 3, marginBottom: 3 }}>
+                            28.000 satellites
+                        </Typography>
+                        <Typography variant="body1">
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+                        </Typography>
+                    </TextSection>
+                    <TextSection heading="How blockchain can help">
+                        <Typography variant="body1">
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+                        </Typography>
+                        <Typography variant="h3" sx={{ marginTop: 3 }}>
+                            Lower costs by higher efficiency
+                        </Typography>
+                    </TextSection>
+                    <TextSection heading="The reward token">
+                    <Typography variant="body1">
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+                        </Typography>
+                        <Typography variant="h3" sx={{ marginTop: 3 }}>
+                            Join a growing network
+                        </Typography>
+                    </TextSection>
                 </Box>
-                <Box bgcolor="green" color="white" gridArea="aside">
-                    <Box display={{ xs: "none", sm: "block" }}>
-                        Dish Image - desktop
-                    </Box>
-                    <div>01</div>
-                    <div>02</div>
+                <Box gridArea={GridArea.aside}>
+                    <Box
+                        component="img"
+                        display={{ xs: "none", sm: "block" }}
+                        src="/assets/dish_vertical.jpg"
+                        alt="placeholder"
+                        width="100%"
+                        sx={{ objectFit: "cover" }}
+                    />
+                    <Stack marginTop={{ xs: 6, sm: 10 }} marginBottom={6} gap={8}>
+                        <EnumerationItem
+                            num={1}
+                            label="Satellite operators"
+                            linkLabel="get in touch with us"
+                            zIndex={1}
+                        />
+                        <EnumerationItem
+                            num={2}
+                            label="Ground station operators"
+                            linkLabel="get in touch with us"
+                            zIndex={1}
+                        />
+                    </Stack>
                 </Box>
-                <Box bgcolor="purple" color="white" gridArea="below">
-                    <div>read the whitepaper</div>
+                <Box gridArea={GridArea.below}>
+                    <Button>read the whitepaper</Button>
                 </Box>
             </PageGridContainer>
+            <Box component="footer" bgcolor="background.default" height={180} marginTop={{ xs: 0, sm: 8 }}>
+                <Container sx={{ paddingTop: 6, paddingBottom: 6 }}>
+                    <Typography variant="body1">
+                        © 2025 DecenSpace
+                    </Typography>
+                </Container>
+            </Box>
         </ThemeProvider>
     </StrictMode>
 );

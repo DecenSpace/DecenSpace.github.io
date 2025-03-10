@@ -1,53 +1,27 @@
-import "@emotion/react";
+import "@mui/system";
 
-/*
-declare module "@emotion/react" {
-
-    interface IColor {
-        main: string;
-        contrastText: string;
-    }
+declare module "@mui/system" {
 
     interface IFont {
-        fontFamily: string;
-        fontWeight: number;
-        fontStyle: string;
-        color: string;
-        fontSize: number;
-        lineHeight: string;
-        letterSpacing: string;
+        fontFamily?: string;
+        fontSize?: number | string;
+        fontWeight?: number | string;
+        lineHeight?: number | string;
+        letterSpacing?: number | string;
+        color?: string;
     }
 
-    export interface Theme {
-        palette: {
-            primary: IColor,
-            secondary: IColor,
-            text: {
-                primary: string,
-                secondary: string,
-                disabled: string
-            },
-            background: {
-                paper: string,
-                default: string
-            }
-        },
-        typography: {
-            fontFamily: string,
-            fontSize: number,
-            fontWeightLight: number,
-            fontWeightRegular: number,
-            fontWeightBold: number,
-            h1: IFont,
-            h2: IFont,
-            h3: IFont,
-            body1: {
-                fontSize: number,
-                lineHeight: string,
-                letterSpacing: string
-            }
-        },
-        spacing: number
+    export interface Typography {
+        fontFamily: string;
+        fontSize: number;
+        fontWeightLight: number;
+        fontWeightRegular: number;
+        fontWeightBold: number;
+        h1: IFont;
+        h2: IFont;
+        h3: IFont;
+        h4: IFont;
+        body1: IFont;
+        subtitle1: IFont;
     }
 }
-*/
