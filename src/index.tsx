@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { StrictMode } from "react";
-import { Box, Container, createTheme, ThemeProvider } from "@mui/system";
+import { Box, Container, createTheme, ThemeProvider, Stack } from "@mui/system";
 import theme from "theme";
 import Typography from "components/Typography";
 import Button from "components/Button";
@@ -11,7 +11,6 @@ import TextSection from "components/TextSection";
 import { ParallaxProvider } from "react-scroll-parallax";
 import MobileParallaxDishImage from "components/MobileParallaxDishImage";
 import AudienceButtons from "components/AudienceButtons";
-import { Stack } from "@mui/material";
 import EnumerationItem from "components/EnumerationItem";
 
 createRoot(document.body).render(
