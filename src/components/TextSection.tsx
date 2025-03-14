@@ -1,13 +1,28 @@
-import Box from "@mui/system/Box";
+import Box, { display } from "@mui/system/Box";
 import styled from "@mui/system/styled";
+import { Parallax } from "react-scroll-parallax";
 
 const TextSectionBase = styled("section")(({ theme }) => ({
     position: "relative",
     borderTop: `1px solid ${theme.palette.divider}`,
-    paddingTop: theme.spacing(6),
-    marginBottom: theme.spacing(8),
+    paddingTop: theme.spacing(8),
+    marginBottom: theme.spacing(12),
     [theme.breakpoints.up("sm")]: {
         paddingTop: theme.spacing(5)
+    },
+    "&:before": {
+        content: "''",
+        display: "block",
+        position: "absolute",
+        top: -1,
+        right: "100%",
+        borderTop: "1px solid white",
+        height: 0,
+        width: 100,
+        zIndex: 0,
+        [theme.breakpoints.up("sm")]: {
+            display: "none"
+        }
     }
 }));
 
@@ -28,15 +43,24 @@ const TextSectionHeading = styled("h1")(({ theme }) => ({
 interface ITextSectionProps {
     heading: string;
     children: React.ReactNode;
+    first?: boolean;
 }
 
-const TextSection: React.FC<ITextSectionProps> = ({ heading, children }) => (
-    <TextSectionBase>
-        <TextSectionHeading>{heading}</TextSectionHeading>
-        <Box marginRight={{ xs: 0, sm: "20%" }}>
-            {children}
-        </Box>
-    </TextSectionBase>
+const TextSection: React.FC<ITextSectionProps> = ({ heading, children, first }) => (
+    <Parallax
+        opacity={[0, 1]}
+        easing="easeOut"
+        translateX={[-20, 0]}
+        rootMargin={{ top: 300, bottom: -300, left: 0, right: 0 }}
+        disabled={first}
+    >
+        <TextSectionBase>
+            <TextSectionHeading>{heading}</TextSectionHeading>
+            <Box marginRight={{ xs: 0, sm: "20%" }}>
+                {children}
+            </Box>
+        </TextSectionBase>
+    </Parallax>
 );
 
 export default TextSection;

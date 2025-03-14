@@ -28,7 +28,8 @@
     "@mui/system": "^6.4.7",
     "normalize.css": "^8.0.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-scroll-parallax": "^3.4.5"
   },
   "engines": {
     "node": ">=16.0.0"

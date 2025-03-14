@@ -18,7 +18,7 @@ const OuterCircle = styled(Box)(({ theme }) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "start",
-    justifyContent: "end",
+    justifyContent: "start",
     textAlign: "left",
     transition: "background-color 0.2s, transform 1s",
     cursor: "pointer",
@@ -40,14 +40,14 @@ const InnerCircle = styled("div")(({ theme }) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "start",
-    justifyContent: "end",
+    justifyContent: "start",
     textAlign: "left"
 }));
 
 const Number = styled("span")({
     fontFamily: "'MajorMonoDisplay Numbers', sans-serif",
     fontSize: 44,
-    lineHeight: "1.5",
+    lineHeight: "1.2",
     display: "inline-block",
     marginLeft: "-0.12em"
 });
