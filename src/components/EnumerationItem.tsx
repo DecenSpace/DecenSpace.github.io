@@ -1,11 +1,11 @@
-import { Box, BoxProps, lighten, styled } from "@mui/system";
+import { lighten, styled, SxProps } from "@mui/system";
 import Typography from "./Typography";
 import SvgIcon from "./SvgIcon";
 import SvgArrowRight from "icons/ArrowRight";
 
 const size = 22;
 
-const OuterCircle = styled(Box)(({ theme }) => ({
+const OuterCircle = styled("a")(({ theme }) => ({
     height: theme.spacing(size),
     width: theme.spacing(size + 20),
     borderRadius: theme.spacing(size / 2),
@@ -22,6 +22,7 @@ const OuterCircle = styled(Box)(({ theme }) => ({
     textAlign: "left",
     transition: "background-color 0.2s, transform 1s",
     cursor: "pointer",
+    textDecoration: "none",
     ":hover": {
         backgroundColor: lighten(theme.palette.background.paper, 0.025),
         transform: "translateX(8px)"
@@ -52,15 +53,16 @@ const Number = styled("span")({
     marginLeft: "-0.12em"
 });
 
-interface IEnumerationItemProps extends BoxProps {
+interface IEnumerationItemProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     num: number;
     label: string;
     linkLabel: string;
     children?: never;
+    sx?: SxProps;
 }
 
 const EnumerationItem: React.FC<IEnumerationItemProps> = ({ num, label, linkLabel, ...props }) => (
-    <OuterCircle component="button" {...props}>
+    <OuterCircle {...props}>
         <InnerCircle>
             <Number>{num < 10 ? "0": ""}{num}</Number>
             <Typography variant="body1" sx={{ margin: 0 }}>{label}</Typography>
