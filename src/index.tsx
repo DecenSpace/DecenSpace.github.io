@@ -10,7 +10,6 @@ import PageGridContainer, { GridArea } from "components/PageGridContainer";
 import TextSection from "components/TextSection";
 import { ParallaxProvider } from "react-scroll-parallax";
 import MobileParallaxDishImage from "components/MobileParallaxDishImage";
-import AudienceButtons from "components/AudienceButtons";
 import EnumerationItem from "components/EnumerationItem";
 
 createRoot(document.body).render(
@@ -19,7 +18,7 @@ createRoot(document.body).render(
             <ParallaxProvider>
                 <PageGridContainer>
                     <Box gridArea={GridArea.above} justifySelf="end" marginBottom={10} marginTop={{ xs: 6, sm: 0 }}>
-                        <Button href="mailto:info@decenspace.com">contact us</Button>
+                        <Button component="a" href="mailto:info@decenspace.com" sx={{ textDecoration: "none" }}>contact us</Button>
                     </Box>
                     <Box component="header" gridArea={GridArea.head}>
                         <SvgIcon component={SvgDsLogo} color="text.primary" height={128} marginBottom={5} />
@@ -29,7 +28,7 @@ createRoot(document.body).render(
                         <Box>
                             <Typography variant="h4">
                                 Bringing satellite companies and ground station operators together using DePIN technology.
-                                Our vision is to provide a protocol for a sustainable and accelerating marketplace for the space industry, where all parties benefit from commitment and long term participation and growth.
+                                Our vision is to provide a protocol for a sustainable and accelerating marketplace for the space industry, where all parties benefit from commitment, long term participation and growth.
                             </Typography>
                             <MobileParallaxDishImage marginTop={4} marginBottom={8} />
                         </Box>
@@ -77,20 +76,20 @@ createRoot(document.body).render(
                                 num={1}
                                 label="Satellite operators"
                                 linkLabel="get in touch with us"
-                                linkHref="mailto:satellites@decenspace.com"
-                                zIndex={1}
+                                href="mailto:satellites@decenspace.com"
                             />
                             <EnumerationItem
                                 num={2}
                                 label="Ground station operators"
                                 linkLabel="get in touch with us"
-                                linkHref="mailto:groundstation@decenspace.com"
-                                zIndex={1}
+                                href="mailto:groundstation@decenspace.com"
                             />
                         </Stack>
                     </Box>
                     <Box gridArea={GridArea.below}>
-                        <Button>read the whitepaper</Button>
+                        <Button onClick={() => window.alert("We are working on that. Please contact us for any questions.")}>
+                            read the whitepaper
+                        </Button>
                     </Box>
                 </PageGridContainer>
                 <Box component="footer" bgcolor="background.default" height={180} marginTop={{ xs: 0, sm: 8 }}>
