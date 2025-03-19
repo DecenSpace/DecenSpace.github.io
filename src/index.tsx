@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { StrictMode } from "react";
-import { Box, Container, createTheme, ThemeProvider, Stack } from "@mui/system";
+import { Box, Container, createTheme, ThemeProvider } from "@mui/system";
 import theme from "theme";
 import Typography from "components/Typography";
 import Button from "components/Button";
@@ -10,7 +10,7 @@ import PageGridContainer, { GridArea } from "components/PageGridContainer";
 import TextSection from "components/TextSection";
 import { ParallaxProvider } from "react-scroll-parallax";
 import MobileParallaxDishImage from "components/MobileParallaxDishImage";
-import EnumerationItem from "components/EnumerationItem";
+import AudienceButtons from "components/AudienceButtons";
 
 createRoot(document.body).render(
     <StrictMode>
@@ -71,20 +71,7 @@ createRoot(document.body).render(
                             width="100%"
                             sx={{ objectFit: "cover" }}
                         />
-                        <Stack marginTop={{ xs: 6, sm: 10 }} marginBottom={6} gap={8}>
-                            <EnumerationItem
-                                num={1}
-                                label="Satellite operators"
-                                linkLabel="get in touch with us"
-                                href="mailto:satellites@decenspace.com"
-                            />
-                            <EnumerationItem
-                                num={2}
-                                label="Ground station operators"
-                                linkLabel="get in touch with us"
-                                href="mailto:groundstation@decenspace.com"
-                            />
-                        </Stack>
+                        <AudienceButtons />
                     </Box>
                     <Box gridArea={GridArea.below}>
                         <Button onClick={() => window.alert("We are working on that. Please contact us for any questions.")}>

@@ -28,12 +28,14 @@ const AudienceButtons: React.FC = () => {
                     num={1}
                     label="Satellite operators"
                     linkLabel="get in touch with us"
+                    href="mailto:satellites@decenspace.com"
                     sx={{ flexShrink: 0 }}
                 />
                 <EnumerationItem
                     num={2}
                     label="Ground station operators"
                     linkLabel="get in touch with us"
+                    href="mailto:groundstation@decenspace.com"
                     sx={{ flexShrink: 0 }}
                 />
             </Stack>
