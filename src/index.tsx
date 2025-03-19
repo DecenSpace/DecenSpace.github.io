@@ -23,7 +23,7 @@ createRoot(document.body).render(
                     <Box component="header" gridArea={GridArea.head}>
                         <SvgIcon component={SvgDsLogo} color="text.primary" height={128} marginBottom={5} />
                         <Typography variant="h2">
-                            Decentralized space communication
+                            Democratizing space communication
                         </Typography>
                         <Box>
                             <Typography variant="h4">
