@@ -23,7 +23,7 @@ const PageGridContainer = styled(Container)(({ theme }) => ({
         "${GridArea.above}"
     `,
     [theme.breakpoints.up("sm")]: {
-        marginTop: theme.spacing(4),
+        marginTop: theme.spacing(6),
         gridTemplateColumns: "repeat(6,  minmax(0, 1fr))",
         gridTemplateAreas: `
             "${GridArea.head} ${GridArea.head} ${GridArea.head} ${GridArea.head} ${GridArea.above} ${GridArea.above}"
