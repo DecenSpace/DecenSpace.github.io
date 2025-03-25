@@ -17,6 +17,7 @@ const AudienceButtons: React.FC = () => {
             marginX={{ xs: -4, sm: 0 }}
             overflow={{ xs: "auto", sm: "visible" }}
             width="100vw"
+            sx={{ scrollbarWidth: "none" }}
             ref={ref}
         >
             <Stack
