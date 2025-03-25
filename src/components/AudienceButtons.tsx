@@ -5,7 +5,7 @@ import { useParallax } from "react-scroll-parallax";
 
 const AudienceButtons: React.FC = () => {
 
-    const { ref } = useParallax({ rootMargin: { top: -200, bottom: -400, left: 0, right: 0 }, onProgressChange: p => {
+    const { ref } = useParallax({ rootMargin: { top: -400, bottom: -200, left: 0, right: 0 }, onProgressChange: p => {
         if (ref.current) {
             ref.current.scrollTo({ left: ref.current.scrollWidth * p });
         }
