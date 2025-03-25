@@ -21,7 +21,7 @@ createRoot(document.body).render(
             <ParallaxProvider>
                 <PageGridContainer>
                     <Box gridArea={GridArea.above} justifySelf="end" marginBottom={10} marginTop={{ xs: 6, sm: 0 }}>
-                        <Button component="a" href="mailto:info@decenspace.com" sx={{ textDecoration: "none" }}>contact us</Button>
+                        <Button component="a" href="mailto:info@decenspace.com" sx={{ textDecoration: "none" }}>Contact us</Button>
                     </Box>
                     <Box component="header" gridArea={GridArea.head}>
                         <SvgIcon component={SvgDsLogo} color="text.primary" height={128} marginBottom={5} />
@@ -78,7 +78,7 @@ createRoot(document.body).render(
                     </Box>
                     <Box gridArea={GridArea.below}>
                         <Button onClick={() => window.alert("We are working on that. Please contact us for any questions.")}>
-                            read the whitepaper
+                            Read the whitepaper
                         </Button>
                     </Box>
                 </PageGridContainer>
