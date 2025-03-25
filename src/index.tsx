@@ -36,7 +36,7 @@ createRoot(document.body).render(
                             <MobileParallaxDishImage marginTop={4} marginBottom={8} />
                         </Box>
                     </Box>
-                    <Box gridArea={GridArea.main} paddingTop={{ xs: 8, sm: 28 }}>
+                    <Box gridArea={GridArea.main} paddingTop={{ xs: 8, sm: 20 }}>
                         <TextSection heading="Why we built it" first>
                             <Typography variant="body1">
                                 The space industry faces a critical infrastructure challenge: ground station access is expensive, centralized, and inefficient. Satellite operators struggle with limited coverage while existing ground stations sit underutilized. We built DecentSpace to create a marketplace that transforms how the space industry communicates with satellites, democratizing access while rewarding participation.
