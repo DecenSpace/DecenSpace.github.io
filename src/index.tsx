@@ -11,6 +11,9 @@ import TextSection from "components/TextSection";
 import { ParallaxProvider } from "react-scroll-parallax";
 import MobileParallaxDishImage from "components/MobileParallaxDishImage";
 import AudienceButtons from "components/AudienceButtons";
+import InlineIconLink from "components/InlineIconLink";
+import X from "@mui/icons-material/X";
+import LinkedIn from "@mui/icons-material/LinkedIn";
 
 createRoot(document.body).render(
     <StrictMode>
@@ -79,10 +82,30 @@ createRoot(document.body).render(
                         </Button>
                     </Box>
                 </PageGridContainer>
-                <Box component="footer" bgcolor="background.default" height={180} marginTop={{ xs: 0, sm: 8 }}>
+                <Box component="footer" bgcolor="background.default" height={240} marginTop={{ xs: 0, sm: 8 }}>
                     <Container sx={{ paddingTop: 6, paddingBottom: 6 }}>
                         <Typography variant="body1">
                             © 2025 DecenSpace
+                        </Typography>
+                        <Typography variant="body1">
+                            Follow us
+                            <Box component="span" marginTop={1} display="block">
+                                <InlineIconLink
+                                    aria-label="X profile"
+                                    href="https://x.com/decenspace"
+                                    target="_blank"
+                                >
+                                    <X />
+                                </InlineIconLink>
+                                <InlineIconLink
+                                    aria-label="LinkedIn profile"
+                                    href="https://www.linkedin.com/company/decen-space"
+                                    sx={{ transform: "scale(1.2)" }}
+                                    target="_blank"
+                                >
+                                    <LinkedIn />
+                                </InlineIconLink>
+                            </Box>
                         </Typography>
                     </Container>
                 </Box>
