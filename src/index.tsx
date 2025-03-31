@@ -26,7 +26,7 @@ createRoot(document.body).render(
                     <Box component="header" gridArea={GridArea.head}>
                         <SvgIcon component={SvgDsLogo} color="text.primary" height={128} marginBottom={5} />
                         <Typography variant="h2">
-                            Democratizing space communication
+                            Democratizing space communications
                         </Typography>
                         <Box>
                             <Typography variant="h4">
