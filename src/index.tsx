@@ -11,6 +11,9 @@ import TextSection from "components/TextSection";
 import { ParallaxProvider } from "react-scroll-parallax";
 import MobileParallaxDishImage from "components/MobileParallaxDishImage";
 import AudienceButtons from "components/AudienceButtons";
+import InlineIconLink from "components/InlineIconLink";
+import X from "@mui/icons-material/X";
+import LinkedIn from "@mui/icons-material/LinkedIn";
 
 createRoot(document.body).render(
     <StrictMode>
@@ -18,12 +21,12 @@ createRoot(document.body).render(
             <ParallaxProvider>
                 <PageGridContainer>
                     <Box gridArea={GridArea.above} justifySelf="end" marginBottom={10} marginTop={{ xs: 6, sm: 0 }}>
-                        <Button component="a" href="mailto:info@decenspace.com" sx={{ textDecoration: "none" }}>contact us</Button>
+                        <Button component="a" href="mailto:info@decenspace.com" sx={{ textDecoration: "none" }}>Contact us</Button>
                     </Box>
                     <Box component="header" gridArea={GridArea.head}>
                         <SvgIcon component={SvgDsLogo} color="text.primary" height={128} marginBottom={5} />
                         <Typography variant="h2">
-                            Democratizing space communication
+                            Democratizing space communications
                         </Typography>
                         <Box>
                             <Typography variant="h4">
@@ -33,7 +36,7 @@ createRoot(document.body).render(
                             <MobileParallaxDishImage marginTop={4} marginBottom={8} />
                         </Box>
                     </Box>
-                    <Box gridArea={GridArea.main} paddingTop={{ xs: 8, sm: 28 }}>
+                    <Box gridArea={GridArea.main} paddingTop={{ xs: 8, sm: 16 }}>
                         <TextSection heading="Why we built it" first>
                             <Typography variant="body1">
                                 The space industry faces a critical infrastructure challenge: ground station access is expensive, centralized, and inefficient. Satellite operators struggle with limited coverage while existing ground stations sit underutilized. We built DecentSpace to create a marketplace that transforms how the space industry communicates with satellites, democratizing access while rewarding participation.
@@ -75,14 +78,34 @@ createRoot(document.body).render(
                     </Box>
                     <Box gridArea={GridArea.below}>
                         <Button onClick={() => window.alert("We are working on that. Please contact us for any questions.")}>
-                            read the whitepaper
+                            Read the whitepaper
                         </Button>
                     </Box>
                 </PageGridContainer>
-                <Box component="footer" bgcolor="background.default" height={180} marginTop={{ xs: 0, sm: 8 }}>
+                <Box component="footer" bgcolor="background.default" height={240} marginTop={{ xs: 0, sm: 8 }}>
                     <Container sx={{ paddingTop: 6, paddingBottom: 6 }}>
                         <Typography variant="body1">
                             © 2025 DecenSpace
+                        </Typography>
+                        <Typography variant="body1">
+                            Follow us
+                            <Box component="span" marginTop={1} display="block">
+                                <InlineIconLink
+                                    aria-label="X profile"
+                                    href="https://x.com/decenspace"
+                                    target="_blank"
+                                >
+                                    <X />
+                                </InlineIconLink>
+                                <InlineIconLink
+                                    aria-label="LinkedIn profile"
+                                    href="https://www.linkedin.com/company/decen-space"
+                                    sx={{ transform: "scale(1.2)" }}
+                                    target="_blank"
+                                >
+                                    <LinkedIn />
+                                </InlineIconLink>
+                            </Box>
                         </Typography>
                     </Container>
                 </Box>

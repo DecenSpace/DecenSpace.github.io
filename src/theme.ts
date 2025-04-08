@@ -62,12 +62,12 @@ const theme: ThemeOptions = {
             fontWeight: typographyBase.fontWeightRegular,
             color: palette.text.primary,
             fontSize: 16,
-            lineHeight: "1.2",
+            lineHeight: "1.4",
             letterSpacing: "0.02em"
         },
         body1: {
             fontSize: 14,
-            lineHeight: "1.4",
+            lineHeight: "1.6",
             letterSpacing: "0.04em",
             color: palette.text.primary
         },
