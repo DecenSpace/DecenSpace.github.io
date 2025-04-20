@@ -1,4 +1,4 @@
-import Box, { display } from "@mui/system/Box";
+import Box from "@mui/system/Box";
 import styled from "@mui/system/styled";
 import { Parallax } from "react-scroll-parallax";
 
@@ -51,7 +51,7 @@ const TextSection: React.FC<ITextSectionProps> = ({ heading, children, first }) 
         opacity={[0, 1]}
         easing="easeOut"
         translateX={[-20, 0]}
-        rootMargin={{ top: 300, bottom: -300, left: 0, right: 0 }}
+        rootMargin={{ top: 500, bottom: -500, left: 0, right: 0 }}
         disabled={first}
     >
         <TextSectionBase>
