@@ -39,7 +39,7 @@ createRoot(document.body).render(
                     <Box gridArea={GridArea.main} paddingTop={{ xs: 8, sm: 16 }}>
                         <TextSection heading="Why we built it" first>
                             <Typography variant="body1">
-                                The space industry faces a critical infrastructure challenge: ground station access is expensive, centralized, and inefficient. Satellite operators struggle with limited coverage while existing ground stations sit underutilized. We built DecentSpace to create a marketplace that transforms how the space industry communicates with satellites, democratizing access while rewarding participation.
+                                The space industry faces a critical infrastructure challenge: ground station access is expensive, centralized, and inefficient. Satellite operators struggle with limited coverage while existing ground stations sit underutilized. We built Decen Space to create a marketplace that transforms how the space industry communicates with satellites, democratizing access while rewarding participation.
                             </Typography>
                             <Typography variant="h3" sx={{ marginTop: 3, marginBottom: 3 }}>
                                 28,000 satellites
