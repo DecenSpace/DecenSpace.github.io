@@ -1,4 +1,5 @@
-import type { Theme, ThemeOptions } from "@mui/system";
+import type { Theme, ThemeOptions } from "@mui/material/styles";
+import { blend } from "@mui/system";
 
 const palette: ThemeOptions["palette"] = {
     primary: {
@@ -39,28 +40,28 @@ const theme: ThemeOptions = {
         h1: {
             fontFamily: typographyBase.fontFamily,
             fontWeight: typographyBase.fontWeightLight,
-            color: palette.text.primary,
+            color: palette.text?.primary,
             fontSize: 32,
             lineHeight: "1.2"
         },
         h2: {
             fontFamily: typographyBase.fontFamily,
             fontWeight: typographyBase.fontWeightLight,
-            color: palette.text.secondary,
+            color: palette.text?.secondary,
             fontSize: 26,
             lineHeight: "1.2"
         },
         h3: {
             fontFamily: typographyBase.fontFamily,
             fontWeight: typographyBase.fontWeightRegular,
-            color: palette.text.secondary,
+            color: palette.text?.secondary,
             fontSize: 22,
             lineHeight: "1.2"
         },
         h4: {
             fontFamily: typographyBase.fontFamily,
             fontWeight: typographyBase.fontWeightRegular,
-            color: palette.text.primary,
+            color: palette.text?.primary,
             fontSize: 16,
             lineHeight: "1.4",
             letterSpacing: "0.02em"
@@ -69,7 +70,7 @@ const theme: ThemeOptions = {
             fontSize: 14,
             lineHeight: "1.6",
             letterSpacing: "0.04em",
-            color: palette.text.primary
+            color: palette.text?.primary
         },
         subtitle1: {
             fontSize: 14
@@ -86,6 +87,27 @@ const theme: ThemeOptions = {
                         paddingLeft: theme.spacing(6),
                         paddingRight: theme.spacing(6)
                     }
+                })
+            }
+        },
+        MuiButton: {
+            styleOverrides: {
+                root: ({ theme }) => ({
+                    fontSize: 16,
+                    lineHeight: "1.2",
+                    letterSpacing: "0.04em",
+                    padding: theme.spacing(2, 4),
+                    display: "inline-flex",
+                    borderRadius: 36,
+                    color: theme.palette.primary.contrastText,
+                    backgroundColor: theme.palette.primary.main,
+                    cursor: "pointer",
+                    transition: "background-color 0.2s",
+                    border: 0,
+                    textTransform: "none"
+                }),
+                disabled: ({ theme }) => ({
+                    backgroundColor: blend(theme.palette.primary.main, theme.palette.grey[400], 0.5)
                 })
             }
         }

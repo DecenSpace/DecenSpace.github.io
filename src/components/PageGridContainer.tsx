@@ -1,5 +1,5 @@
-import Container from "@mui/system/Container";
-import styled from "@mui/system/styled";
+import Container from "@mui/material/Container";
+import { styled } from "@mui/material/styles";
 
 export enum GridArea {
     above = "above",

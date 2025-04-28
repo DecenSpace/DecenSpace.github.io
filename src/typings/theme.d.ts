@@ -1,6 +1,6 @@
-import "@mui/system";
+import "@mui/material/styles";
 
-declare module "@mui/system" {
+declare module "@mui/material/styles" {
 
     interface IFont {
         fontFamily?: string;

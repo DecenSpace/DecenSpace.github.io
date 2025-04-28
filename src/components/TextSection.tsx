@@ -1,5 +1,6 @@
-import Box from "@mui/system/Box";
-import styled from "@mui/system/styled";
+
+import Box from "@mui/material/Box";
+import { styled } from "@mui/material/styles";
 import { Parallax } from "react-scroll-parallax";
 
 const TextSectionBase = styled("section")(({ theme }) => ({

@@ -1,7 +1,7 @@
-import { lighten, styled, SxProps } from "@mui/system";
-import Typography from "./Typography";
 import SvgIcon from "./SvgIcon";
 import SvgArrowRight from "icons/ArrowRight";
+import Typography from "@mui/material/Typography";
+import { lighten, styled, SxProps } from "@mui/material/styles";
 
 const size = 22;
 

@@ -1,8 +1,10 @@
 import { createRoot } from "react-dom/client";
 import { StrictMode } from "react";
-import { Box, Container, createTheme, ThemeProvider } from "@mui/system";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
 import theme from "theme";
-import Typography from "components/Typography";
 import Button from "components/Button";
 import SvgDsLogo from "icons/DsLogo";
 import SvgIcon from "components/SvgIcon";
@@ -25,7 +27,7 @@ createRoot(document.body).render(
                     </Box>
                     <Box component="header" gridArea={GridArea.head}>
                         <SvgIcon component={SvgDsLogo} color="text.primary" height={128} marginBottom={5} />
-                        <Typography variant="h2">
+                        <Typography variant="h2" marginBottom={3}>
                             Democratizing space communications
                         </Typography>
                         <Box>
