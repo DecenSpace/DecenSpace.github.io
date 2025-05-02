@@ -1,6 +1,5 @@
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import Button from "components/Button";
 import SvgDsLogo from "icons/DsLogo";
 import SvgIcon from "components/SvgIcon";
 import PageGridContainer, { GridArea } from "components/PageGridContainer";
@@ -12,19 +11,27 @@ import InlineIconLink from "components/InlineIconLink";
 import X from "@mui/icons-material/X";
 import LinkedIn from "@mui/icons-material/LinkedIn";
 import Typography from "@mui/material/Typography";
+import StartPageButton from "components/StartPageButton";
+
+const GlowLogo = () => (
+    <Box marginBottom={5} position="relative">
+        <SvgIcon component={SvgDsLogo} color="text.primary" height={128} sx={{ filter: "blur(6px)", opacity: 0.6, position: "absolute", left: 0, top: 0 }} />
+        <SvgIcon component={SvgDsLogo} color="text.primary" height={128} zIndex={1} />
+    </Box>
+);
 
 const Home: React.FC = () => (
     <ParallaxProvider>
         <PageGridContainer>
             <Box gridArea={GridArea.above} justifySelf="end" marginBottom={10} marginTop={{ xs: 6, sm: 0 }}>
-                <Button component="a" href="mailto:info@decenspace.com" sx={{ textDecoration: "none" }}>Contact us</Button>
+                <StartPageButton size="large" component="a" href="mailto:info@decenspace.com" sx={{ textDecoration: "none" }}>Contact us</StartPageButton>
             </Box>
             <Box component="header" gridArea={GridArea.head}>
-                <SvgIcon component={SvgDsLogo} color="text.primary" height={128} marginBottom={5} />
+                <GlowLogo />
                 <Typography variant="h2" marginBottom={3}>
                     Democratizing space communications
                 </Typography>
-                <Box>
+                <Box marginRight={{ xs: 0, sm: 6 }}>
                     <Typography variant="h4">
                         Bringing satellite companies and ground station operators together using DePIN technology.
                         Our vision is to provide a protocol for a sustainable and accelerating marketplace for the space industry, where all parties benefit from commitment, long term participation and growth.
@@ -37,7 +44,7 @@ const Home: React.FC = () => (
                     <Typography variant="body1">
                         The space industry faces a critical infrastructure challenge: ground station access is expensive, centralized, and inefficient. Satellite operators struggle with limited coverage while existing ground stations sit underutilized. We built Decen Space to create a marketplace that transforms how the space industry communicates with satellites, democratizing access while rewarding participation.
                     </Typography>
-                    <Typography variant="h3" sx={{ marginTop: 3, marginBottom: 3 }}>
+                    <Typography variant="h3" color="primary" sx={{ marginTop: 3, marginBottom: 3 }}>
                         28,000 satellites
                     </Typography>
                     <Typography variant="body1">
@@ -48,7 +55,7 @@ const Home: React.FC = () => (
                     <Typography variant="body1">
                         Decentralized Physical Infrastructure Networks enable secure, transparent, and trustless coordination between satellite operators and ground station owners. Smart contracts automate scheduling, payment, and quality verification without middlemen. This creates a self-sustaining network where participants are fairly rewarded for their contributions, while cryptographic verification ensures reliable service quality.
                     </Typography>
-                    <Typography variant="h3" sx={{ marginTop: 3 }}>
+                    <Typography variant="h3" color="primary" sx={{ marginTop: 3 }}>
                         Lower costs by higher efficiency
                     </Typography>
                 </TextSection>
@@ -56,7 +63,7 @@ const Home: React.FC = () => (
                     <Typography variant="body1">
                         Our economic model creates fair incentives for all participants, rewarding ground station operators based on contribution quality and strategic location. Satellite operators gain cost-effective access to a global communications network, with transparent pricing and performance metrics. This value-sharing approach ensures sustainable growth and aligns the interests of all participants for long-term success.
                     </Typography>
-                    <Typography variant="h3" sx={{ marginTop: 3 }}>
+                    <Typography variant="h3" color="primary" sx={{ marginTop: 3 }}>
                         Join a growing network
                     </Typography>
                 </TextSection>
@@ -73,12 +80,12 @@ const Home: React.FC = () => (
                 <AudienceButtons />
             </Box>
             <Box gridArea={GridArea.below}>
-                <Button onClick={() => window.alert("We are working on that. Please contact us for any questions.")}>
+                <StartPageButton size="large" onClick={() => window.alert("We are working on that. Please contact us for any questions.")}>
                     Read the whitepaper
-                </Button>
+                </StartPageButton>
             </Box>
         </PageGridContainer>
-        <Box component="footer" bgcolor="background.default" height={240} marginTop={{ xs: 0, sm: 8 }}>
+        <Box component="footer" height={240}>
             <Container sx={{ paddingTop: 6, paddingBottom: 6 }}>
                 <Typography variant="body1">
                     © 2025 DecenSpace

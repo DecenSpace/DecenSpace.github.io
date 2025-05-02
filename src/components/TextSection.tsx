@@ -17,7 +17,7 @@ const TextSectionBase = styled("section")(({ theme }) => ({
         position: "absolute",
         top: -1,
         right: "100%",
-        borderTop: "1px solid white",
+        borderTop: `1px solid ${theme.palette.divider}`,
         height: 0,
         width: 100,
         zIndex: 0,

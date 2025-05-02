@@ -20,8 +20,8 @@ const router = createHashRouter([
                 index: true,
                 Component: Home,
             }, {
-                path: "/app",
-                Component: lazy(() => import("routes/app"))
+                path: "/theme-test",
+                Component: lazy(() => import("routes/theme-test"))
             }
         ]
     }
