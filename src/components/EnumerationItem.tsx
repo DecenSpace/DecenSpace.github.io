@@ -1,11 +1,12 @@
-import SvgIcon from "./SvgIcon";
 import SvgArrowRight from "icons/ArrowRight";
 import Typography from "@mui/material/Typography";
 import { styled, SxProps } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import { Link, LinkProps } from "react-router-dom";
 
 const size = 22;
 
-const OuterCircle = styled("a")(({ theme }) => ({
+const OuterCircle = styled(Link)(({ theme }) => ({
     height: theme.spacing(size),
     width: theme.spacing(size + 20),
     borderRadius: theme.spacing(size / 2),
@@ -53,7 +54,7 @@ const Number = styled("span")({
     marginLeft: "-0.12em"
 });
 
-interface IEnumerationItemProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+interface IEnumerationItemProps extends LinkProps {
     num: number;
     label: string;
     linkLabel: string;
@@ -67,7 +68,7 @@ const EnumerationItem: React.FC<IEnumerationItemProps> = ({ num, label, linkLabe
             <Number>{num < 10 ? "0": ""}{num}</Number>
             <Typography variant="body1" sx={{ margin: 0 }}>{label}</Typography>
         </InnerCircle>
-        <SvgIcon component={SvgArrowRight} height={24} />
+        <Box component={SvgArrowRight} height={24} />
         {linkLabel}
     </OuterCircle>
 );

@@ -27,12 +27,13 @@ const PageGridContainer = styled(Container)(({ theme }) => ({
         "radial-gradient(113% 91% at 17% -2%,rgb(2, 24, 165) 0%,rgba(1, 0, 42, 0) 40%)",
         "radial-gradient(142% 91% at 83% 7%, #02005CFF 0%,rgba(10, 3, 71, 0.64) 89%)",
     ].join(", "),
+    minHeight: "calc(100vh - 180px)", // round about the footer height
     [theme.breakpoints.up("sm")]: {
         paddingTop: theme.spacing(6),
         gridTemplateColumns: "repeat(6,  minmax(0, 1fr))",
         gridTemplateAreas: `
-            "${GridArea.head} ${GridArea.head} ${GridArea.head} ${GridArea.head} ${GridArea.above} ${GridArea.above}"
-            "${GridArea.head} ${GridArea.head} ${GridArea.head} ${GridArea.head} ${GridArea.aside} ${GridArea.aside}"
+            "${GridArea.head} ${GridArea.head} ${GridArea.above} ${GridArea.above} ${GridArea.above} ${GridArea.above}"
+            "${GridArea.head} ${GridArea.head} . . ${GridArea.aside} ${GridArea.aside}"
             "${GridArea.main} ${GridArea.main} ${GridArea.main} . ${GridArea.aside} ${GridArea.aside}"
             "${GridArea.below} ${GridArea.below} ${GridArea.below} . ${GridArea.aside} ${GridArea.aside}"
         `
