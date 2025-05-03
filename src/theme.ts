@@ -238,6 +238,7 @@ const theme: ThemeOptions = {
             },
             styleOverrides: {
                 root:  {
+                    lineHeight: "1.5",
                     paddingLeft: "1.75em",
                     paddingRight: "1.75em"
                 },
@@ -255,16 +256,22 @@ const theme: ThemeOptions = {
                     paddingLeft: "0.75em",
                     paddingRight: "0.75em",
                     "&:hover": {
-                        backgroundColor: theme.palette.grey[700]
+                        backgroundColor: transparentHighlightOverlay
                     }
                 }),
-                outlined: ({ theme }) => ({
-                    color: theme.palette.primary.light,
-                    borderColor: theme.palette.primary.light,
+                outlined: {
                     "&:hover": {
-                        backgroundColor: theme.palette.grey[700]
+                        backgroundColor: transparentHighlightOverlay
                     }
-                })
+                },
+                outlinedPrimary: ({ theme }) => ({
+                    color: theme.palette.primary.light,
+                    borderColor: theme.palette.primary.light
+                }),
+                outlinedSecondary: ({ theme }) => ({
+                    color: theme.palette.grey[300],
+                    borderColor: theme.palette.grey[300]
+                }),
             }
         },
         MuiFab: {
@@ -546,14 +553,14 @@ const theme: ThemeOptions = {
             styleOverrides: {
                 root: ({ theme }) => ({
                     color: theme.palette.primary.light,
-                    "&:hover": {
+                    "&:not(.MuiButton-root):hover": {
                         color: theme.palette.primary.main
                     }
                 }),
                 underlineAlways: ({ theme }) => ({
                     color: "inherit",
                     textDecorationColor: "inherit",
-                    "&:hover": {
+                    "&:not(.MuiButton-root):hover": {
                         color: theme.palette.primary.light
                     }
                 })
