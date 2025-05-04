@@ -4,15 +4,15 @@ import TextSection from "./components/TextSection";
 import MobileParallaxDishImage from "./components/MobileParallaxDishImage";
 import AudienceButtons from "./components/AudienceButtons";
 import Typography from "@mui/material/Typography";
-import StartPageButton from "./components/StartPageButton";
-import RolesSelectMenu from "./components/RolesSelectMenu";
+import ProfileSelectMenu from "../../components/ProfileSelectMenu";
 import TitleLogo from "./components/TitleLogo";
+import Button from "@mui/material/Button";
 
 const Home: React.FC = () => (
     <>
-        <RolesSelectMenu marginBottom={10} marginTop={{ xs: 6, sm: 0 }} />
+        <ProfileSelectMenu marginBottom={10} marginTop={{ xs: 6, sm: 0 }} />
         <Box component="header" gridArea={GridArea.head}>
-            <TitleLogo />
+            <TitleLogo size={120} />
             <Typography variant="h2" marginBottom={3}>
                 Democratizing space communications
             </Typography>
@@ -65,9 +65,9 @@ const Home: React.FC = () => (
             <AudienceButtons />
         </Box>
         <Box gridArea={GridArea.below}>
-            <StartPageButton size="large" onClick={() => window.alert("We are working on that. Please contact us for any questions.")}>
+            <Button size="large" onClick={() => window.alert("We are working on that. Please contact us for any questions.")}>
                 Read the whitepaper
-            </StartPageButton>
+            </Button>
         </Box>
     </>
 );

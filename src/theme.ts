@@ -56,6 +56,7 @@ const grey = {
 export const heroGradient = `linear-gradient(90deg, ${blue[800]} 0%, ${blue[600]} 22%, ${blue[600]} 30%, ${red[500]} 85%, ${orange[400]} 100%)`;
 
 const transparentHighlightOverlay = "rgba(100, 100, 150, 0.2)";
+const transparentHighlightOverlay2 = "rgba(100, 100, 150, 0.4)";
 
 const palette: PaletteOptions = {
     mode: "dark",
@@ -251,13 +252,15 @@ const theme: ThemeOptions = {
                         backgroundColor: theme.palette.grey[600]
                     }
                 }),
-                text: ({ theme }) => ({
-                    color: theme.palette.primary.light,
+                text: {
                     paddingLeft: "0.75em",
                     paddingRight: "0.75em",
                     "&:hover": {
-                        backgroundColor: transparentHighlightOverlay
+                        backgroundColor: transparentHighlightOverlay2
                     }
+                },
+                textPrimary: ({ theme }) => ({
+                    color: theme.palette.text.primary
                 }),
                 outlined: {
                     "&:hover": {

@@ -1,15 +1,15 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { GridArea } from "routes/start/components/PageGridContainer";
-import RolesSelectMenu from "routes/start/components/RolesSelectMenu";
+import ProfileSelectMenu from "components/ProfileSelectMenu";
 import TitleLogo from "routes/start/components/TitleLogo";
 import ConnectWalletTeaser from "../components/ConnectWalletTeaser";
 
 const SatelliteOps: React.FC = () => (
     <>
-        <RolesSelectMenu marginBottom={10} marginTop={{ xs: 6, sm: 0 }} />
+        <ProfileSelectMenu marginBottom={10} marginTop={{ xs: 6, sm: 0 }} />
         <Box component="header" gridArea={GridArea.head} minHeight={360}>
-            <TitleLogo />
+            <TitleLogo size={120} />
             <Typography variant="h2" marginBottom={3}>
                 Satellite Operators
             </Typography>
@@ -20,7 +20,7 @@ const SatelliteOps: React.FC = () => (
             </Box>
         </Box>
         <Box gridArea={GridArea.main} marginTop={4}>
-            <ConnectWalletTeaser contactLink="mailto:satellites@decenspace.com" />
+            <ConnectWalletTeaser profile="satelliteOperator" />
         </Box>
     </>
 );
