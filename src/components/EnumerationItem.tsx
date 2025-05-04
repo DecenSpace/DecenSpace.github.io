@@ -1,7 +1,7 @@
-import { lighten, styled, SxProps } from "@mui/system";
-import Typography from "./Typography";
 import SvgIcon from "./SvgIcon";
 import SvgArrowRight from "icons/ArrowRight";
+import Typography from "@mui/material/Typography";
+import { styled, SxProps } from "@mui/material/styles";
 
 const size = 22;
 
@@ -11,7 +11,7 @@ const OuterCircle = styled("a")(({ theme }) => ({
     borderRadius: theme.spacing(size / 2),
     padding: theme.spacing(5, 4, 5, size + 4),
     gap: theme.spacing(3),
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.primaryColor[800],
     color: theme.palette.text.primary,
     position: "relative",
     border: 0,
@@ -24,7 +24,7 @@ const OuterCircle = styled("a")(({ theme }) => ({
     cursor: "pointer",
     textDecoration: "none",
     ":hover": {
-        backgroundColor: lighten(theme.palette.background.paper, 0.025),
+        backgroundColor: theme.palette.primaryColor[700],
         transform: "translateX(8px)"
     }
 }));
@@ -37,7 +37,7 @@ const InnerCircle = styled("div")(({ theme }) => ({
     position: "absolute",
     top: 0,
     left: 0,
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.dark,
     display: "flex",
     flexDirection: "column",
     alignItems: "start",

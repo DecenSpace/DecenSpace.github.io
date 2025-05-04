@@ -1,4 +1,4 @@
-import Box, { BoxProps } from "@mui/system/Box";
+import Box, { type BoxProps } from "@mui/material/Box";
 import { useState } from "react";
 import { useParallax } from "react-scroll-parallax";
 

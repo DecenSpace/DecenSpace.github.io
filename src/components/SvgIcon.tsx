@@ -1,4 +1,4 @@
-import { Box, BoxProps } from "@mui/system";
+import Box, { BoxProps } from "@mui/material/Box";
 import { JSX, SVGProps } from "react";
 
 const SvgIcon: React.FC<{ component: (p: SVGProps<SVGSVGElement>) => JSX.Element } & BoxProps> = ({ component, ...props }) => {

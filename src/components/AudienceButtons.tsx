@@ -1,7 +1,8 @@
-import Box from "@mui/system/Box";
-import Stack from "@mui/system/Stack";
+
+import Box from "@mui/material/Box";
 import EnumerationItem from "./EnumerationItem";
 import { useParallax } from "react-scroll-parallax";
+import Stack from "@mui/material/Stack";
 
 const AudienceButtons: React.FC = () => {
 
