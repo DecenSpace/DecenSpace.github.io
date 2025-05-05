@@ -6,12 +6,20 @@ import IconLanguage from "@mui/icons-material/Language";
 import { Link, useMatch } from "react-router-dom";
 import Button from "@mui/material/Button";
 import WalletControl from "./WalletControl";
+import { profiles } from "utils/profiles";
+
+interface IProfileSelectMenuProps extends BoxProps {
+    section: "start" | "app";
+    onDisconnect?: () => void;
+}
 
 // TODO: render in top right menu on XS
-const ProfileSelectMenu: React.FC<BoxProps & { onDisconnect?: () => void }> = ({ onDisconnect, ...props }) => {
+const ProfileSelectMenu: React.FC<IProfileSelectMenuProps> = ({ section, onDisconnect, ...props }) => {
 
-    const satelliteOpsRoute = useMatch("/start/satellite-ops");
-    const groundStationOpsRoute = useMatch("/start/ground-station-ops");
+    const pathType = section === "app" ? "appPath" : "startPath";
+
+    const satelliteOpsRoute = useMatch(profiles.satelliteOperator[pathType]);
+    const groundStationOpsRoute = useMatch(profiles.groundStation[pathType]);
 
     return (
         <Box
@@ -29,7 +37,7 @@ const ProfileSelectMenu: React.FC<BoxProps & { onDisconnect?: () => void }> = ({
                 variant="outlined"
                 startIcon={<AccountBalanceIcon />}
                 component={Link}
-                to="/start/stakers"
+                to={`/${section}/stakers`}
                 disabled
             >
                 Stakers
@@ -38,7 +46,7 @@ const ProfileSelectMenu: React.FC<BoxProps & { onDisconnect?: () => void }> = ({
                 variant="outlined"
                 startIcon={<IconLanguage />}
                 component={Link}
-                to="/start/ground-station-ops"
+                to={profiles.groundStation[pathType]}
                 color={groundStationOpsRoute ? "primary" : "secondary"}
             >
                 Ground Stations
@@ -47,7 +55,7 @@ const ProfileSelectMenu: React.FC<BoxProps & { onDisconnect?: () => void }> = ({
                 variant="outlined"
                 startIcon={<IconSatelliteAlt />}
                 component={Link}
-                to="/start/satellite-ops"
+                to={profiles.satelliteOperator[pathType]}
                 color={satelliteOpsRoute ? "primary" : "secondary"}
             >
                 Satellite Operators
