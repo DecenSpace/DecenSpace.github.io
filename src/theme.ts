@@ -182,6 +182,9 @@ const theme: ThemeOptions = {
                     [theme.breakpoints.up("sm")]: {
                         paddingLeft: theme.spacing(6),
                         paddingRight: theme.spacing(6)
+                    },
+                    [theme.breakpoints.up("xl")]: {
+                        maxWidth: "1440px"
                     }
                 })
             }
@@ -262,6 +265,9 @@ const theme: ThemeOptions = {
                 textPrimary: ({ theme }) => ({
                     color: theme.palette.text.primary
                 }),
+                textSecondary: ({ theme }) => ({
+                    color: theme.palette.text.secondary
+                }),
                 outlined: {
                     "&:hover": {
                         backgroundColor: transparentHighlightOverlay
@@ -323,16 +329,6 @@ const theme: ThemeOptions = {
                     },
                     "& .MuiListItemIcon-root": {
                         minWidth: theme.spacing(5)
-                    },
-                })
-            }
-        },
-        MuiListItemText: {
-            styleOverrides: {
-                // Dense Lists had the color set to secondary. Don't wanted that.
-                root: ({ theme }) => ({
-                    "& .MuiTypography-root": {
-                        color: theme.palette.text.primary
                     }
                 })
             }
@@ -373,6 +369,15 @@ const theme: ThemeOptions = {
                         color: theme.palette.text.primary
                     }
                 })
+            }
+        },
+        MuiTableRow: {
+            styleOverrides: {
+                root: {
+                    "&.MuiTableRow-hover:hover": {
+                        backgroundColor: transparentHighlightOverlay
+                    }
+                }
             }
         },
         MuiTableCell: {
@@ -567,6 +572,19 @@ const theme: ThemeOptions = {
                         color: theme.palette.primary.light
                     }
                 })
+            }
+        },
+        MuiListItemText: {
+            defaultProps: {
+                // Wanted dense lists to have the same colors as normal lists
+                slotProps: {
+                    primary: {
+                        variant: "body1"
+                    },
+                    secondary: {
+                        variant: "body2"
+                    }
+                }
             }
         }
     }

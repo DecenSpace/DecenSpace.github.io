@@ -2,7 +2,7 @@ import Typography from "@mui/material/Typography";
 import AppLayout from "../components/AppLayout";
 
 const GroundStationOps: React.FC = () => (
-    <AppLayout>
+    <AppLayout sidebar={null}>
         <Typography variant="h2" marginBottom={3}>
             Ground Station Operators
         </Typography>

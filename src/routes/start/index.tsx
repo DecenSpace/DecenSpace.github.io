@@ -10,7 +10,7 @@ import Button from "@mui/material/Button";
 
 const Home: React.FC = () => (
     <>
-        <ProfileSelectMenu marginBottom={10} marginTop={{ xs: 6, sm: 0 }} />
+        <ProfileSelectMenu section="start" marginBottom={10} marginTop={{ xs: 6, sm: 0 }} />
         <Box component="header" gridArea={GridArea.head}>
             <TitleLogo size={120} />
             <Typography variant="h2" marginBottom={3}>
