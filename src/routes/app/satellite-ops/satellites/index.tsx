@@ -24,6 +24,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { ClickAwayListener } from "@mui/material";
+import { CesiumViewer } from "components/cesium/CesiumViewer";
 
 const SatellitesTable = styled(Table)({
     "th:first-child, td:first-child": {
@@ -89,7 +90,7 @@ const Satellites: React.FC = () => {
                     </DashboardCard>
                 )}
                 <Paper sx={{ backgroundColor: "rgb(0, 0, 0)", gridColumn: { xs: "span 1", sm: "2 / -1" }, gridRow: "1 / -1", height: "100%" }}>
-                    {/* TODO: super cool 3d earth */}
+                   <CesiumViewer />
                 </Paper>
             </AppContentGrid>
             <Paper variant="outlined" sx={{ marginTop: 3 }}>
