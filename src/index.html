@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' data: blob: *.decenspace.com ; style-src 'self' 'unsafe-inline' fonts.googleapis.com ; font-src 'self' fonts.gstatic.com">
+  <head>
     <title>DecenSpace</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Bringing satellite companies and ground station operators together using DePIN technology.">
-    <link rel="icon" href="/assets/app-icon.svg" type="image/svg+xml">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Bringing satellite companies and ground station operators together using DePIN technology."
+    />
+    <link rel="icon" href="/assets/app-icon.svg" type="image/svg+xml" />
     <% if (define.NODE_ENV !== "production") { %>
-        <script>new EventSource("/esbuild").addEventListener("change", () => location.reload())</script>
+    <script>
+      new EventSource("/esbuild").addEventListener("change", () =>
+        location.reload()
+      );
+    </script>
     <% } %>
-</head>
-<body>
-    <div id="root">
-    </div>
-</body>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>
