@@ -7,6 +7,10 @@ import { Link, useMatch } from "react-router-dom";
 import Button from "@mui/material/Button";
 import WalletControl from "./WalletControl";
 import { profiles } from "utils/profiles";
+import { getAdminKey } from "routes/app/admin/utils/utils";
+import { useWallet } from "@solana/wallet-adapter-react";
+
+const adminPubkey = getAdminKey().publicKey;
 
 interface IProfileSelectMenuProps extends BoxProps {
   section: "start" | "app";
@@ -19,6 +23,9 @@ const ProfileSelectMenu: React.FC<IProfileSelectMenuProps> = ({
   onDisconnect,
   ...props
 }) => {
+  const wallet = useWallet();
+  console.log(wallet.publicKey?.toBase58());
+  console.log("admin: ", adminPubkey.toBase58());
   const pathType = section === "app" ? "appPath" : "startPath";
 
   const satelliteOpsRoute = useMatch(profiles.satelliteOperator[pathType]);
@@ -63,14 +70,17 @@ const ProfileSelectMenu: React.FC<IProfileSelectMenuProps> = ({
       >
         Satellite Operators
       </Button>
-      <Button
-        variant="outlined"
-        component={Link}
-        to={profiles.admin.appPath}
-        color="primary"
-      >
-        ADMIN
-      </Button>
+      {wallet.publicKey &&
+      wallet.publicKey.toString() === adminPubkey.toString() ? (
+        <Button
+          variant="outlined"
+          component={Link}
+          to={profiles.admin.appPath}
+          color="primary"
+        >
+          ADMIN
+        </Button>
+      ) : null}
       <WalletControl
         sx={{ order: { xs: 0, sm: -1, lg: 1 } }}
         onDisconnect={onDisconnect}
