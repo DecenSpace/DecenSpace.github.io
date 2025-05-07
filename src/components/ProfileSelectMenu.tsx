@@ -24,8 +24,6 @@ const ProfileSelectMenu: React.FC<IProfileSelectMenuProps> = ({
   ...props
 }) => {
   const wallet = useWallet();
-  console.log(wallet.publicKey?.toBase58());
-  console.log("admin: ", adminPubkey.toBase58());
   const pathType = section === "app" ? "appPath" : "startPath";
 
   const satelliteOpsRoute = useMatch(profiles.satelliteOperator[pathType]);
