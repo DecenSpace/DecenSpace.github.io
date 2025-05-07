@@ -62,6 +62,29 @@ export type SatelliteMint = {
           };
         }
       ];
+    },
+    {
+      name: "updateRegistryAuthority";
+      accounts: [
+        {
+          name: "authority";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "registry";
+          isMut: true;
+          isSigner: false;
+        }
+      ];
+      args: [
+        {
+          name: "args";
+          type: {
+            defined: "UpdateRegistryAuthorityArgs";
+          };
+        }
+      ];
     }
   ];
   accounts: [
@@ -139,6 +162,18 @@ export type SatelliteMint = {
     }
   ];
   types: [
+    {
+      name: "UpdateRegistryAuthorityArgs";
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "newAuthority";
+            type: "publicKey";
+          }
+        ];
+      };
+    },
     {
       name: "RegistryInitArgs";
       type: {
@@ -337,6 +372,29 @@ export const IDL: SatelliteMint = {
         },
       ],
     },
+    {
+      name: "updateRegistryAuthority",
+      accounts: [
+        {
+          name: "authority",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "registry",
+          isMut: true,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: "args",
+          type: {
+            defined: "UpdateRegistryAuthorityArgs",
+          },
+        },
+      ],
+    },
   ],
   accounts: [
     {
@@ -413,6 +471,18 @@ export const IDL: SatelliteMint = {
     },
   ],
   types: [
+    {
+      name: "UpdateRegistryAuthorityArgs",
+      type: {
+        kind: "struct",
+        fields: [
+          {
+            name: "newAuthority",
+            type: "publicKey",
+          },
+        ],
+      },
+    },
     {
       name: "RegistryInitArgs",
       type: {

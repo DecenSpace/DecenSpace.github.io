@@ -17,24 +17,29 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useWallet } from "@solana/wallet-adapter-react";
 
-let registryPda: PublicKey;
 const admin = getAdminKey();
 
 const InitializeRegistry: React.FC = () => {
   const connection = new Connection(clusterApiUrl("devnet"));
   const [authority, setAuthority] = useState("");
   const { program } = useSatelliteProgram();
+  const [registryPda, setRegistryPda] = useState<PublicKey>();
+  const wallet = useWallet();
 
   // get the registry pda
   useEffect(() => {
-    try {
-      [registryPda] = PublicKey.findProgramAddressSync(
-        [REGISTRY_SEEDS, admin.publicKey.toBuffer()],
-        program.programId
-      );
-    } catch (error) {
-      console.error(error);
+    if (wallet.publicKey) {
+      try {
+        let [registryPda] = PublicKey.findProgramAddressSync(
+          [REGISTRY_SEEDS, wallet.publicKey.toBuffer()],
+          program.programId
+        );
+        setRegistryPda(registryPda);
+      } catch (error) {
+        console.error(error);
+      }
     }
   }, [program.programId]);
 
@@ -57,7 +62,6 @@ const InitializeRegistry: React.FC = () => {
       })
       .instruction();
 
-    console.log(ix);
     const tx = new Transaction().add(ix);
     const txID = await sendAndConfirmTransaction(connection, tx, [admin]);
     console.log("tx: ", txID);
