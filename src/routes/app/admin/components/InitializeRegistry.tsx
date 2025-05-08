@@ -17,13 +17,12 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import { useWallet } from "@solana/wallet-adapter-react";
 
-const admin = getAdminKey();
-
 const InitializeRegistry: React.FC = () => {
   const connection = new Connection(clusterApiUrl("devnet"));
   const [authority, setAuthority] = useState("");
-  const { program } = useSatelliteProgram();
+  const { program, getProgramAccount } = useSatelliteProgram();
   const [registryPda, setRegistryPda] = useState<PublicKey>();
+  const [sender, setSender] = useState<PublicKey>();
   const wallet = useWallet();
 
   // get the registry pda
@@ -35,6 +34,7 @@ const InitializeRegistry: React.FC = () => {
           program.programId
         );
         setRegistryPda(registryPda);
+        setSender(wallet.publicKey);
       } catch (error) {
         console.error(error);
       }
@@ -54,24 +54,27 @@ const InitializeRegistry: React.FC = () => {
     const txInstruction = await program.methods
       .initializeRegistry(args)
       .accounts({
-        authority: admin.publicKey,
+        authority: sender,
         registry: registryPda,
         systemProgram: SystemProgram.programId,
       })
       .instruction();
 
     const tx = new Transaction().add(txInstruction);
-    const txID = await sendAndConfirmTransaction(connection, tx, [admin]);
+    tx.feePayer = sender;
+    tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+    const txID = await wallet.sendTransaction(tx, connection);
+    await connection.confirmTransaction(txID);
     console.log("tx: ", txID);
   };
 
   return (
     <>
-      <Typography variant="h3" marginBottom={3}>
-        Initialize Registry
-      </Typography>
       <form onSubmit={handleSubmit}>
         <Card sx={{ marginTop: 3 }}>
+          <CardContent>
+            <Typography variant="h3">Initialize registry</Typography>
+          </CardContent>
           <CardContent>
             <TextField
               fullWidth

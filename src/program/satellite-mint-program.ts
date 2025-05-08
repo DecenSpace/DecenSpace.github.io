@@ -31,6 +31,22 @@ export type SatelliteMint = {
       ];
     },
     {
+      name: "closeRegistry";
+      accounts: [
+        {
+          name: "authority";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "registry";
+          isMut: true;
+          isSigner: false;
+        }
+      ];
+      args: [];
+    },
+    {
       name: "mintSatellite";
       accounts: [
         {
@@ -338,6 +354,22 @@ export const IDL: SatelliteMint = {
           },
         },
       ],
+    },
+    {
+      name: "closeRegistry",
+      accounts: [
+        {
+          name: "authority",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "registry",
+          isMut: true,
+          isSigner: false,
+        },
+      ],
+      args: [],
     },
     {
       name: "mintSatellite",

@@ -1,0 +1,77 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { getAdminKey } from "../utils/utils";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import {
+  clusterApiUrl,
+  Connection,
+  PublicKey,
+  Transaction,
+} from "@solana/web3.js";
+import { useSatelliteProgram } from "program/program-data-access";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { REGISTRY_SEEDS } from "program/utils/Seeds";
+
+const CloseRegistry: React.FC = () => {
+  const connection = new Connection(clusterApiUrl("devnet"));
+  const { program, getProgramAccount } = useSatelliteProgram();
+  const [registryPda, setRegistryPda] = useState<PublicKey>();
+  const [sender, setSender] = useState<PublicKey>();
+  const wallet = useWallet();
+
+  // get the registry pda
+  useEffect(() => {
+    if (wallet.publicKey) {
+      try {
+        let [registryPda] = PublicKey.findProgramAddressSync(
+          [REGISTRY_SEEDS, wallet.publicKey.toBuffer()],
+          program.programId
+        );
+        setRegistryPda(registryPda);
+        setSender(wallet.publicKey);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }, [program.programId]);
+
+  const handleCloseRegistry = async () => {
+    const txInstruction = await program.methods
+      .closeRegistry()
+      .accounts({ authority: sender, registry: registryPda })
+      .instruction();
+    const tx = new Transaction().add(txInstruction);
+    tx.feePayer = sender;
+    tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+    const signature = await wallet.sendTransaction(tx, connection);
+    await connection.confirmTransaction(signature);
+    console.log("tx: ", signature);
+  };
+
+  return (
+    <>
+      <Card sx={{ marginTop: 3 }}>
+        <CardContent>
+          <Typography variant="h3">Close registry</Typography>
+        </CardContent>
+        <CardContent>
+          <Button
+            onClick={handleCloseRegistry}
+            variant="contained"
+            color="primary"
+            size="large"
+          >
+            Close Registry
+          </Button>
+        </CardContent>
+      </Card>
+    </>
+  );
+};
+
+export default CloseRegistry;

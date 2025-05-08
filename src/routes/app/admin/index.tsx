@@ -3,6 +3,7 @@
 import Typography from "@mui/material/Typography";
 import AppLayout from "../components/AppLayout";
 import InitializeRegistry from "./components/InitializeRegistry";
+import CloseRegistry from "./components/CloseRegistry";
 
 const Admin: React.FC = () => {
   return (
@@ -11,6 +12,7 @@ const Admin: React.FC = () => {
         ADMIN CONTROLS
       </Typography>
       <InitializeRegistry />
+      <CloseRegistry />
     </AppLayout>
   );
 };
