@@ -10,13 +10,11 @@ import { useSatelliteProgram } from "program/program-data-access";
 import { REGISTRY_SEEDS } from "program/utils/Seeds";
 import { useEffect, useState } from "react";
 import { getAdminKey } from "../utils/utils";
-import {
-  Button,
-  Card,
-  CardContent,
-  TextField,
-  Typography,
-} from "@mui/material";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
 import { useWallet } from "@solana/wallet-adapter-react";
 
 const admin = getAdminKey();
@@ -53,7 +51,7 @@ const InitializeRegistry: React.FC = () => {
     e.preventDefault();
 
     const args = { authority: new PublicKey(authority) };
-    const ix = await program.methods
+    const txInstruction = await program.methods
       .initializeRegistry(args)
       .accounts({
         authority: admin.publicKey,
@@ -62,7 +60,7 @@ const InitializeRegistry: React.FC = () => {
       })
       .instruction();
 
-    const tx = new Transaction().add(ix);
+    const tx = new Transaction().add(txInstruction);
     const txID = await sendAndConfirmTransaction(connection, tx, [admin]);
     console.log("tx: ", txID);
   };

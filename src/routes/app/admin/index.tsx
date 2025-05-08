@@ -1,11 +1,8 @@
 "use client";
 
-import * as buffer from "buffer";
 import Typography from "@mui/material/Typography";
 import AppLayout from "../components/AppLayout";
 import InitializeRegistry from "./components/InitializeRegistry";
-
-window.Buffer = buffer.Buffer;
 
 const Admin: React.FC = () => {
   return (

@@ -24,8 +24,8 @@ const App: React.FC = () => {
   const wallets = useMemo(() => [new PhantomWalletAdapter()], [network]);
 
   return (
-    <ReactQueryProvider>
-      <StrictMode>
+    <StrictMode>
+      <ReactQueryProvider>
         <ThemeProvider theme={createTheme(theme)}>
           <ConnectionProvider endpoint={endpoint}>
             <WalletProvider wallets={wallets}>
@@ -36,8 +36,8 @@ const App: React.FC = () => {
             </WalletProvider>
           </ConnectionProvider>
         </ThemeProvider>
-      </StrictMode>
-    </ReactQueryProvider>
+      </ReactQueryProvider>
+    </StrictMode>
   );
 };
 

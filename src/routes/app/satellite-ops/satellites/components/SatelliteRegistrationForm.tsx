@@ -1,8 +1,16 @@
 "use client";
 
-import { Button, CardContent, Grid, MenuItem, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { ManeuverTypes, OperationStatus } from "../utils/RegistrationUtils";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+import {
+  ManeuverTypes,
+  OperationStatus,
+  selectManeuverTypes,
+  selectOperationStatus,
+} from "../utils/RegistrationUtils";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Dayjs } from "dayjs";
@@ -30,8 +38,8 @@ const SatelliteRegistrationForm: React.FC = () => {
     orbitType: "",
     inclination: "",
     altitude: "",
-    maneuverType: ManeuverTypes.type1,
-    operationStatus: OperationStatus.type1,
+    maneuverType: ManeuverTypes.StationKeeping,
+    operationStatus: OperationStatus.Offline,
   });
 
   const handleInputChange = (
@@ -152,7 +160,7 @@ const SatelliteRegistrationForm: React.FC = () => {
           />
         </Grid>
 
-        {/* altitude */}
+        {/* maneuver type */}
         <Grid size={3}>
           <TextField
             fullWidth
@@ -163,9 +171,9 @@ const SatelliteRegistrationForm: React.FC = () => {
             onChange={handleInputChange}
             variant="outlined"
           >
-            {Object.values(ManeuverTypes).map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
+            {selectManeuverTypes.map(([value, label]) => (
+              <MenuItem key={value} value={value}>
+                {label}
               </MenuItem>
             ))}
           </TextField>
@@ -182,9 +190,9 @@ const SatelliteRegistrationForm: React.FC = () => {
             onChange={handleInputChange}
             variant="outlined"
           >
-            {Object.values(OperationStatus).map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
+            {selectOperationStatus.map(([value, label]) => (
+              <MenuItem key={value} value={value}>
+                {label}
               </MenuItem>
             ))}
           </TextField>
