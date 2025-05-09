@@ -13,78 +13,78 @@ import { useWallet } from "@solana/wallet-adapter-react";
 const adminPubkey = getAdminKey().publicKey;
 
 interface IProfileSelectMenuProps extends BoxProps {
-  section: "start" | "app";
-  onDisconnect?: () => void;
+    section: "start" | "app";
+    onDisconnect?: () => void;
 }
 
 // TODO: render in top right menu on XS
 const ProfileSelectMenu: React.FC<IProfileSelectMenuProps> = ({
-  section,
-  onDisconnect,
-  ...props
+    section,
+    onDisconnect,
+    ...props
 }) => {
-  const wallet = useWallet();
-  const pathType = section === "app" ? "appPath" : "startPath";
+    const wallet = useWallet();
+    const pathType = section === "app" ? "appPath" : "startPath";
 
-  const satelliteOpsRoute = useMatch(profiles.satelliteOperator[pathType]);
-  const groundStationOpsRoute = useMatch(profiles.groundStation[pathType]);
+    const satelliteOpsRoute = useMatch(profiles.satelliteOperator[pathType]);
+    const groundStationOpsRoute = useMatch(profiles.groundStation[pathType]);
 
-  return (
-    <Box
-      gridArea={GridArea.above}
-      justifySelf="end"
-      display="flex"
-      flexDirection={{ xs: "column", lg: "row" }}
-      justifyContent={{ xs: "flex-start", lg: "flex-end" }}
-      alignItems={{ xs: "stretch", sm: "flex-end", lg: "flex-start" }}
-      gap={{ xs: 4, sm: 2 }}
-      width="100%"
-      {...props}
-    >
-      <Button
-        variant="outlined"
-        startIcon={<AccountBalanceIcon />}
-        component={Link}
-        to={`/${section}/stakers`}
-        disabled
-      >
-        Stakers
-      </Button>
-      <Button
-        variant="outlined"
-        startIcon={<IconLanguage />}
-        component={Link}
-        to={profiles.groundStation[pathType]}
-        color={groundStationOpsRoute ? "primary" : "secondary"}
-      >
-        Ground Stations
-      </Button>
-      <Button
-        variant="outlined"
-        startIcon={<IconSatelliteAlt />}
-        component={Link}
-        to={profiles.satelliteOperator[pathType]}
-        color={satelliteOpsRoute ? "primary" : "secondary"}
-      >
-        Satellite Operators
-      </Button>
-      {wallet.publicKey &&
-      wallet.publicKey.toString() === adminPubkey.toString() ? (
-        <Button
-          variant="outlined"
-          component={Link}
-          to={profiles.admin.appPath}
-          color="primary"
+    return (
+        <Box
+            gridArea={GridArea.above}
+            justifySelf="end"
+            display="flex"
+            flexDirection={{ xs: "column", lg: "row" }}
+            justifyContent={{ xs: "flex-start", lg: "flex-end" }}
+            alignItems={{ xs: "stretch", sm: "flex-end", lg: "flex-start" }}
+            gap={{ xs: 4, sm: 2 }}
+            width="100%"
+            {...props}
         >
-          ADMIN
-        </Button>
-      ) : null}
-      <WalletControl
-        sx={{ order: { xs: 0, sm: -1, lg: 1 } }}
-        onDisconnect={onDisconnect}
-      />
-    </Box>
-  );
+            <Button
+                variant="outlined"
+                startIcon={<AccountBalanceIcon />}
+                component={Link}
+                to={`/${section}/stakers`}
+                disabled
+            >
+                Stakers
+            </Button>
+            <Button
+                variant="outlined"
+                startIcon={<IconLanguage />}
+                component={Link}
+                to={profiles.groundStation[pathType]}
+                color={groundStationOpsRoute ? "primary" : "secondary"}
+            >
+                Ground Stations
+            </Button>
+            <Button
+                variant="outlined"
+                startIcon={<IconSatelliteAlt />}
+                component={Link}
+                to={profiles.satelliteOperator[pathType]}
+                color={satelliteOpsRoute ? "primary" : "secondary"}
+            >
+                Satellite Operators
+            </Button>
+            {wallet.publicKey &&
+                wallet.publicKey.toString() === adminPubkey.toString() ? (
+                <Button
+                    variant="outlined"
+                    component={Link}
+                    to="/app/admin"
+                    color="primary"
+                >
+                    ADMIN
+                </Button>
+            ) : null}
+            <WalletControl
+                sx={{ order: { xs: 0, sm: -1, lg: 1 } }}
+                onDisconnect={onDisconnect}
+            />
+        </Box>
+    );
 };
 
 export default ProfileSelectMenu;

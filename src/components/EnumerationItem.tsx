@@ -65,7 +65,7 @@ interface IEnumerationItemProps extends LinkProps {
 const EnumerationItem: React.FC<IEnumerationItemProps> = ({ num, label, linkLabel, ...props }) => (
     <OuterCircle {...props}>
         <InnerCircle>
-            <Number>{num < 10 ? "0": ""}{num}</Number>
+            <Number>{num < 10 ? "0" : ""}{num}</Number>
             <Typography variant="body1" sx={{ margin: 0 }}>{label}</Typography>
         </InnerCircle>
         <Box component={SvgArrowRight} height={24} />
