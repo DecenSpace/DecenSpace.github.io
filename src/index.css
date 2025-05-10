@@ -1,4 +1,7 @@
 @import "normalize.css";
+/* Could remove this package and implement the dialog ourself in the future, to reduce bundle size.
+Dosen't look that advanced. */
+@import "@solana/wallet-adapter-react-ui/styles.css";
 
 @font-face {
     font-family: "Anek Latin";
