@@ -120,7 +120,9 @@ const SatelliteRegistrationForm: React.FC = () => {
                         <DatePicker
                             sx={{ width: 1 }}
                             label="Launch Date"
-                            onChange={(date) => handleDateChange("launchDate", date)}
+                            onChange={(date) =>
+                                handleDateChange("launchDate", date)
+                            }
                         />
                     </LocalizationProvider>
                 </Grid>
@@ -195,7 +197,12 @@ const SatelliteRegistrationForm: React.FC = () => {
                         ))}
                     </TextField>
                 </Grid>
-                <Button type="submit" variant="contained" color="primary" size="large">
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                >
                     Register Satellite
                 </Button>
             </Grid>

@@ -37,11 +37,17 @@ const CloseRegistry: React.FC = () => {
     }, [program.programId]);
 
     const handleCloseRegistry = async () => {
+        const { blockhash, lastValidBlockHeight } =
+            await connection.getLatestBlockhash();
 
-        const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash();
+        // build the tx
+        const tx = new Transaction({
+            blockhash,
+            lastValidBlockHeight,
+            feePayer: sender,
+        });
 
-        const tx = new Transaction({ blockhash, lastValidBlockHeight, feePayer: sender });
-
+        // build the tx instruction
         const txInstruction = await program.methods
             .closeRegistry()
             .accounts({ authority: sender, registry: registryPda })
@@ -49,12 +55,14 @@ const CloseRegistry: React.FC = () => {
 
         tx.add(txInstruction);
 
+        // get the signature
         const signature = await wallet.sendTransaction(tx, connection);
 
+        // confirm the signature
         await connection.confirmTransaction({
             signature,
             blockhash,
-            lastValidBlockHeight
+            lastValidBlockHeight,
         });
 
         console.log("tx: ", signature);

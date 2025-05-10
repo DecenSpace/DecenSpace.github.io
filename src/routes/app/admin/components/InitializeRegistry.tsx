@@ -48,16 +48,20 @@ const InitializeRegistry: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        // build args for instruction
         const args = { authority: new PublicKey(authority) };
 
-        const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash();
+        const { blockhash, lastValidBlockHeight } =
+            await connection.getLatestBlockhash();
 
-        const tx = new Transaction({ 
+        // build tx
+        const tx = new Transaction({
             feePayer: sender,
             blockhash,
-            lastValidBlockHeight
+            lastValidBlockHeight,
         });
 
+        // build tx instruction
         const txInstruction = await program.methods
             .initializeRegistry(args)
             .accounts({
@@ -69,12 +73,14 @@ const InitializeRegistry: React.FC = () => {
 
         tx.add(txInstruction);
 
+        // get the signature
         const signature = await wallet.sendTransaction(tx, connection);
 
+        // confirm the signature
         await connection.confirmTransaction({
             signature,
             blockhash,
-            lastValidBlockHeight
+            lastValidBlockHeight,
         });
 
         console.log("tx: ", signature);
@@ -85,7 +91,9 @@ const InitializeRegistry: React.FC = () => {
             <form onSubmit={handleSubmit}>
                 <Card sx={{ marginTop: 3 }}>
                     <CardContent>
-                        <Typography variant="h3">Initialize registry</Typography>
+                        <Typography variant="h3">
+                            Initialize registry
+                        </Typography>
                     </CardContent>
                     <CardContent>
                         <TextField

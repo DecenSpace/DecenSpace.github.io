@@ -7,10 +7,10 @@ import { Link, useMatch } from "react-router-dom";
 import Button from "@mui/material/Button";
 import WalletControl from "./WalletControl";
 import { profiles } from "utils/profiles";
-import { getAdminKey } from "routes/app/admin/utils/utils";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { adminPubkey } from "routes/app/admin/utils/getAdminPubkey";
 
-const adminPubkey = getAdminKey().publicKey;
+const admin = adminPubkey;
 
 interface IProfileSelectMenuProps extends BoxProps {
     section: "start" | "app";
@@ -69,7 +69,7 @@ const ProfileSelectMenu: React.FC<IProfileSelectMenuProps> = ({
                 Satellite Operators
             </Button>
             {wallet.publicKey &&
-                wallet.publicKey.toString() === adminPubkey.toString() ? (
+                wallet.publicKey.toString() === admin.toString() ? (
                 <Button
                     variant="outlined"
                     component={Link}
