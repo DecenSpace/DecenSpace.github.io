@@ -10,8 +10,6 @@ import { profiles } from "utils/profiles";
 import { useWallet } from "@solana/wallet-adapter-react";
 import adminPubkey from "routes/app/admin/utils/adminPubkey";
 
-const admin = adminPubkey;
-
 interface IProfileSelectMenuProps extends BoxProps {
     section: "start" | "app";
     onDisconnect?: () => void;
@@ -69,7 +67,7 @@ const ProfileSelectMenu: React.FC<IProfileSelectMenuProps> = ({
                 Satellite Operators
             </Button>
             {wallet.publicKey &&
-                wallet.publicKey.toString() === admin.toString() ? (
+                wallet.publicKey.toString() === adminPubkey.toString() ? (
                 <Button
                     variant="outlined"
                     component={Link}
