@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import WalletControl from "./WalletControl";
 import { profiles } from "utils/profiles";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { adminPubkey } from "routes/app/admin/utils/getAdminPubkey";
+import adminPubkey from "routes/app/admin/utils/adminPubkey";
 
 const admin = adminPubkey;
 
