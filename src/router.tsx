@@ -18,21 +18,21 @@ const router = createHashRouter([
         children: [
             {
                 index: true,
-                element: <Start />
+                element: <Start />,
             },
             {
                 path: "/start/ground-station-ops",
-                Component: lazy(() => import("routes/start/ground-station-ops"))
+                Component: lazy(() => import("routes/start/ground-station-ops")),
             },
             {
                 path: "/start/satellite-ops",
-                Component: lazy(() => import("routes/start/satellite-ops"))
-            }
-        ]
+                Component: lazy(() => import("routes/start/satellite-ops")),
+            },
+        ],
     },
     {
         path: "/app/ground-station-ops",
-        Component: lazy(() => import("routes/app/ground-station-ops"))
+        Component: lazy(() => import("routes/app/ground-station-ops")),
     },
     {
         path: "/app/satellite-ops",
@@ -40,23 +40,29 @@ const router = createHashRouter([
         children: [
             {
                 index: true,
-                Component: lazy(() => import("routes/app/satellite-ops/home"))
+                Component: lazy(() => import("routes/app/satellite-ops/home")),
             },
             {
                 path: "/app/satellite-ops/satellites",
-                Component: lazy(() => import("routes/app/satellite-ops/satellites"))
+                Component: lazy(() => import("routes/app/satellite-ops/satellites")),
             },
             {
                 // Only semantically a nested route
                 path: "/app/satellite-ops/satellites/register",
-                Component: lazy(() => import("routes/app/satellite-ops/satellites/register"))
-            }
-        ]
+                Component: lazy(
+                    () => import("routes/app/satellite-ops/satellites/register")
+                ),
+            },
+        ],
+    },
+    {
+        path: "/app/admin",
+        Component: lazy(() => import("routes/app/admin")),
     },
     {
         path: "/theme-test",
-        Component: lazy(() => import("routes/theme-test"))
-    }
+        Component: lazy(() => import("routes/theme-test")),
+    },
 ]);
 
 export default router;

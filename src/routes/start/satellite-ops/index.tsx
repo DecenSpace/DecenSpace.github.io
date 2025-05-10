@@ -7,7 +7,11 @@ import ConnectWalletTeaser from "../components/ConnectWalletTeaser";
 
 const SatelliteOps: React.FC = () => (
     <>
-        <ProfileSelectMenu section="start" marginBottom={10} marginTop={{ xs: 6, sm: 0 }} />
+        <ProfileSelectMenu
+            section="start"
+            marginBottom={10}
+            marginTop={{ xs: 6, sm: 0 }}
+        />
         <Box component="header" gridArea={GridArea.head} minHeight={360}>
             <TitleLogo size={120} />
             <Typography variant="h2" marginBottom={3}>
@@ -15,7 +19,9 @@ const SatelliteOps: React.FC = () => (
             </Typography>
             <Box marginRight={{ xs: 0, sm: 6 }}>
                 <Typography variant="h4">
-                    DecenSpace for satellite operators. A decentralized network of ground stations that provides cost-effective, reliable, and secure satellite communications.
+                    DecenSpace for satellite operators. A decentralized network of ground
+                    stations that provides cost-effective, reliable, and secure satellite
+                    communications.
                 </Typography>
             </Box>
         </Box>

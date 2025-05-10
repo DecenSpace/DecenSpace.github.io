@@ -69,7 +69,7 @@ const WalletControl: React.FC<BoxProps & { onDisconnect?: () => void }> = ({ onD
                         sx: { minWidth: 170, marginTop: 1 }
                     }
                 }}
-                
+
             >
                 <MenuItem disabled>Balance</MenuItem>
                 <MenuItem onClick={() => navigate(profiles.groundStation.appPath)}>

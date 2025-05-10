@@ -7,6 +7,10 @@ import { Link, useMatch } from "react-router-dom";
 import Button from "@mui/material/Button";
 import WalletControl from "./WalletControl";
 import { profiles } from "utils/profiles";
+import { useWallet } from "@solana/wallet-adapter-react";
+import adminPubkey from "routes/app/admin/utils/adminPubkey";
+
+const admin = adminPubkey;
 
 interface IProfileSelectMenuProps extends BoxProps {
     section: "start" | "app";
@@ -14,8 +18,12 @@ interface IProfileSelectMenuProps extends BoxProps {
 }
 
 // TODO: render in top right menu on XS
-const ProfileSelectMenu: React.FC<IProfileSelectMenuProps> = ({ section, onDisconnect, ...props }) => {
-
+const ProfileSelectMenu: React.FC<IProfileSelectMenuProps> = ({
+    section,
+    onDisconnect,
+    ...props
+}) => {
+    const wallet = useWallet();
     const pathType = section === "app" ? "appPath" : "startPath";
 
     const satelliteOpsRoute = useMatch(profiles.satelliteOperator[pathType]);
@@ -60,7 +68,21 @@ const ProfileSelectMenu: React.FC<IProfileSelectMenuProps> = ({ section, onDisco
             >
                 Satellite Operators
             </Button>
-            <WalletControl sx={{ order: { xs: 0, sm: -1, lg: 1 } }} onDisconnect={onDisconnect} />
+            {wallet.publicKey &&
+                wallet.publicKey.toString() === admin.toString() ? (
+                <Button
+                    variant="outlined"
+                    component={Link}
+                    to="/app/admin"
+                    color="primary"
+                >
+                    ADMIN
+                </Button>
+            ) : null}
+            <WalletControl
+                sx={{ order: { xs: 0, sm: -1, lg: 1 } }}
+                onDisconnect={onDisconnect}
+            />
         </Box>
     );
 };
