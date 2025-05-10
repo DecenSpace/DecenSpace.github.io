@@ -54,7 +54,10 @@ const buildOptions: BuildOptions = {
     metafile: true,
     target: "es2020",
     format: "esm",
-    define: pickAsJsonFromEnv(["NODE_ENV"]),
+    define: {
+        ...pickAsJsonFromEnv(["NODE_ENV"]),
+        CESIUM_BASE_URL: JSON.stringify("/assets/cesium")
+    },
     loader,
     plugins: [
         htmlPlugin({
@@ -78,6 +81,7 @@ const buildOptions: BuildOptions = {
     }
 
     await cp(`${sourcedir}/assets`, `${outdir}/assets`, { recursive: true });
+    await cp("node_modules/cesium/Build/Cesium", `${outdir}/assets/cesium`, { recursive: true });
 
     if (serveDev) {
         const context = await esbuild.context(buildOptions);
