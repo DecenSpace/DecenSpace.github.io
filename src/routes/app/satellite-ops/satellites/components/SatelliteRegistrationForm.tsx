@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import {
-    ManeuverTypes,
-    OperationStatus,
     selectManeuverTypes,
     selectOperationStatus,
 } from "../utils/RegistrationUtils";
@@ -23,9 +21,16 @@ import {
     Transaction,
 } from "@solana/web3.js";
 import { REGISTRY_SEEDS, SATELLITE_SEEDS } from "program/utils/Seeds";
-import { getAdminKey } from "routes/app/admin/utils/utils";
+import adminPubkey from "routes/app/admin/utils/adminPubkey";
+import { getAdminKeypair } from "routes/app/admin/utils/adminKeypair";
+import { getTestKeypair } from "routes/app/admin/utils/testKeypair";
 
-const admin = getAdminKey();
+// for debug (in .gitignore)
+const adminKeypair = getAdminKeypair();
+const testKeypair = getTestKeypair();
+
+// should be read in a better way. (preferrably from the registry account)
+const admin = adminPubkey;
 
 const ManeuverType = {
     StationKeeping: { stationKeeping: {} },
@@ -45,7 +50,7 @@ const OperationStatus = {
 };
 
 interface SatelliteFormValues {
-    owner: string;
+    owner: PublicKey;
     name: string;
     country: string;
     noradId: number;
@@ -65,7 +70,7 @@ const SatelliteRegistrationForm: React.FC = () => {
     const [satellitePda, setSatellitePda] = useState<PublicKey>();
     const { program } = useSatelliteProgram();
     const [formValues, setFormValues] = useState<SatelliteFormValues>({
-        owner: "",
+        owner: wallet.publicKey!,
         name: "",
         country: "",
         noradId: 0,
@@ -73,22 +78,23 @@ const SatelliteRegistrationForm: React.FC = () => {
         orbitType: "",
         inclination: 0,
         altitude: 0,
-        maneuverType: "StationKeeping",
-        operationStatus: "Active",
+        maneuverType: "",
+        operationStatus: "",
     });
 
+    // get seeds
     useEffect(() => {
         if (wallet.publicKey) {
             try {
                 let [registryPda] = PublicKey.findProgramAddressSync(
-                    [REGISTRY_SEEDS, admin.publicKey.toBuffer()],
+                    [REGISTRY_SEEDS, admin.toBuffer()],
                     program.programId
                 );
                 let [satellitePda] = PublicKey.findProgramAddressSync(
                     [
                         SATELLITE_SEEDS,
-                        admin.publicKey.toBuffer(),
                         wallet.publicKey.toBuffer(),
+                        admin.toBuffer(),
                     ],
                     program.programId
                 );
@@ -100,7 +106,7 @@ const SatelliteRegistrationForm: React.FC = () => {
             }
         }
     }, [program.programId]);
-      
+
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
@@ -124,8 +130,7 @@ const SatelliteRegistrationForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const res = { ...formValues };
-        console.log("satellite data: ", JSON.stringify(res, null, 2));
+        // prepare args for tx
         const args = {
             ...formValues,
             owner: new PublicKey(formValues.owner),
@@ -141,9 +146,7 @@ const SatelliteRegistrationForm: React.FC = () => {
                 ],
         };
 
-        console.log("registry pda: ", registryPda?.toBase58());
-        console.log("satellite pda: ", satellitePda?.toBase58());
-
+        // build tx instruction
         const txInstruction = await program.methods
             .mintSatellite(args)
             .accounts({
@@ -154,14 +157,36 @@ const SatelliteRegistrationForm: React.FC = () => {
             })
             .instruction();
 
-        const tx = new Transaction().add(txInstruction);
-        tx.feePayer = satelliteOwner;
-        tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+        const { blockhash, lastValidBlockHeight } =
+            await connection.getLatestBlockhash();
+
+        // build tx
+        const tx = new Transaction({
+            feePayer: satelliteOwner,
+            blockhash,
+            lastValidBlockHeight,
+        });
+
+        tx.add(txInstruction);
+
+        // for debug
+        // const signature = await sendAndConfirmTransaction(connection, tx, [testKeypair]);
+
+        // get signature
         const signature = await wallet.sendTransaction(tx, connection);
-        await connection.confirmTransaction(signature);
+        await connection.confirmTransaction({
+            signature,
+            blockhash,
+            lastValidBlockHeight,
+        });
         console.log("satellite tx: ", signature);
 
         const satellite = await program.account.satellite.fetch(satellitePda!);
+        const registry = await program.account.registry.fetch(registryPda!);
+        console.log(
+            "satellite count in registry: ",
+            registry.satelliteCount.toNumber()
+        );
         console.log("satellite author: ", satellite.owner.toBase58());
     };
 
@@ -172,12 +197,14 @@ const SatelliteRegistrationForm: React.FC = () => {
                     <TextField
                         fullWidth
                         name="owner"
-                        onChange={handleInputChange}
+                        value={wallet.publicKey}
                         label="Owner Pubkey"
                         variant="outlined"
+                        disabled
+                        helperText="Autofilled from wallet"
                     />
                 </Grid>
-              
+
                 <Grid size={3}>
                     <TextField
                         fullWidth
@@ -254,7 +281,7 @@ const SatelliteRegistrationForm: React.FC = () => {
                     <TextField
                         fullWidth
                         label="Maneuver Type"
-                        value=""
+                        value={formValues.maneuverType}
                         name="maneuverType"
                         select
                         onChange={handleInputChange}
@@ -272,7 +299,7 @@ const SatelliteRegistrationForm: React.FC = () => {
                     <TextField
                         fullWidth
                         label="Operation Status"
-                        value=""
+                        value={formValues.operationStatus}
                         name="operationStatus"
                         select
                         onChange={handleInputChange}
