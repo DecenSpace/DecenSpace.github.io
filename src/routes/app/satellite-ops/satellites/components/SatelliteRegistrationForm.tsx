@@ -1,11 +1,11 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import {
+    ManeuverTypes,
+    OperationStatus,
     selectManeuverTypes,
     selectOperationStatus,
 } from "../utils/RegistrationUtils";
@@ -100,7 +100,7 @@ const SatelliteRegistrationForm: React.FC = () => {
             }
         }
     }, [program.programId]);
-
+      
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
@@ -177,7 +177,7 @@ const SatelliteRegistrationForm: React.FC = () => {
                         variant="outlined"
                     />
                 </Grid>
-
+              
                 <Grid size={3}>
                     <TextField
                         fullWidth

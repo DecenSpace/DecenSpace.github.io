@@ -1,5 +1,3 @@
-"use client";
-
 import Typography from "@mui/material/Typography";
 import AppLayout from "../components/AppLayout";
 import InitializeRegistry from "./components/InitializeRegistry";

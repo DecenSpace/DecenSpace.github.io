@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -17,7 +15,7 @@ import { REGISTRY_SEEDS } from "program/utils/Seeds";
 
 const CloseRegistry: React.FC = () => {
     const connection = new Connection(clusterApiUrl("devnet"));
-    const { program, getProgramAccount } = useSatelliteProgram();
+    const { program } = useSatelliteProgram();
     const [registryPda, setRegistryPda] = useState<PublicKey>();
     const [sender, setSender] = useState<PublicKey>();
     const wallet = useWallet();
@@ -39,15 +37,33 @@ const CloseRegistry: React.FC = () => {
     }, [program.programId]);
 
     const handleCloseRegistry = async () => {
+        const { blockhash, lastValidBlockHeight } =
+            await connection.getLatestBlockhash();
+
+        // build the tx
+        const tx = new Transaction({
+            blockhash,
+            lastValidBlockHeight,
+            feePayer: sender,
+        });
+
+        // build the tx instruction
         const txInstruction = await program.methods
             .closeRegistry()
             .accounts({ authority: sender, registry: registryPda })
             .instruction();
-        const tx = new Transaction().add(txInstruction);
-        tx.feePayer = sender;
-        tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+
+        tx.add(txInstruction);
+
+        // get the signature
         const signature = await wallet.sendTransaction(tx, connection);
-        await connection.confirmTransaction(signature);
+
+        // confirm the signature
+        await connection.confirmTransaction({
+            signature,
+            blockhash,
+            lastValidBlockHeight,
+        });
         console.log("tx: ", signature);
     };
 
