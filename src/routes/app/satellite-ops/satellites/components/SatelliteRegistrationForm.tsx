@@ -22,12 +22,6 @@ import {
 } from "@solana/web3.js";
 import { REGISTRY_SEEDS, SATELLITE_SEEDS } from "program/utils/Seeds";
 import adminPubkey from "routes/app/admin/utils/adminPubkey";
-import { getAdminKeypair } from "routes/app/admin/utils/adminKeypair";
-import { getTestKeypair } from "routes/app/admin/utils/testKeypair";
-
-// for debug (in .gitignore)
-const adminKeypair = getAdminKeypair();
-const testKeypair = getTestKeypair();
 
 // should be read in a better way. (preferrably from the registry account)
 const admin = adminPubkey;
