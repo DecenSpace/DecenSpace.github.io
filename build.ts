@@ -78,6 +78,7 @@ const buildOptions: BuildOptions = {
     }
 
     await cp(`${sourcedir}/assets`, `${outdir}/assets`, { recursive: true });
+    await cp(`${sourcedir}/404.html`, `${outdir}/404.html`);
 
     if (serveDev) {
         const context = await esbuild.context(buildOptions);
@@ -93,7 +94,7 @@ const buildOptions: BuildOptions = {
         await context.watch();
         const { port } = await context.serve({
             servedir: outdir,
-            port: 8080,
+            port: 3000,
             fallback: spaRouting ? `${outdir}/${htmlFileName}` : undefined,
         });
 
