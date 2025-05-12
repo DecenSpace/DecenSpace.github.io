@@ -1,15 +1,19 @@
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect } from "react";
+import { useShowSnackbar } from "./SnackbarProvider";
 
 const WalletAutoConnect: React.FC = () => {
 
-    const { wallet, publicKey, connect } = useWallet();
+    const { wallet, publicKey, connect, select: selectWallet } = useWallet();
+
+    const showSnackbar = useShowSnackbar();
 
     // automatically connect to wallet
     useEffect(() => {
         if (wallet && !publicKey) {
-            connect().then(() => {
-                // TODO: show snackbar
+            connect().catch(() => {
+                showSnackbar("Wallet could not be connected", "error", 2000);
+                selectWallet(null);
             });
         }
     }, [wallet, publicKey, connect]);
