@@ -132,11 +132,11 @@ const SatelliteRegistrationForm: React.FC = () => {
             launchDate: new BN(dayjs(formValues.launchDate).unix()),
             maneuverType:
                 ManeuverType[
-                    formValues.maneuverType as keyof typeof ManeuverType
+                formValues.maneuverType as keyof typeof ManeuverType
                 ],
             operationStatus:
                 OperationStatus[
-                    formValues.operationStatus as keyof typeof OperationStatus
+                formValues.operationStatus as keyof typeof OperationStatus
                 ],
         };
 
@@ -190,6 +190,7 @@ const SatelliteRegistrationForm: React.FC = () => {
                 <Grid size={6}>
                     <TextField
                         fullWidth
+                        required
                         name="owner"
                         value={wallet.publicKey}
                         label="Owner Pubkey"
@@ -202,6 +203,7 @@ const SatelliteRegistrationForm: React.FC = () => {
                 <Grid size={3}>
                     <TextField
                         fullWidth
+                        required
                         name="name"
                         onChange={handleInputChange}
                         label="Name of satellite"
@@ -212,6 +214,7 @@ const SatelliteRegistrationForm: React.FC = () => {
                 <Grid size={3}>
                     <TextField
                         fullWidth
+                        required
                         name="country"
                         onChange={handleInputChange}
                         label="Country"
@@ -222,6 +225,7 @@ const SatelliteRegistrationForm: React.FC = () => {
                 <Grid size={4}>
                     <TextField
                         fullWidth
+                        required
                         name="noradId"
                         onChange={handleInputChange}
                         label="NORAD-ID"
@@ -244,6 +248,7 @@ const SatelliteRegistrationForm: React.FC = () => {
                 <Grid size={4}>
                     <TextField
                         fullWidth
+                        required
                         label="Orbit Type"
                         name="orbitType"
                         onChange={handleInputChange}
@@ -254,6 +259,7 @@ const SatelliteRegistrationForm: React.FC = () => {
                 <Grid size={3}>
                     <TextField
                         fullWidth
+                        required
                         label="Inclination"
                         name="inclination"
                         onChange={handleInputChange}
@@ -264,6 +270,7 @@ const SatelliteRegistrationForm: React.FC = () => {
                 <Grid size={3}>
                     <TextField
                         fullWidth
+                        required
                         label="Altitude"
                         name="altitude"
                         onChange={handleInputChange}
@@ -274,6 +281,7 @@ const SatelliteRegistrationForm: React.FC = () => {
                 <Grid size={3}>
                     <TextField
                         fullWidth
+                        required
                         label="Maneuver Type"
                         value={formValues.maneuverType}
                         name="maneuverType"
@@ -292,6 +300,7 @@ const SatelliteRegistrationForm: React.FC = () => {
                 <Grid size={3}>
                     <TextField
                         fullWidth
+                        required
                         label="Operation Status"
                         value={formValues.operationStatus}
                         name="operationStatus"
