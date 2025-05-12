@@ -1,11 +1,9 @@
 import { lazy } from "react";
-import { createHashRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import Start from "routes/start";
 import StartLayout from "routes/start/StartLayout";
 
-// can't have real SPA routing on GH pages.
-// Will use createBrowserRouter if we have an Nginx server
-const router = createHashRouter([
+const router = createBrowserRouter([
     {
         path: "/",
         // In this place could later be a smart redirect, that checks if a wallet is connected.
@@ -63,6 +61,10 @@ const router = createHashRouter([
         path: "/theme-test",
         Component: lazy(() => import("routes/theme-test")),
     },
+    {
+        path: "*",
+        element: <Navigate to="/start" replace />,
+    }
 ]);
 
 export default router;

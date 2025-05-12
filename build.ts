@@ -12,7 +12,7 @@ const analyze = argv.includes("--analyze");
 const sourcedir = "src";
 const outdir = "dist";
 const htmlFileName = "index.html";
-const spaRouting = false;
+const spaRouting = true;
 
 const entryPoints = [`${sourcedir}/index.tsx`, `${sourcedir}/index.css`];
 
