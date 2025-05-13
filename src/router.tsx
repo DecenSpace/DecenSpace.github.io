@@ -56,7 +56,7 @@ const router = createHashRouter([
             {
                 // will probably remove this later
                 path: "/app/satellite-ops/satellites/view-satellite",
-                Component: lazy(() => import("routes/app/satellite-ops/satellites/view-satellite"))
+                Component: lazy(() => import("routes/app/satellite-ops/satellites/my-satellites"))
             }
         ],
     },

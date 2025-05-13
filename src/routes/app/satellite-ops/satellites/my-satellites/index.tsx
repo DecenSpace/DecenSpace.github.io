@@ -1,16 +1,16 @@
 import { Box, Card, CardContent } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import ViewSatelliteForm from "../components/ViewSatelliteForm";
+import SatelliteList from "../components/SatelliteList";
 
-const ViewSatellite: React.FC = () => (
+const MySatellites: React.FC = () => (
     <Box>
-        <Typography variant="h2">View Satellite</Typography>
+        <Typography variant="h2">My Satellites</Typography>
         <Card sx={{ marginTop: 3 }}>
             <CardContent>
-                <ViewSatelliteForm />
+                <SatelliteList />
             </CardContent>
         </Card>
     </Box>
 );
 
-export default ViewSatellite;
+export default MySatellites;
