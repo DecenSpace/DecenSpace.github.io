@@ -53,6 +53,11 @@ const router = createHashRouter([
                     () => import("routes/app/satellite-ops/satellites/register")
                 ),
             },
+            {
+                // will probably remove this later
+                path: "/app/satellite-ops/satellites/view-satellite",
+                Component: lazy(() => import("routes/app/satellite-ops/satellites/view-satellite"))
+            }
         ],
     },
     {

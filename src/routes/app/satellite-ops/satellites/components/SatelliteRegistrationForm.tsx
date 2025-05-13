@@ -16,11 +16,17 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import {
     clusterApiUrl,
     Connection,
+    Keypair,
     PublicKey,
+    sendAndConfirmTransaction,
     SystemProgram,
     Transaction,
 } from "@solana/web3.js";
-import { REGISTRY_SEEDS, SATELLITE_SEEDS } from "program/utils/Seeds";
+import {
+    REGISTRY_SEEDS,
+    SATELLITE_OPERATOR_SEEDS,
+    SATELLITE_SEEDS,
+} from "program/utils/Seeds";
 import adminPubkey from "routes/app/admin/utils/adminPubkey";
 
 // should be read in a better way. (preferrably from the registry account)
@@ -61,7 +67,8 @@ const SatelliteRegistrationForm: React.FC = () => {
     const wallet = useWallet();
     const [satelliteOwner, setSatelliteOwner] = useState<PublicKey>();
     const [registryPda, setRegistryPda] = useState<PublicKey>();
-    const [satellitePda, setSatellitePda] = useState<PublicKey>();
+    const [satelliteOperatorPda, setSatelliteOperatorPda] =
+        useState<PublicKey>();
     const { program } = useSatelliteProgram();
     const [formValues, setFormValues] = useState<SatelliteFormValues>({
         owner: wallet.publicKey!,
@@ -75,31 +82,6 @@ const SatelliteRegistrationForm: React.FC = () => {
         maneuverType: "",
         operationStatus: "",
     });
-
-    // get seeds
-    useEffect(() => {
-        if (wallet.publicKey) {
-            try {
-                let [registryPda] = PublicKey.findProgramAddressSync(
-                    [REGISTRY_SEEDS, admin.toBuffer()],
-                    program.programId
-                );
-                let [satellitePda] = PublicKey.findProgramAddressSync(
-                    [
-                        SATELLITE_SEEDS,
-                        wallet.publicKey.toBuffer(),
-                        admin.toBuffer(),
-                    ],
-                    program.programId
-                );
-                setRegistryPda(registryPda);
-                setSatelliteOwner(wallet.publicKey);
-                setSatellitePda(satellitePda);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-    }, [program.programId]);
 
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -121,24 +103,54 @@ const SatelliteRegistrationForm: React.FC = () => {
         });
     };
 
+    // prepare args for tx
+    const args = {
+        ...formValues,
+        owner: new PublicKey(formValues.owner),
+        noradId: new BN(formValues.noradId),
+        launchDate: new BN(dayjs(formValues.launchDate).unix()),
+        maneuverType:
+            ManeuverType[formValues.maneuverType as keyof typeof ManeuverType],
+        operationStatus:
+            OperationStatus[
+            formValues.operationStatus as keyof typeof OperationStatus
+            ],
+    };
+
+    // get pda
+    useEffect(() => {
+        if (wallet.publicKey) {
+            try {
+                let [registryPda] = PublicKey.findProgramAddressSync(
+                    [REGISTRY_SEEDS, admin.toBuffer()],
+                    program.programId
+                );
+                let [satelliteOperatorPda] = PublicKey.findProgramAddressSync(
+                    [SATELLITE_OPERATOR_SEEDS, wallet.publicKey.toBuffer()],
+                    program.programId
+                );
+                setRegistryPda(registryPda);
+                setSatelliteOwner(wallet.publicKey);
+                setSatelliteOperatorPda(satelliteOperatorPda);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    }, [program.programId]);
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // prepare args for tx
-        const args = {
-            ...formValues,
-            owner: new PublicKey(formValues.owner),
-            noradId: new BN(formValues.noradId),
-            launchDate: new BN(dayjs(formValues.launchDate).unix()),
-            maneuverType:
-                ManeuverType[
-                formValues.maneuverType as keyof typeof ManeuverType
-                ],
-            operationStatus:
-                OperationStatus[
-                formValues.operationStatus as keyof typeof OperationStatus
-                ],
-        };
+        // get satellite pda
+        let [satellitePda] = PublicKey.findProgramAddressSync(
+            [
+                SATELLITE_SEEDS,
+                wallet.publicKey!.toBuffer(),
+                admin.toBuffer(),
+                args.noradId.toArrayLike(Buffer, "le", 8),
+            ],
+            program.programId
+        );
 
         // build tx instruction
         const txInstruction = await program.methods
@@ -147,6 +159,7 @@ const SatelliteRegistrationForm: React.FC = () => {
                 authority: satelliteOwner,
                 registry: registryPda,
                 satellite: satellitePda,
+                satelliteOperator: satelliteOperatorPda,
                 systemProgram: SystemProgram.programId,
             })
             .instruction();
@@ -164,7 +177,9 @@ const SatelliteRegistrationForm: React.FC = () => {
         tx.add(txInstruction);
 
         // for debug
-        // const signature = await sendAndConfirmTransaction(connection, tx, [testKeypair]);
+        // const signature = await sendAndConfirmTransaction(connection, tx, [
+        //    testKeypair,
+        // ]);
 
         // get signature
         const signature = await wallet.sendTransaction(tx, connection);
@@ -173,15 +188,8 @@ const SatelliteRegistrationForm: React.FC = () => {
             blockhash,
             lastValidBlockHeight,
         });
-        console.log("satellite tx: ", signature);
 
-        const satellite = await program.account.satellite.fetch(satellitePda!);
-        const registry = await program.account.registry.fetch(registryPda!);
-        console.log(
-            "satellite count in registry: ",
-            registry.satelliteCount.toNumber()
-        );
-        console.log("satellite author: ", satellite.owner.toBase58());
+        console.log("satellite tx: ", signature);
     };
 
     return (
