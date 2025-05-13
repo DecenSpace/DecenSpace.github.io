@@ -1,6 +1,6 @@
 import { Box, Card, CardContent } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import SatelliteRegistrationForm from "../components/SatelliteRegistrationForm";
+import SatelliteRegistrationForm from "./components/SatelliteRegistrationForm";
 
 const RegisterSatellite: React.FC = () => (
     <Box>

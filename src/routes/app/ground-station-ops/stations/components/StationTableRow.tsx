@@ -12,7 +12,7 @@ interface IStationTableRowProps {
     onMenuClick: (item: TableDemoData, element: HTMLElement) => void;
 }
 
-const SatelliteTableRow: React.FC<IStationTableRowProps> = ({ data, selected, onSelect, onMenuClick }) => (
+const StationTableRow: React.FC<IStationTableRowProps> = ({ data, selected, onSelect, onMenuClick }) => (
     <TableRow hover selected={selected} onClick={(e) => onSelect(data)}>
         <TableCell>
             <Box bgcolor="success.main" width="1em" height="1em" />
@@ -34,4 +34,4 @@ const SatelliteTableRow: React.FC<IStationTableRowProps> = ({ data, selected, on
     </TableRow>
 );
 
-export default SatelliteTableRow;
+export default StationTableRow;

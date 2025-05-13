@@ -16,7 +16,7 @@ const Home: React.FC = () => {
     return (
         <>
             <Typography variant="h2" marginBottom={3}>
-                Satellite Operators
+                Ground Station Operators
             </Typography>
             <Typography variant="h3" marginBottom={3}>
                 Dashboard

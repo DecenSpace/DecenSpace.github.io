@@ -1,17 +1,36 @@
-import Typography from "@mui/material/Typography";
 import AppLayout from "../components/AppLayout";
+import List from "@mui/material/List";
+import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
+import AppSidebarNavButton from "../components/AppSidebarNavButton";
+import IconLanguage from "@mui/icons-material/Language";
+import { Outlet } from "react-router-dom";
+import AddIcon from "@mui/icons-material/Add";
+import AppSidebarNavNested from "../components/AppSidebarNavNested";
 
 const GroundStationOps: React.FC = () => (
-    <AppLayout sidebar={null}>
-        <Typography variant="h2" marginBottom={3}>
-            Ground Station Operators
-        </Typography>
-        <Typography variant="h3" marginBottom={3}>
-            App
-        </Typography>
-        <Typography variant="h4" marginBottom={3}>
-            Coming soon
-        </Typography>
+    <AppLayout sidebar={(
+        <List component="nav">
+            <AppSidebarNavButton
+                path="/app/ground-station-ops"
+                icon={<SpaceDashboardIcon />}
+                text="Dashboard"
+            />
+            <AppSidebarNavButton
+                path="/app/ground-station-ops/stations"
+                icon={<IconLanguage />}
+                text="Stations"
+            />
+            <AppSidebarNavNested showOnRoute="/app/ground-station-ops/stations/*">
+                <AppSidebarNavButton
+                    path="/app/ground-station-ops/stations/register"
+                    icon={<AddIcon />}
+                    text="Register station"
+                    sx={{ paddingLeft: 4 }}
+                />
+            </AppSidebarNavNested>
+        </List>
+    )}>
+        <Outlet />
     </AppLayout>
 );
 

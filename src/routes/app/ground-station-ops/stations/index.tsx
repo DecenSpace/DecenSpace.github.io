@@ -17,7 +17,7 @@ import DashboardCard from "routes/app/components/DashboardCard";
 import DashboardCardButton from "routes/app/components/DashboardCardButton";
 import { useState } from "react";
 import { TableDemoData, tableDemoData } from "./utils/tableDemoData";
-import SatelliteTableRow from "./components/SatelliteTableRow";
+import StationTableRow from "./components/StationTableRow";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import List from "@mui/material/List";
@@ -25,7 +25,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { ClickAwayListener } from "@mui/material";
 
-const SatellitesTable = styled(Table)({
+const StationsTable = styled(Table)({
     "th:first-child, td:first-child": {
         width: 56
     },
@@ -34,7 +34,7 @@ const SatellitesTable = styled(Table)({
     }
 });
 
-const Satellites: React.FC = () => {
+const Stations: React.FC = () => {
 
     const [tablePageSize, setTablePageSize] = useState(10);
 
@@ -56,12 +56,12 @@ const Satellites: React.FC = () => {
     return (
         <>
             <Typography variant="h3" marginBottom={3}>
-                Fleet
+                Stations
             </Typography>
             <AppContentGrid sx={{ gridAutoRows: "400px" }}>
                 {selectedItem ? (
                     <DashboardCard variant="outlined">
-                        <CardHeader title={selectedItem.name} subheader="Selected satellite" />
+                        <CardHeader title={selectedItem.name} subheader="Selected station" />
                         {/* <CardContent>
                             <Typography variant="body2">Name: {selectedItem.name}</Typography>
                             <Typography variant="body2">Date added: {selectedItem.added}</Typography>
@@ -77,12 +77,12 @@ const Satellites: React.FC = () => {
                     </DashboardCard>
                 ) : (
                     <DashboardCard>
-                        <CardHeader title="Fleet" subheader="0/0 active" />
+                        <CardHeader title="Stations" subheader="0/0 active" />
                         <CardContent>
                             {/* TODO: contribution-type graph */}
                         </CardContent>
                         <CardActions>
-                            <DashboardCardButton component={Link} to="/app/satellite-ops/register">
+                            <DashboardCardButton component={Link} to="/app/ground-station-ops/register">
                                 Register
                             </DashboardCardButton>
                         </CardActions>
@@ -95,7 +95,7 @@ const Satellites: React.FC = () => {
             <Paper variant="outlined" sx={{ marginTop: 3 }}>
                 <ClickAwayListener onClickAway={() => setSelectedItem(null)}>
                     <TableContainer>
-                        <SatellitesTable size="small">
+                        <StationsTable size="small">
                             <TableHead>
                                 <TableRow>
                                     <TableCell />
@@ -107,7 +107,7 @@ const Satellites: React.FC = () => {
                             </TableHead>
                             <TableBody>
                                 {tableData.map(data => (
-                                    <SatelliteTableRow
+                                    <StationTableRow
                                         key={data.id}
                                         data={data}
                                         selected={selectedItem === data}
@@ -116,7 +116,7 @@ const Satellites: React.FC = () => {
                                     />
                                 ))}
                             </TableBody>
-                        </SatellitesTable>
+                        </StationsTable>
                     </TableContainer>
                 </ClickAwayListener>
                 <TablePagination
@@ -144,4 +144,4 @@ const Satellites: React.FC = () => {
     );
 };
 
-export default Satellites;
+export default Stations;
