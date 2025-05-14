@@ -60,6 +60,11 @@ export type SatelliteMint = {
                     isSigner: false;
                 },
                 {
+                    name: "satelliteOperator";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
                     name: "registry";
                     isMut: true;
                     isSigner: false;
@@ -75,6 +80,34 @@ export type SatelliteMint = {
                     name: "args";
                     type: {
                         defined: "SatelliteMintArgs";
+                    };
+                }
+            ];
+        },
+        {
+            name: "closeSatellite";
+            accounts: [
+                {
+                    name: "authority";
+                    isMut: true;
+                    isSigner: true;
+                },
+                {
+                    name: "satellite";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "registry";
+                    isMut: true;
+                    isSigner: false;
+                }
+            ];
+            args: [
+                {
+                    name: "args";
+                    type: {
+                        defined: "SatelliteCloseArgs";
                     };
                 }
             ];
@@ -116,6 +149,24 @@ export type SatelliteMint = {
                     {
                         name: "satelliteCount";
                         type: "u64";
+                    }
+                ];
+            };
+        },
+        {
+            name: "satelliteOperator";
+            type: {
+                kind: "struct";
+                fields: [
+                    {
+                        name: "owner";
+                        type: "publicKey";
+                    },
+                    {
+                        name: "satellites";
+                        type: {
+                            vec: "u64";
+                        };
                     }
                 ];
             };
@@ -198,6 +249,18 @@ export type SatelliteMint = {
                     {
                         name: "authority";
                         type: "publicKey";
+                    }
+                ];
+            };
+        },
+        {
+            name: "SatelliteCloseArgs";
+            type: {
+                kind: "struct";
+                fields: [
+                    {
+                        name: "noradId";
+                        type: "u64";
                     }
                 ];
             };
@@ -304,6 +367,23 @@ export type SatelliteMint = {
             };
         }
     ];
+    events: [
+        {
+            name: "RegistryInitialized";
+            fields: [
+                {
+                    name: "authority";
+                    type: "publicKey";
+                    index: false;
+                },
+                {
+                    name: "satelliteCount";
+                    type: "u64";
+                    index: false;
+                }
+            ];
+        }
+    ];
     errors: [
         {
             code: 6000;
@@ -385,6 +465,11 @@ export const IDL: SatelliteMint = {
                     isSigner: false,
                 },
                 {
+                    name: "satelliteOperator",
+                    isMut: true,
+                    isSigner: false,
+                },
+                {
                     name: "registry",
                     isMut: true,
                     isSigner: false,
@@ -400,6 +485,34 @@ export const IDL: SatelliteMint = {
                     name: "args",
                     type: {
                         defined: "SatelliteMintArgs",
+                    },
+                },
+            ],
+        },
+        {
+            name: "closeSatellite",
+            accounts: [
+                {
+                    name: "authority",
+                    isMut: true,
+                    isSigner: true,
+                },
+                {
+                    name: "satellite",
+                    isMut: true,
+                    isSigner: false,
+                },
+                {
+                    name: "registry",
+                    isMut: true,
+                    isSigner: false,
+                },
+            ],
+            args: [
+                {
+                    name: "args",
+                    type: {
+                        defined: "SatelliteCloseArgs",
                     },
                 },
             ],
@@ -441,6 +554,24 @@ export const IDL: SatelliteMint = {
                     {
                         name: "satelliteCount",
                         type: "u64",
+                    },
+                ],
+            },
+        },
+        {
+            name: "satelliteOperator",
+            type: {
+                kind: "struct",
+                fields: [
+                    {
+                        name: "owner",
+                        type: "publicKey",
+                    },
+                    {
+                        name: "satellites",
+                        type: {
+                            vec: "u64",
+                        },
                     },
                 ],
             },
@@ -523,6 +654,18 @@ export const IDL: SatelliteMint = {
                     {
                         name: "authority",
                         type: "publicKey",
+                    },
+                ],
+            },
+        },
+        {
+            name: "SatelliteCloseArgs",
+            type: {
+                kind: "struct",
+                fields: [
+                    {
+                        name: "noradId",
+                        type: "u64",
                     },
                 ],
             },
@@ -627,6 +770,23 @@ export const IDL: SatelliteMint = {
                     },
                 ],
             },
+        },
+    ],
+    events: [
+        {
+            name: "RegistryInitialized",
+            fields: [
+                {
+                    name: "authority",
+                    type: "publicKey",
+                    index: false,
+                },
+                {
+                    name: "satelliteCount",
+                    type: "u64",
+                    index: false,
+                },
+            ],
         },
     ],
     errors: [

@@ -8,28 +8,35 @@ import AddIcon from "@mui/icons-material/Add";
 import AppSidebarNavNested from "../components/AppSidebarNavNested";
 
 const SatelliteOps: React.FC = () => (
-    <AppLayout sidebar={(
-        <List component="nav">
-            <AppSidebarNavButton
-                path="/app/satellite-ops"
-                icon={<SpaceDashboardIcon />}
-                text="Dashboard"
-            />
-            <AppSidebarNavButton
-                path="/app/satellite-ops/satellites"
-                icon={<SatelliteAltIcon />}
-                text="Fleet"
-            />
-            <AppSidebarNavNested showOnRoute="/app/satellite-ops/satellites/*">
+    <AppLayout
+        sidebar={
+            <List component="nav">
                 <AppSidebarNavButton
-                    path="/app/satellite-ops/satellites/register"
-                    icon={<AddIcon />}
-                    text="Register satellite"
-                    sx={{ paddingLeft: 4 }}
+                    path="/app/satellite-ops"
+                    icon={<SpaceDashboardIcon />}
+                    text="Dashboard"
                 />
-            </AppSidebarNavNested>
-        </List>
-    )}>
+                <AppSidebarNavButton
+                    path="/app/satellite-ops/satellites"
+                    icon={<SatelliteAltIcon />}
+                    text="Fleet"
+                />
+                <AppSidebarNavNested showOnRoute="/app/satellite-ops/satellites/*">
+                    <AppSidebarNavButton
+                        path="/app/satellite-ops/satellites/register"
+                        icon={<AddIcon />}
+                        text="Register satellite"
+                        sx={{ paddingLeft: 4 }}
+                    />
+                    <AppSidebarNavButton
+                        path="/app/satellite-ops/satellites/view-satellite"
+                        icon={<SatelliteAltIcon />}
+                        text="My satellites"
+                    />
+                </AppSidebarNavNested>
+            </List>
+        }
+    >
         <Outlet />
     </AppLayout>
 );

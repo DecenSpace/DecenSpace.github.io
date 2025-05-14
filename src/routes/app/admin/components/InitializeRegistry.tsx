@@ -85,7 +85,7 @@ const InitializeRegistry: React.FC = () => {
 
         console.log("tx: ", signature);
     };
-
+  
     return (
         <>
             <form onSubmit={handleSubmit}>

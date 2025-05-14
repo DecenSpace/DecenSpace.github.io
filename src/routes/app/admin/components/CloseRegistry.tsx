@@ -64,7 +64,6 @@ const CloseRegistry: React.FC = () => {
             blockhash,
             lastValidBlockHeight,
         });
-
         console.log("tx: ", signature);
     };
 

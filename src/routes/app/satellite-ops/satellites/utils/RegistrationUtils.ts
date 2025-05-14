@@ -1,3 +1,5 @@
+import { u64 } from "@metaplex-foundation/beet";
+
 export enum ManeuverTypes {
     StationKeeping = "StationKeeping",
     OrbitRaising = "OrbitRaising",
@@ -25,8 +27,12 @@ export enum OperationStatus {
     Offline = "Offline",
 }
 
-export const selectOperationStatus: Array<[value: OperationStatus, label: string]> = [
-    [OperationStatus.Active, "Active"],
-    [OperationStatus.Maintenance, "Maintenance"],
-    [OperationStatus.Offline, "Offline"],
-];
+export const selectOperationStatus: Array<
+    [value: OperationStatus, label: string]
+> = [
+        [OperationStatus.Active, "Active"],
+        [OperationStatus.Maintenance, "Maintenance"],
+        [OperationStatus.Offline, "Offline"],
+    ];
+
+
