@@ -1,10 +1,12 @@
 import { ImageryLayer, Viewer, ViewerProps } from "resium";
-import { Rectangle, SingleTileImageryProvider } from "cesium";
+import { Ion, Rectangle, SingleTileImageryProvider } from "cesium";
 import { useMemo } from "react";
 
 // Cesium docs said there were issues with import the styles like this but I couldn't find any.
 // Maybe just related to webpack or vite based setups.
 import "cesium/Build/Cesium/Widgets/widgets.css";
+
+Ion.defaultAccessToken = "";
 
 export interface IEarthViewerProps extends ViewerProps {
     satellites?: any[];
@@ -36,7 +38,20 @@ const EarthViewer: React.FC<IEarthViewerProps> = ({
     }
 
     return (
-        <Viewer style={viewerStyle} {...props}>
+        <Viewer
+            style={viewerStyle}
+            timeline={false}
+            animation={false}
+            navigationHelpButton={false}
+            homeButton={false}
+            sceneModePicker={false}
+            baseLayerPicker={false}
+            geocoder={false}
+            fullscreenButton={false}
+            infoBox={false}
+            selectionIndicator={false}
+            {...props}
+        >
             <ImageryLayer imageryProvider={imageryProvider} />
             {children}
         </Viewer>

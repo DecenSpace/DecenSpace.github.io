@@ -57,8 +57,7 @@ const buildOptions: BuildOptions = {
     format: "esm",
     define: {
         ...pickAsJsonFromEnv(["NODE_ENV"]),
-        CESIUM_BASE_URL: JSON.stringify(resiumPublicPath),
-        CESIUM_ION_TOKEN: JSON.stringify("")
+        CESIUM_BASE_URL: JSON.stringify(resiumPublicPath)
     },
     loader,
     plugins: [
