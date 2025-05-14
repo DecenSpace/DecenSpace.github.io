@@ -44,7 +44,7 @@ const RegisterSatellite: React.FC = () => {
                 inclination: formValues.inclination,
                 altitude: formValues.altitude,
                 maneuverType: { [formValues.maneuverType]: {} } as any,
-                operationStatus: { [formValues.maneuverType]: {} } as any
+                operationStatus: { [formValues.operationStatus]: {} } as any
             })
             .accounts({
                 authority: programAddresses.walletPubkey,
