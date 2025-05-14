@@ -24,6 +24,9 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { ClickAwayListener } from "@mui/material";
+import { ISatellite } from "./components/SatellitesViewer";
+import SatellitesViewer from "./components/SatellitesViewer";
+import { ManeuverTypes, OperationStatus } from "./utils/RegistrationUtils";
 
 const SatellitesTable = styled(Table)({
     "th:first-child, td:first-child": {
@@ -33,6 +36,20 @@ const SatellitesTable = styled(Table)({
         width: 56
     }
 });
+
+const satellite: ISatellite = {
+    owner: "Space Y",
+    name: "Space Y 69420",
+    country: "US",
+    noradId: "69420",
+    launchDate: new Date(),
+    mintDate: new Date(),
+    inclination: 55,
+    altitude: 35786000,
+    maneuverType: ManeuverTypes.InclinationChange,
+    operationStatus: OperationStatus.Active,
+    semiMajorAxis: 42164000
+};
 
 const Satellites: React.FC = () => {
 
@@ -88,8 +105,10 @@ const Satellites: React.FC = () => {
                         </CardActions>
                     </DashboardCard>
                 )}
-                <Paper sx={{ backgroundColor: "rgb(0, 0, 0)", gridColumn: { xs: "span 1", sm: "2 / -1" }, gridRow: "1 / -1", height: "100%" }}>
-                    {/* TODO: super cool 3d earth */}
+                <Paper sx={{ position: "relative", backgroundColor: "rgb(0, 0, 0)", gridColumn: { xs: "span 1", sm: "2 / -1" }, gridRow: "1 / -1", height: "100%" }}>
+                    <SatellitesViewer satellites={[
+                        satellite
+                    ]} />
                 </Paper>
             </AppContentGrid>
             <Paper variant="outlined" sx={{ marginTop: 3 }}>
