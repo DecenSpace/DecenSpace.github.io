@@ -29,38 +29,44 @@ const router = createBrowserRouter([
         ],
     },
     {
-        path: "/app/ground-station-ops",
-        Component: lazy(() => import("routes/app/ground-station-ops")),
-    },
-    {
-        path: "/app/satellite-ops",
-        Component: lazy(() => import("routes/app/satellite-ops")),
+        path: "/app",
+        Component: lazy(() => import("routes/app")),
         children: [
             {
-                index: true,
-                Component: lazy(() => import("routes/app/satellite-ops/home")),
+                path: "/app/ground-station-ops",
+                Component: lazy(() => import("routes/app/ground-station-ops")),
             },
             {
-                path: "/app/satellite-ops/satellites",
-                Component: lazy(() => import("routes/app/satellite-ops/satellites")),
+                path: "/app/satellite-ops",
+                Component: lazy(() => import("routes/app/satellite-ops")),
+                children: [
+                    {
+                        index: true,
+                        Component: lazy(() => import("routes/app/satellite-ops/home")),
+                    },
+                    {
+                        path: "/app/satellite-ops/satellites",
+                        Component: lazy(() => import("routes/app/satellite-ops/satellites")),
+                    },
+                    {
+                        // Only semantically a nested route
+                        path: "/app/satellite-ops/satellites/register",
+                        Component: lazy(
+                            () => import("routes/app/satellite-ops/satellites/register")
+                        ),
+                    },
+                    {
+                        // will probably remove this later
+                        path: "/app/satellite-ops/satellites/view-satellite",
+                        Component: lazy(() => import("routes/app/satellite-ops/satellites/my-satellites"))
+                    },
+                ],
             },
             {
-                // Only semantically a nested route
-                path: "/app/satellite-ops/satellites/register",
-                Component: lazy(
-                    () => import("routes/app/satellite-ops/satellites/register")
-                ),
+                path: "/app/admin",
+                Component: lazy(() => import("routes/app/admin")),
             },
-            {
-                // will probably remove this later
-                path: "/app/satellite-ops/satellites/view-satellite",
-                Component: lazy(() => import("routes/app/satellite-ops/satellites/my-satellites"))
-            }
         ],
-    },
-    {
-        path: "/app/admin",
-        Component: lazy(() => import("routes/app/admin")),
     },
     {
         path: "/theme-test",
