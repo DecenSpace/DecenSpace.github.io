@@ -29,12 +29,12 @@ function createEciPosition(
     argOfPeriapsis: number
 ): Cartesian3 {
 
-    const ν = CesiumMath.toRadians(angleDeg);
+    const angleAsRadians = CesiumMath.toRadians(angleDeg);
     const a = semiMajorAxis;
     const e = eccentricity;
-    const r = (a * (1 - e * e)) / (1 + e * Math.cos(ν));
-    const xOrb = r * Math.cos(ν);
-    const yOrb = r * Math.sin(ν);
+    const r = (a * (1 - e * e)) / (1 + e * Math.cos(angleAsRadians));
+    const xOrb = r * Math.cos(angleAsRadians);
+    const yOrb = r * Math.sin(angleAsRadians);
     const zOrb = 0;
     const perifocal = new Cartesian3(xOrb, yOrb, zOrb);
 
@@ -42,13 +42,13 @@ function createEciPosition(
     const Ω = CesiumMath.toRadians(raan);
     const ω = CesiumMath.toRadians(argOfPeriapsis);
 
-    const Rz_RAAN = Matrix3.fromRotationZ(Ω, new Matrix3());
-    const Rx_Inc = Matrix3.fromRotationX(i, new Matrix3());
-    const Rz_ArgPeriapsis = Matrix3.fromRotationZ(ω, new Matrix3());
+    const rotationZRaan = Matrix3.fromRotationZ(Ω, new Matrix3());
+    const rotationXInclination = Matrix3.fromRotationX(i, new Matrix3());
+    const rotationXArgPeriapsis = Matrix3.fromRotationZ(ω, new Matrix3());
 
     const rotation = Matrix3.multiply(
-        Rz_RAAN,
-        Matrix3.multiply(Rx_Inc, Rz_ArgPeriapsis, new Matrix3()),
+        rotationZRaan,
+        Matrix3.multiply(rotationXInclination, rotationXArgPeriapsis, new Matrix3()),
         new Matrix3()
     );
 
@@ -114,7 +114,6 @@ const SatellitesViewer: React.FC<ISatellitesViewerProps> = ({
     satellites,
     selectedSatelliteId,
     fullWidthAndHeight = true,
-    style,
     ...props
 }) => {
 
