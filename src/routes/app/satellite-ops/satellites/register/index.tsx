@@ -15,9 +15,6 @@ const RegisterSatellite: React.FC = () => {
 
     const handleSubmit = async (formValues: ISatelliteFormValues) => {
 
-        // TODO: remove log
-        console.log("Form values", formValues);
-
         if (!programAddresses || !walletContext.wallet) return;
 
         // build tx instruction

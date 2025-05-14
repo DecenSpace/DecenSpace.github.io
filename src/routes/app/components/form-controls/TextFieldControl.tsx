@@ -21,8 +21,6 @@ function TextFieldControl<TFieldValues extends FieldValues>({ controller, ...pro
 
         } else if (props.type === "date") {
 
-            console.log("Date value", value);
-
             const parsedValue = value === "" ? undefined : new Date(value);
             field.onChange(parsedValue);
 
