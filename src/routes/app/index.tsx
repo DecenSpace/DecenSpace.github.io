@@ -3,7 +3,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, SystemProgram } from "@solana/web3.js";
 import useAnchorProvider from "components/SolanaProvider";
 import { getSatelliteProgram, SatelliteMint } from "program/program-exports";
-import { REGISTRY_SEEDS, SATELLITE_SEEDS } from "program/utils/Seeds";
+import { REGISTRY_SEEDS, SATELLITE_OPERATOR_SEEDS } from "program/utils/Seeds";
 import { createContext, useContext, useMemo } from "react";
 import { Outlet } from "react-router-dom";
 import adminPubkey from "./admin/utils/adminPubkey";
@@ -37,22 +37,18 @@ export function useProgramAddresses() {
     }
 
     const [registryPda] = PublicKey.findProgramAddressSync(
-        [REGISTRY_SEEDS, wallet.publicKey.toBuffer()],
+        [REGISTRY_SEEDS, adminPubkey.toBuffer()],
         satelliteProgram.programId
     );
 
-    const [satellitePda] = PublicKey.findProgramAddressSync(
-        [
-            SATELLITE_SEEDS,
-            wallet.publicKey.toBuffer(),
-            adminPubkey.toBuffer(),
-        ],
+    const [satelliteOperatorPda] = PublicKey.findProgramAddressSync(
+        [SATELLITE_OPERATOR_SEEDS, wallet.publicKey.toBuffer()],
         satelliteProgram.programId
     );
 
     return {
         registryPda,
-        satellitePda,
+        satelliteOperatorPda,
         systemPda: SystemProgram.programId,
         walletPubkey: wallet.publicKey
     };

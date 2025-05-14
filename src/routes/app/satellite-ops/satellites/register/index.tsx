@@ -3,8 +3,10 @@ import Typography from "@mui/material/Typography";
 import SatelliteRegistrationForm, { ISatelliteFormValues } from "../components/SatelliteRegistrationForm";
 import { useProgramAddresses, useSatelliteProgram } from "routes/app";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { Transaction } from "@solana/web3.js";
+import { PublicKey, Transaction } from "@solana/web3.js";
 import { BN } from "bn.js";
+import { SATELLITE_SEEDS } from "program/utils/Seeds";
+import adminPubkey from "routes/app/admin/utils/adminPubkey";
 
 const RegisterSatellite: React.FC = () => {
 
@@ -15,7 +17,20 @@ const RegisterSatellite: React.FC = () => {
 
     const handleSubmit = async (formValues: ISatelliteFormValues) => {
 
-        if (!programAddresses || !walletContext.wallet) return;
+        if (!programAddresses || !walletContext.wallet || !walletContext.publicKey) return;
+
+        const noradId = new BN(formValues.noradId);
+
+        // get satellite pda
+        const [satellitePda] = PublicKey.findProgramAddressSync(
+            [
+                SATELLITE_SEEDS,
+                walletContext.publicKey.toBuffer(),
+                adminPubkey.toBuffer(),
+                noradId.toArrayLike(Buffer, "le", 8),
+            ],
+            satellitesProgram.programId
+        );
 
         // build tx instruction
         const txInstruction = await satellitesProgram.methods
@@ -24,17 +39,18 @@ const RegisterSatellite: React.FC = () => {
                 name: formValues.name,
                 orbitType: "",
                 country: formValues.country,
-                noradId: new BN(formValues.noradId),
+                noradId,
                 launchDate: new BN(formValues.launchDate.getTime()),
                 inclination: formValues.inclination,
                 altitude: formValues.altitude,
                 maneuverType: { [formValues.maneuverType]: {} } as any,
-                operationStatus:  { [formValues.maneuverType]: {} } as any
+                operationStatus: { [formValues.maneuverType]: {} } as any
             })
             .accounts({
                 authority: programAddresses.walletPubkey,
                 registry: programAddresses.registryPda,
-                satellite: programAddresses.satellitePda,
+                satellite: satellitePda,
+                satelliteOperator: programAddresses.satelliteOperatorPda,
                 systemProgram: programAddresses.systemPda,
             })
             .instruction();
