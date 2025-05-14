@@ -17,6 +17,9 @@ const Home: React.FC = () => (
                 Democratizing space communications
             </Typography>
             <Box marginRight={{ xs: 0, sm: 6 }}>
+                <Typography variant="h4" marginBottom={3} color="warning">
+                    Demo application
+                </Typography>
                 <Typography variant="h4">
                     Bringing satellite companies and ground station operators together using DePIN technology.
                     Our vision is to provide a protocol for a sustainable and accelerating marketplace for the space industry, where all parties benefit from commitment, long term participation and growth.
