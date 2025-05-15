@@ -10,6 +10,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { profiles } from "utils/profiles";
 import { useNavigate } from "react-router";
+import { useShowSnackbar } from "./SnackbarProvider";
 
 const WalletControl: React.FC<BoxProps & { onDisconnect?: () => void }> = ({ onDisconnect, ...props }) => {
 
@@ -19,6 +20,8 @@ const WalletControl: React.FC<BoxProps & { onDisconnect?: () => void }> = ({ onD
     const [menuAnchorElement, setMenuAnchorElement] = useState<HTMLElement | null>(null);
 
     const navigate = useNavigate();
+
+    const showSnackbar = useShowSnackbar();
 
     const onButtonClick = (e: React.MouseEvent) => {
 
@@ -34,8 +37,7 @@ const WalletControl: React.FC<BoxProps & { onDisconnect?: () => void }> = ({ onD
 
         if (publicKey) {
             disconnect().then(() => {
-                // TODO: show snackbar
-
+                showSnackbar("Wallet disconnected", "info", 2000);
                 onDisconnect?.();
             });
         }

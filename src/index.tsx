@@ -14,6 +14,7 @@ import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
 import WalletAutoConnect from "components/WalletAutoConnect";
 import router from "router";
 import ReactQueryProvider from "providers/ReactQueryProvider";
+import SnackbarProvider from "components/SnackbarProvider";
 
 const App: React.FC = () => {
     const network = WalletAdapterNetwork.Devnet;
@@ -30,9 +31,11 @@ const App: React.FC = () => {
                     <ConnectionProvider endpoint={endpoint}>
                         <WalletProvider wallets={wallets}>
                             <WalletModalProvider>
-                                <RouterProvider router={router} />
+                                <SnackbarProvider>
+                                    <RouterProvider router={router} />
+                                    <WalletAutoConnect />
+                                </SnackbarProvider>
                             </WalletModalProvider>
-                            <WalletAutoConnect />
                         </WalletProvider>
                     </ConnectionProvider>
                 </ThemeProvider>
