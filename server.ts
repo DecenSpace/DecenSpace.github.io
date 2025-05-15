@@ -1,4 +1,3 @@
-// simple static file server that serves files from the dist directory. Non /assets requests will send the index.html file
 import express from "express";
 import path from "path";
 
