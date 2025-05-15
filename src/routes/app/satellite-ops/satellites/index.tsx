@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import AppContentGrid from "routes/app/components/AppContentGrid";
 import DashboardCard from "routes/app/components/DashboardCard";
 import DashboardCardButton from "routes/app/components/DashboardCardButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TableDemoData, tableDemoData } from "./utils/tableDemoData";
 import SatelliteTableRow from "./components/SatelliteTableRow";
 import Menu from "@mui/material/Menu";
@@ -24,17 +24,24 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { ClickAwayListener } from "@mui/material";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useSatelliteProgram } from "program/program-data-access";
+import BN from "bn.js";
+import { getSatelliteOwnerData } from "program/accounts/satelliteOwner";
+import { SatelliteDataValues } from "./utils/satelliteDataValues";
+import SatelliteDataBoard from "./components/SatelliteDataBoard";
 import { ISatellite } from "./components/SatellitesViewer";
 import SatellitesViewer from "./components/SatellitesViewer";
 import { ManeuverTypes, OperationStatus } from "./utils/RegistrationUtils";
 
+
 const SatellitesTable = styled(Table)({
     "th:first-child, td:first-child": {
-        width: 56
+        width: 56,
     },
     "th:last-child, td:last-child": {
-        width: 56
-    }
+        width: 56,
+    },
 });
 
 const satellite: ISatellite = {
@@ -52,23 +59,41 @@ const satellite: ISatellite = {
 };
 
 const Satellites: React.FC = () => {
-
     const [tablePageSize, setTablePageSize] = useState(10);
-
     const tableData = tableDemoData.slice(0, tablePageSize);
+    const [satelliteNoradId, setSatelliteNoradId] = useState<BN[]>([]);
+    const [selectedItem, setSelectedItem] =
+        useState<SatelliteDataValues | null>(null);
+    const [selectedMenuItem, setSelectedMenuItem] = useState<
+        [id: number, element: HTMLElement] | null
+    >(null);
+    const wallet = useWallet();
+    const { program } = useSatelliteProgram();
 
-    const [selectedItem, setSelectedItem] = useState<TableDemoData | null>(null);
-    const [selectedMenuItem, setSelectedMenuItem] = useState<[id: string, element: HTMLElement] | null>(null);
-
-    const onTableItemClick = (item: TableDemoData) => {
+    const onTableItemClick = (item: SatelliteDataValues) => {
         setSelectedItem(item);
     };
 
-    const onTableItemMenuClick = (item: TableDemoData, element: HTMLElement) => {
-
-        setSelectedMenuItem([item.id, element]);
+    const onTableItemMenuClick = (
+        item: SatelliteDataValues,
+        element: HTMLElement
+    ) => {
+        setSelectedMenuItem([item.noradId.toNumber(), element]);
         setSelectedItem(item);
     };
+
+    useEffect(() => {
+        const storeSatelliteNoradId = async () => {
+            const { satellites } = await getSatelliteOwnerData(
+                wallet.publicKey!,
+                program
+            );
+
+            setSatelliteNoradId(satellites.map((id) => new BN(id)));
+        };
+
+        storeSatelliteNoradId();
+    }, [program.programId, wallet.publicKey]);
 
     return (
         <>
@@ -76,22 +101,8 @@ const Satellites: React.FC = () => {
                 Fleet
             </Typography>
             <AppContentGrid sx={{ gridAutoRows: "400px" }}>
-                {selectedItem ? (
-                    <DashboardCard variant="outlined">
-                        <CardHeader title={selectedItem.name} subheader="Selected satellite" />
-                        {/* <CardContent>
-                            <Typography variant="body2">Name: {selectedItem.name}</Typography>
-                            <Typography variant="body2">Date added: {selectedItem.added}</Typography>
-                        </CardContent> */}
-                        <List dense disablePadding>
-                            <ListItem>
-                                <ListItemText primary="Name" secondary={selectedItem.name} />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemText primary="Added" secondary={selectedItem.added} />
-                            </ListItem>
-                        </List>
-                    </DashboardCard>
+                {selectedItem?.noradId ? (
+                    <SatelliteDataBoard noradId={selectedItem.noradId} />
                 ) : (
                     <DashboardCard>
                         <CardHeader title="Fleet" subheader="0/0 active" />
@@ -99,12 +110,16 @@ const Satellites: React.FC = () => {
                             {/* TODO: contribution-type graph */}
                         </CardContent>
                         <CardActions>
-                            <DashboardCardButton component={Link} to="/app/satellite-ops/register-satellite">
+                            <DashboardCardButton
+                                component={Link}
+                                to="/app/satellite-ops/register-satellite"
+                            >
                                 Register
                             </DashboardCardButton>
                         </CardActions>
                     </DashboardCard>
                 )}
+
                 <Paper sx={{ position: "relative", backgroundColor: "rgb(0, 0, 0)", gridColumn: { xs: "span 1", sm: "2 / -1" }, gridRow: "1 / -1", height: "100%" }}>
                     <SatellitesViewer satellites={[
                         satellite
@@ -125,11 +140,10 @@ const Satellites: React.FC = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {tableData.map(data => (
+                                {satelliteNoradId.map((id, index) => (
                                     <SatelliteTableRow
-                                        key={data.id}
-                                        data={data}
-                                        selected={selectedItem === data}
+                                        key={index}
+                                        noradId={id}
                                         onSelect={onTableItemClick}
                                         onMenuClick={onTableItemMenuClick}
                                     />
@@ -146,7 +160,9 @@ const Satellites: React.FC = () => {
                     rowsPerPage={tablePageSize}
                     page={0}
                     onPageChange={() => { }}
-                    onRowsPerPageChange={r => setTablePageSize(+r.target.value)}
+                    onRowsPerPageChange={(r) =>
+                        setTablePageSize(+r.target.value)
+                    }
                 />
                 <Menu
                     open={!!selectedMenuItem}
