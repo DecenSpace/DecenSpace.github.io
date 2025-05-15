@@ -70,14 +70,26 @@ const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId }) => {
                     <List dense disablePadding>
                         <ListItem>
                             <ListItemText
-                                primary="Name"
-                                secondary={satelliteData?.name}
+                                primary="NORAD ID"
+                                secondary={satelliteData?.noradId.toNumber()}
                             />
                         </ListItem>
                         <ListItem>
                             <ListItemText
-                                primary="Added"
-                                secondary={satelliteData?.launchDate.toNumber()}
+                                primary="Inclination"
+                                secondary={satelliteData?.inclination}
+                            />
+                        </ListItem>
+                        <ListItem>
+                            <ListItemText
+                                primary="Altitude"
+                                secondary={satelliteData?.altitude}
+                            />
+                        </ListItem>
+                        <ListItem>
+                            <ListItemText
+                                primary="Semi-Major axis"
+                                secondary={satelliteData?.semiMajorAxis}
                             />
                         </ListItem>
                     </List>

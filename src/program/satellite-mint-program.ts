@@ -218,6 +218,22 @@ export type SatelliteMint = {
                         type: "f64";
                     },
                     {
+                        name: "semiMajorAxis";
+                        type: "f64";
+                    },
+                    {
+                        name: "eccentricity";
+                        type: "f64";
+                    },
+                    {
+                        name: "raan";
+                        type: "f64";
+                    },
+                    {
+                        name: "argOfPeriapsis";
+                        type: "f64";
+                    },
+                    {
                         name: "maneuverType";
                         type: {
                             defined: "ManeuverType";
@@ -305,6 +321,22 @@ export type SatelliteMint = {
                     },
                     {
                         name: "altitude";
+                        type: "f64";
+                    },
+                    {
+                        name: "semiMajorAxis";
+                        type: "f64";
+                    },
+                    {
+                        name: "eccentricity";
+                        type: "f64";
+                    },
+                    {
+                        name: "raan";
+                        type: "f64";
+                    },
+                    {
+                        name: "argOfPeriapsis";
                         type: "f64";
                     },
                     {
@@ -633,6 +665,22 @@ export const IDL: SatelliteMint = {
                         type: "f64",
                     },
                     {
+                        name: "semiMajorAxis",
+                        type: "f64",
+                    },
+                    {
+                        name: "eccentricity",
+                        type: "f64",
+                    },
+                    {
+                        name: "raan",
+                        type: "f64",
+                    },
+                    {
+                        name: "argOfPeriapsis",
+                        type: "f64",
+                    },
+                    {
                         name: "maneuverType",
                         type: {
                             defined: "ManeuverType",
@@ -720,6 +768,22 @@ export const IDL: SatelliteMint = {
                     },
                     {
                         name: "altitude",
+                        type: "f64",
+                    },
+                    {
+                        name: "semiMajorAxis",
+                        type: "f64",
+                    },
+                    {
+                        name: "eccentricity",
+                        type: "f64",
+                    },
+                    {
+                        name: "raan",
+                        type: "f64",
+                    },
+                    {
+                        name: "argOfPeriapsis",
                         type: "f64",
                     },
                     {

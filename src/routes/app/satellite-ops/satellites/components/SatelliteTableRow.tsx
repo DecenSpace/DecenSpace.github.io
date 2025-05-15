@@ -12,12 +12,14 @@ import { SatelliteDataValues } from "../utils/satelliteDataValues";
 
 interface ISatelliteTableRowProps {
     noradId: BN;
+    selected: boolean;
     onSelect: (item: SatelliteDataValues) => void;
     onMenuClick: (item: SatelliteDataValues, element: HTMLElement) => void;
 }
 
 const SatelliteTableRow: React.FC<ISatelliteTableRowProps> = ({
     noradId,
+    selected,
     onSelect,
     onMenuClick,
 }) => {
@@ -39,7 +41,11 @@ const SatelliteTableRow: React.FC<ISatelliteTableRowProps> = ({
     }, [program.programId, wallet.publicKey]);
 
     return (
-        <TableRow hover onClick={(e) => onSelect(satelliteData!)}>
+        <TableRow
+            hover
+            selected={selected}
+            onClick={(e) => onSelect(satelliteData!)}
+        >
             {satelliteData && (
                 <>
                     <TableCell>
@@ -47,7 +53,11 @@ const SatelliteTableRow: React.FC<ISatelliteTableRowProps> = ({
                     </TableCell>
                     <TableCell>{satelliteData?.name}</TableCell>
                     <TableCell>{satelliteData?.country}</TableCell>
-                    <TableCell>{satelliteData?.altitude}</TableCell>
+                    <TableCell>
+                        {new Date(
+                            satelliteData.launchDate.toNumber()
+                        ).toLocaleDateString()}
+                    </TableCell>
                     <TableCell>
                         <IconButton
                             size="small"

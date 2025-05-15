@@ -34,7 +34,6 @@ import { ISatellite } from "./components/SatellitesViewer";
 import SatellitesViewer from "./components/SatellitesViewer";
 import { ManeuverTypes, OperationStatus } from "./utils/RegistrationUtils";
 
-
 const SatellitesTable = styled(Table)({
     "th:first-child, td:first-child": {
         width: 56,
@@ -55,13 +54,13 @@ const satellite: ISatellite = {
     altitude: 35786000,
     maneuverType: ManeuverTypes.InclinationChange,
     operationStatus: OperationStatus.Active,
-    semiMajorAxis: 42164000
+    semiMajorAxis: 42164000,
 };
 
 const Satellites: React.FC = () => {
     const [tablePageSize, setTablePageSize] = useState(10);
     const tableData = tableDemoData.slice(0, tablePageSize);
-    const [satelliteNoradId, setSatelliteNoradId] = useState<BN[]>([]);
+    const [satelliteNoradIds, setSatelliteNoradIds] = useState<BN[]>([]);
     const [selectedItem, setSelectedItem] =
         useState<SatelliteDataValues | null>(null);
     const [selectedMenuItem, setSelectedMenuItem] = useState<
@@ -89,7 +88,7 @@ const Satellites: React.FC = () => {
                 program
             );
 
-            setSatelliteNoradId(satellites.map((id) => new BN(id)));
+            setSatelliteNoradIds(satellites.map((id) => new BN(id)));
         };
 
         storeSatelliteNoradId();
@@ -120,10 +119,16 @@ const Satellites: React.FC = () => {
                     </DashboardCard>
                 )}
 
-                <Paper sx={{ position: "relative", backgroundColor: "rgb(0, 0, 0)", gridColumn: { xs: "span 1", sm: "2 / -1" }, gridRow: "1 / -1", height: "100%" }}>
-                    <SatellitesViewer satellites={[
-                        satellite
-                    ]} />
+                <Paper
+                    sx={{
+                        position: "relative",
+                        backgroundColor: "rgb(0, 0, 0)",
+                        gridColumn: { xs: "span 1", sm: "2 / -1" },
+                        gridRow: "1 / -1",
+                        height: "100%",
+                    }}
+                >
+                    <SatellitesViewer satellites={[satellite]} />
                 </Paper>
             </AppContentGrid>
             <Paper variant="outlined" sx={{ marginTop: 3 }}>
@@ -134,15 +139,20 @@ const Satellites: React.FC = () => {
                                 <TableRow>
                                     <TableCell />
                                     <TableCell>Name</TableCell>
-                                    <TableCell>Transmissions</TableCell>
+                                    <TableCell>Country</TableCell>
                                     <TableCell>Added</TableCell>
                                     <TableCell></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {satelliteNoradId.map((id, index) => (
+                                {satelliteNoradIds.map((id, index) => (
                                     <SatelliteTableRow
                                         key={index}
+                                        selected={
+                                            !!selectedItem &&
+                                            id &&
+                                            selectedItem.noradId.eq(id)
+                                        }
                                         noradId={id}
                                         onSelect={onTableItemClick}
                                         onMenuClick={onTableItemMenuClick}
@@ -159,7 +169,7 @@ const Satellites: React.FC = () => {
                     count={tableDemoData.length}
                     rowsPerPage={tablePageSize}
                     page={0}
-                    onPageChange={() => { }}
+                    onPageChange={() => {}}
                     onRowsPerPageChange={(r) =>
                         setTablePageSize(+r.target.value)
                     }
