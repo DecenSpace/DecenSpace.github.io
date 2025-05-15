@@ -34,5 +34,3 @@ export const selectOperationStatus: Array<
         [OperationStatus.Maintenance, "Maintenance"],
         [OperationStatus.Offline, "Offline"],
     ];
-
-
