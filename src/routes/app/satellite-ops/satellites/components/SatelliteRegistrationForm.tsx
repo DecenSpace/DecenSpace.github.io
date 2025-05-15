@@ -113,7 +113,7 @@ const SatelliteRegistrationForm: React.FC = () => {
             ManeuverType[formValues.maneuverType as keyof typeof ManeuverType],
         operationStatus:
             OperationStatus[
-            formValues.operationStatus as keyof typeof OperationStatus
+                formValues.operationStatus as keyof typeof OperationStatus
             ],
     };
 

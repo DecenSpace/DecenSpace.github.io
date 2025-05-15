@@ -101,6 +101,11 @@ export type SatelliteMint = {
                     name: "registry";
                     isMut: true;
                     isSigner: false;
+                },
+                {
+                    name: "satelliteOperator";
+                    isMut: true;
+                    isSigner: false;
                 }
             ];
             args: [
@@ -399,6 +404,11 @@ export type SatelliteMint = {
             code: 6002;
             name: "MathOverflow";
             msg: "math overflow";
+        },
+        {
+            code: 6003;
+            name: "IndexNotFound";
+            msg: "norad id not found";
         }
     ];
 };
@@ -504,6 +514,11 @@ export const IDL: SatelliteMint = {
                 },
                 {
                     name: "registry",
+                    isMut: true,
+                    isSigner: false,
+                },
+                {
+                    name: "satelliteOperator",
                     isMut: true,
                     isSigner: false,
                 },
@@ -804,6 +819,11 @@ export const IDL: SatelliteMint = {
             code: 6002,
             name: "MathOverflow",
             msg: "math overflow",
+        },
+        {
+            code: 6003,
+            name: "IndexNotFound",
+            msg: "norad id not found",
         },
     ],
 };

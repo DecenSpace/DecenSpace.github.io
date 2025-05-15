@@ -1,5 +1,6 @@
 import { Program } from "@coral-xyz/anchor";
 import { PublicKey } from "@solana/web3.js";
+import { getSatelliteOperatorPda } from "program/pda/satelliteOperator";
 import { SatelliteMint } from "program/satellite-mint-program";
 import { SATELLITE_OPERATOR_SEEDS } from "program/utils/Seeds";
 
@@ -9,10 +10,9 @@ export async function getSatelliteOwnerData(
     satelliteOperatorPubkey: PublicKey,
     program: Program<SatelliteMint>
 ) {
-    // get satellite owner account pda
-    let [satelliteOperatorPda] = PublicKey.findProgramAddressSync(
-        [SATELLITE_OPERATOR_SEEDS, satelliteOperatorPubkey!.toBuffer()],
-        program.programId
+    const satelliteOperatorPda = await getSatelliteOperatorPda(
+        program,
+        satelliteOperatorPubkey
     );
 
     const { satellites, owner } = await program.account.satelliteOperator.fetch(

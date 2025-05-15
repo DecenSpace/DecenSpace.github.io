@@ -40,23 +40,27 @@ const SatelliteTableRow: React.FC<ISatelliteTableRowProps> = ({
 
     return (
         <TableRow hover onClick={(e) => onSelect(satelliteData!)}>
-            <TableCell>
-                <Box bgcolor="success.main" width="1em" height="1em" />
-            </TableCell>
-            <TableCell>{satelliteData?.name}</TableCell>
-            <TableCell>{satelliteData?.country}</TableCell>
-            <TableCell>{satelliteData?.altitude}</TableCell>
-            <TableCell>
-                <IconButton
-                    size="small"
-                    onClick={(e) => {
-                        onMenuClick(satelliteData!, e.currentTarget);
-                        e.stopPropagation();
-                    }}
-                >
-                    <MoreHorizIcon />
-                </IconButton>
-            </TableCell>
+            {satelliteData && (
+                <>
+                    <TableCell>
+                        <Box bgcolor="success.main" width="1em" height="1em" />
+                    </TableCell>
+                    <TableCell>{satelliteData?.name}</TableCell>
+                    <TableCell>{satelliteData?.country}</TableCell>
+                    <TableCell>{satelliteData?.altitude}</TableCell>
+                    <TableCell>
+                        <IconButton
+                            size="small"
+                            onClick={(e) => {
+                                onMenuClick(satelliteData!, e.currentTarget);
+                                e.stopPropagation();
+                            }}
+                        >
+                            <MoreHorizIcon />
+                        </IconButton>
+                    </TableCell>
+                </>
+            )}
         </TableRow>
     );
 };
