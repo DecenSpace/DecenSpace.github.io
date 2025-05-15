@@ -12,7 +12,9 @@ const analyze = argv.includes("--analyze");
 const sourcedir = "src";
 const outdir = "dist";
 const htmlFileName = "index.html";
-const spaRouting = false;
+
+const resiumPublicPath = "/assets/cesium";
+const spaRouting = true;
 
 const entryPoints = [`${sourcedir}/index.tsx`, `${sourcedir}/index.css`];
 
@@ -54,7 +56,10 @@ const buildOptions: BuildOptions = {
     metafile: true,
     target: "es2020",
     format: "esm",
-    define: pickAsJsonFromEnv(["NODE_ENV"]),
+    define: {
+        ...pickAsJsonFromEnv(["NODE_ENV"]),
+        CESIUM_BASE_URL: JSON.stringify(resiumPublicPath)
+    },
     loader,
     plugins: [
         htmlPlugin({
@@ -78,6 +83,8 @@ const buildOptions: BuildOptions = {
     }
 
     await cp(`${sourcedir}/assets`, `${outdir}/assets`, { recursive: true });
+    await cp("node_modules/cesium/Build/Cesium", outdir + resiumPublicPath, { recursive: true });
+    await cp(`${sourcedir}/404.html`, `${outdir}/404.html`);
 
     if (serveDev) {
         const context = await esbuild.context(buildOptions);
@@ -93,7 +100,7 @@ const buildOptions: BuildOptions = {
         await context.watch();
         const { port } = await context.serve({
             servedir: outdir,
-            port: 8080,
+            port: 3000,
             fallback: spaRouting ? `${outdir}/${htmlFileName}` : undefined,
         });
 

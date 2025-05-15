@@ -1,11 +1,9 @@
 import { lazy } from "react";
-import { createHashRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import Start from "routes/start";
 import StartLayout from "routes/start/StartLayout";
 
-// can't have real SPA routing on GH pages.
-// Will use createBrowserRouter if we have an Nginx server
-const router = createHashRouter([
+const router = createBrowserRouter([
     {
         path: "/",
         // In this place could later be a smart redirect, that checks if a wallet is connected.
@@ -31,54 +29,65 @@ const router = createHashRouter([
         ],
     },
     {
-        path: "/app/ground-station-ops",
-        Component: lazy(() => import("routes/app/ground-station-ops")),
+
+        path: "/app",
+        Component: lazy(() => import("routes/app")),
         children: [
             {
-                index: true,
-                Component: lazy(() => import("routes/app/ground-station-ops/home")),
+                path: "/app/ground-station-ops",
+                Component: lazy(() => import("routes/app/ground-station-ops")),
+                children: [
+                    {
+                        index: true,
+                        Component: lazy(() => import("routes/app/ground-station-ops/home")),
+                    },
+                    {
+                        path: "/app/ground-station-ops/stations",
+                        Component: lazy(() => import("routes/app/ground-station-ops/stations")),
+                    },
+                    {
+                        // Only semantically a nested route
+                        path: "/app/ground-station-ops/stations/register",
+                        Component: lazy(
+                            () => import("routes/app/ground-station-ops/stations/register")
+                        ),
+                    },
+                ]
             },
             {
-                path: "/app/ground-station-ops/stations",
-                Component: lazy(() => import("routes/app/ground-station-ops/stations")),
+                path: "/app/satellite-ops",
+                Component: lazy(() => import("routes/app/satellite-ops")),
+                children: [
+                    {
+                        index: true,
+                        Component: lazy(() => import("routes/app/satellite-ops/home")),
+                    },
+                    {
+                        path: "/app/satellite-ops/satellites",
+                        Component: lazy(() => import("routes/app/satellite-ops/satellites")),
+                    },
+                    {
+                        // Only semantically a nested route
+                        path: "/app/satellite-ops/satellites/register",
+                        Component: lazy(
+                            () => import("routes/app/satellite-ops/satellites/register")
+                        ),
+                    },
+                ],
             },
             {
-                // Only semantically a nested route
-                path: "/app/ground-station-ops/stations/register",
-                Component: lazy(
-                    () => import("routes/app/ground-station-ops/stations/register")
-                ),
-            },
-        ]
-    },
-    {
-        path: "/app/satellite-ops",
-        Component: lazy(() => import("routes/app/satellite-ops")),
-        children: [
-            {
-                index: true,
-                Component: lazy(() => import("routes/app/satellite-ops/home")),
-            },
-            {
-                path: "/app/satellite-ops/satellites",
-                Component: lazy(() => import("routes/app/satellite-ops/satellites")),
-            },
-            {
-                // Only semantically a nested route
-                path: "/app/satellite-ops/satellites/register",
-                Component: lazy(
-                    () => import("routes/app/satellite-ops/satellites/register")
-                ),
+                path: "/app/admin",
+                Component: lazy(() => import("routes/app/admin")),
             },
         ],
     },
     {
-        path: "/app/admin",
-        Component: lazy(() => import("routes/app/admin")),
-    },
-    {
         path: "/theme-test",
         Component: lazy(() => import("routes/theme-test")),
+    },
+    {
+        path: "*",
+        element: <Navigate to="/start" replace />,
     },
 ]);
 
