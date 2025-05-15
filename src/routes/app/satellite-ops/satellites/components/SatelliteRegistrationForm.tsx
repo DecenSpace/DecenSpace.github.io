@@ -1,337 +1,182 @@
-import React, { useEffect, useState } from "react";
-import Grid from "@mui/material/Grid";
+import type React from "react";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
-import {
-    selectManeuverTypes,
-    selectOperationStatus,
-} from "../utils/RegistrationUtils";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs, { Dayjs } from "dayjs";
-import { BN } from "bn.js";
-import { useSatelliteProgram } from "program/program-data-access";
-import { useWallet } from "@solana/wallet-adapter-react";
-import {
-    clusterApiUrl,
-    Connection,
-    Keypair,
-    PublicKey,
-    sendAndConfirmTransaction,
-    SystemProgram,
-    Transaction,
-} from "@solana/web3.js";
-import {
-    REGISTRY_SEEDS,
-    SATELLITE_OPERATOR_SEEDS,
-    SATELLITE_SEEDS,
-} from "program/utils/Seeds";
-import adminPubkey from "routes/app/admin/utils/adminPubkey";
+import { useForm } from "react-hook-form";
+import AppContentGrid from "routes/app/components/AppContentGrid";
+import Box from "@mui/material/Box";
+import TextFieldControl from "routes/app/components/form-controls/TextFieldControl";
+import Stack from "@mui/material/Stack";
+import SelectControl from "routes/app/components/form-controls/SelectControl";
+import countries from "utils/countries";
 
-// should be read in a better way. (preferrably from the registry account)
-const admin = adminPubkey;
+type ManeuverType =
+    "stationKeeping" |
+    "orbitRaising" |
+    "orbitLowering" |
+    "inclinationChange" |
+    "phaseAdjustment" |
+    "collisionAvoidance" |
+    "endOfLife" |
+    "desaturation";
 
-const ManeuverType = {
-    StationKeeping: { stationKeeping: {} },
-    OrbitRaising: { orbitRaising: {} },
-    OrbitLowering: { orbitLowering: {} },
-    InclinationChange: { inclinationChange: {} },
-    PhaseAdjustment: { phaseAdjustment: {} },
-    CollisionAvoidance: { collisionAvoidance: {} },
-    EndOfLife: { endOfLife: {} },
-    Desaturation: { desaturation: {} },
-};
+type OperationStatus = 
+    "active" |
+    "offline" |
+    "maintenance";
 
-const OperationStatus = {
-    Active: { active: {} },
-    Offline: { offline: {} },
-    Maintenance: { maintenance: {} },
-};
-
-interface SatelliteFormValues {
-    owner: PublicKey;
+export interface ISatelliteFormValues {
+    // owner: PublicKey;
     name: string;
     country: string;
     noradId: number;
-    launchDate: Dayjs | null;
-    orbitType: string;
+    launchDate: Date;
+    // orbitType: string;
     inclination: number;
     altitude: number;
-    maneuverType: string;
-    operationStatus: string;
+    maneuverType: ManeuverType;
+    operationStatus: OperationStatus;
 }
 
-const SatelliteRegistrationForm: React.FC = () => {
-    const connection = new Connection(clusterApiUrl("devnet"));
-    const wallet = useWallet();
-    const [satelliteOwner, setSatelliteOwner] = useState<PublicKey>();
-    const [registryPda, setRegistryPda] = useState<PublicKey>();
-    const [satelliteOperatorPda, setSatelliteOperatorPda] =
-        useState<PublicKey>();
-    const { program } = useSatelliteProgram();
-    const [formValues, setFormValues] = useState<SatelliteFormValues>({
-        owner: wallet.publicKey!,
-        name: "",
-        country: "",
-        noradId: 0,
-        launchDate: dayjs(),
-        orbitType: "",
-        inclination: 0,
-        altitude: 0,
-        maneuverType: "",
-        operationStatus: "",
-    });
+interface ISatelliteRegistrationFormProps {
+    defaultValues: Partial<ISatelliteFormValues>;
+    onSubmit: (values: ISatelliteFormValues) => void;
+}
 
-    const handleInputChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-        const { name, value } = e.target;
-        setFormValues({
-            ...formValues,
-            [name]: value,
-        });
-    };
+const SatelliteRegistrationForm: React.FC<ISatelliteRegistrationFormProps> = ({ defaultValues, onSubmit }) => {
 
-    const handleDateChange = (
-        field: keyof SatelliteFormValues,
-        value: Dayjs | null
-    ) => {
-        setFormValues({
-            ...formValues,
-            [field]: value,
-        });
-    };
-
-    // prepare args for tx
-    const args = {
-        ...formValues,
-        owner: new PublicKey(formValues.owner),
-        noradId: new BN(formValues.noradId),
-        launchDate: new BN(dayjs(formValues.launchDate).unix()),
-        maneuverType:
-            ManeuverType[formValues.maneuverType as keyof typeof ManeuverType],
-        operationStatus:
-            OperationStatus[
-                formValues.operationStatus as keyof typeof OperationStatus
-            ],
-    };
-
-    // get pda
-    useEffect(() => {
-        if (wallet.publicKey) {
-            try {
-                let [registryPda] = PublicKey.findProgramAddressSync(
-                    [REGISTRY_SEEDS, admin.toBuffer()],
-                    program.programId
-                );
-                let [satelliteOperatorPda] = PublicKey.findProgramAddressSync(
-                    [SATELLITE_OPERATOR_SEEDS, wallet.publicKey.toBuffer()],
-                    program.programId
-                );
-                setRegistryPda(registryPda);
-                setSatelliteOwner(wallet.publicKey);
-                setSatelliteOperatorPda(satelliteOperatorPda);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-    }, [program.programId]);
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        // get satellite pda
-        let [satellitePda] = PublicKey.findProgramAddressSync(
-            [
-                SATELLITE_SEEDS,
-                wallet.publicKey!.toBuffer(),
-                admin.toBuffer(),
-                args.noradId.toArrayLike(Buffer, "le", 8),
-            ],
-            program.programId
-        );
-
-        // build tx instruction
-        const txInstruction = await program.methods
-            .mintSatellite(args)
-            .accounts({
-                authority: satelliteOwner,
-                registry: registryPda,
-                satellite: satellitePda,
-                satelliteOperator: satelliteOperatorPda,
-                systemProgram: SystemProgram.programId,
-            })
-            .instruction();
-
-        const { blockhash, lastValidBlockHeight } =
-            await connection.getLatestBlockhash();
-
-        // build tx
-        const tx = new Transaction({
-            feePayer: satelliteOwner,
-            blockhash,
-            lastValidBlockHeight,
-        });
-
-        tx.add(txInstruction);
-
-        // for debug
-        // const signature = await sendAndConfirmTransaction(connection, tx, [
-        //    testKeypair,
-        // ]);
-
-        // get signature
-        const signature = await wallet.sendTransaction(tx, connection);
-        await connection.confirmTransaction({
-            signature,
-            blockhash,
-            lastValidBlockHeight,
-        });
-
-        console.log("satellite tx: ", signature);
-    };
+    const { handleSubmit, formState, control } = useForm<ISatelliteFormValues>({ defaultValues, mode: "onChange" });
 
     return (
-        <form onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
-                <Grid size={6}>
-                    <TextField
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <AppContentGrid>
+                <Stack direction="column" spacing={3}>
+                    <TextFieldControl
+                        controller={{
+                            control,
+                            name: "name",
+                            rules: { required: true, minLength: 2, maxLength: 30 }
+                        }}
                         fullWidth
-                        required
-                        name="owner"
-                        value={wallet.publicKey}
-                        label="Owner Pubkey"
-                        variant="outlined"
-                        disabled
-                        helperText="Autofilled from wallet"
-                    />
-                </Grid>
-
-                <Grid size={3}>
-                    <TextField
-                        fullWidth
-                        required
-                        name="name"
-                        onChange={handleInputChange}
                         label="Name of satellite"
-                        variant="outlined"
+                        variant="filled"
                     />
-                </Grid>
-
-                <Grid size={3}>
-                    <TextField
-                        fullWidth
-                        required
-                        name="country"
-                        onChange={handleInputChange}
+                    <SelectControl
+                        controller={{
+                            control,
+                            name: "country",
+                            rules: { required: true }
+                        }}
                         label="Country"
-                        variant="outlined"
-                    />
-                </Grid>
-
-                <Grid size={4}>
-                    <TextField
-                        fullWidth
-                        required
-                        name="noradId"
-                        onChange={handleInputChange}
-                        label="NORAD-ID"
-                        variant="outlined"
-                    />
-                </Grid>
-
-                <Grid size={4}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                            sx={{ width: 1 }}
-                            label="Launch Date"
-                            onChange={(date) =>
-                                handleDateChange("launchDate", date)
+                        variant="filled"
+                        options={countries.map(([code, name]) => ({
+                            label: name,
+                            value: code
+                        }))}
+                        selectProps={{
+                            MenuProps: {
+                                sx: { maxHeight: 600 }
                             }
-                        />
-                    </LocalizationProvider>
-                </Grid>
-
-                <Grid size={4}>
-                    <TextField
+                        }}
                         fullWidth
-                        required
-                        label="Orbit Type"
-                        name="orbitType"
-                        onChange={handleInputChange}
-                        variant="outlined"
                     />
-                </Grid>
-
-                <Grid size={3}>
-                    <TextField
+                    <TextFieldControl
+                        controller={{
+                            control,
+                            name: "noradId",
+                            rules: { required: true, min: 70000, max: 900000000 }
+                        }}
                         fullWidth
-                        required
+                        label="NORAD ID"
+                        variant="filled"
+                        type="number"
+                    />
+                    <TextFieldControl
+                        controller={{
+                            control,
+                            name: "launchDate",
+                            rules: { required: true }
+                        }}
+                        fullWidth
+                        label="Launch Date"
+                        variant="filled"
+                        type="date"
+                        slotProps={{
+                            input: {
+                                onFocus: e => (e.currentTarget as HTMLInputElement).showPicker?.()
+                            }
+                        }}
+                    />
+                </Stack>
+                <Stack direction="column" spacing={3}>
+                    <TextFieldControl
+                        controller={{
+                            control,
+                            name: "inclination",
+                            rules: { required: true }
+                        }}
+                        fullWidth
                         label="Inclination"
-                        name="inclination"
-                        onChange={handleInputChange}
-                        variant="outlined"
+                        variant="filled"
+                        type="number"
                     />
-                </Grid>
-
-                <Grid size={3}>
-                    <TextField
+                    <TextFieldControl
+                        controller={{
+                            control,
+                            name: "altitude",
+                            rules: { required: true, min: 1000 }
+                        }}
                         fullWidth
-                        required
                         label="Altitude"
-                        name="altitude"
-                        onChange={handleInputChange}
-                        variant="outlined"
+                        variant="filled"
+                        type="number"
                     />
-                </Grid>
-
-                <Grid size={3}>
-                    <TextField
-                        fullWidth
-                        required
+                    <SelectControl
+                        controller={{
+                            control,
+                            name: "maneuverType",
+                            rules: { required: true }
+                        }}
                         label="Maneuver Type"
-                        value={formValues.maneuverType}
-                        name="maneuverType"
-                        select
-                        onChange={handleInputChange}
-                        variant="outlined"
-                    >
-                        {selectManeuverTypes.map(([value, label]) => (
-                            <MenuItem key={value} value={value}>
-                                {label}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                </Grid>
-
-                <Grid size={3}>
-                    <TextField
+                        variant="filled"
+                        options={[
+                            { label: "Station Keeping", value: "stationKeeping" },
+                            { label: "Orbit Raising", value: "orbitRaising" },
+                            { label: "Orbit Lowering", value: "orbitLowering" },
+                            { label: "Inclination Change", value: "inclinationChange" },
+                            { label: "Phase Adjustment", value: "phaseAdjustment" },
+                            { label: "Collision Avoidance", value: "collisionAvoidance" },
+                            { label: "End of Life", value: "endOfLife" },
+                            { label: "Desaturation", value: "desaturation" },
+                        ] satisfies { label: string, value: ManeuverType }[]}
                         fullWidth
-                        required
+                    />
+                    <SelectControl
+                        controller={{
+                            control,
+                            name: "operationStatus",
+                            rules: { required: true }
+                        }}
                         label="Operation Status"
-                        value={formValues.operationStatus}
-                        name="operationStatus"
-                        select
-                        onChange={handleInputChange}
-                        variant="outlined"
+                        variant="filled"
+                        options={[
+                            { label: "Active", value: "active" },
+                            { label: "Offline", value: "offline" },
+                            { label: "Maintenance", value: "maintenance" },
+                        ] satisfies { label: string, value: OperationStatus }[]}
+                        fullWidth
+                    />
+                </Stack>
+                <Box gridColumn="1 / -1" marginTop={1}>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        size="large"
+                        disabled={!formState.isValid}
                     >
-                        {selectOperationStatus.map(([value, label]) => (
-                            <MenuItem key={value} value={value}>
-                                {label}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                </Grid>
-                <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                >
-                    Register Satellite
-                </Button>
-            </Grid>
+                        Register Satellite
+                    </Button>
+                </Box>
+            </AppContentGrid>
         </form>
     );
 };

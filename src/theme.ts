@@ -49,7 +49,7 @@ const grey = {
     300: "#A2B1D7",
     200: "#B4B6C1",
     100: "#C9CBD6",
-    50:  "#EEEFF4"
+    50: "#EEEFF4"
 
 } satisfies ColorPartial;
 
@@ -241,7 +241,7 @@ const theme: ThemeOptions = {
                 variant: "contained"
             },
             styleOverrides: {
-                root:  {
+                root: {
                     lineHeight: "1.5",
                     paddingLeft: "1.75em",
                     paddingRight: "1.75em"
@@ -432,7 +432,7 @@ const theme: ThemeOptions = {
                     backgroundColor: theme.palette.background.default,
                     borderRadius: 0,
                     "&:not(.Mui-disabled):hover": {
-                        backgroundColor:theme.palette.background.default
+                        backgroundColor: theme.palette.background.default
                     },
                     "&.Mui-focused": {
                         backgroundColor: darken(theme.palette.background.default, 0.1)
@@ -445,7 +445,18 @@ const theme: ThemeOptions = {
                     },
                     "&::after": {
                         borderWidth: 1
+                    },
+                    "&:not(.Mui-focused) .MuiInputBase-input[type=date]": {
+                        color: "transparent"
                     }
+                }),
+                input: ({ value }) => ({
+                    "::-webkit-calendar-picker-indicator": {
+                        display: "none"
+                    },
+                    "&[type=date]:not(.Mui-error)": value ? {
+                        color: "inherit !important"
+                    } : undefined
                 })
             }
         },
