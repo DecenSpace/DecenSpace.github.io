@@ -20,7 +20,9 @@ const router = createBrowserRouter([
             },
             {
                 path: "/start/ground-station-ops",
-                Component: lazy(() => import("routes/start/ground-station-ops")),
+                Component: lazy(
+                    () => import("routes/start/ground-station-ops")
+                ),
             },
             {
                 path: "/start/satellite-ops",
@@ -42,7 +44,9 @@ const router = createBrowserRouter([
             },
             {
                 path: "/app/satellite-ops/satellites",
-                Component: lazy(() => import("routes/app/satellite-ops/satellites")),
+                Component: lazy(
+                    () => import("routes/app/satellite-ops/satellites")
+                ),
             },
             {
                 // Only semantically a nested route
@@ -51,11 +55,6 @@ const router = createBrowserRouter([
                     () => import("routes/app/satellite-ops/satellites/register")
                 ),
             },
-            {
-                // will probably remove this later
-                path: "/app/satellite-ops/satellites/view-satellite",
-                Component: lazy(() => import("routes/app/satellite-ops/satellites/my-satellites"))
-            }
         ],
     },
     {
@@ -69,7 +68,7 @@ const router = createBrowserRouter([
     {
         path: "*",
         element: <Navigate to="/start" replace />,
-    }
+    },
 ]);
 
 export default router;

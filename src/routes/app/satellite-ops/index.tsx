@@ -28,11 +28,6 @@ const SatelliteOps: React.FC = () => (
                         text="Register satellite"
                         sx={{ paddingLeft: 4 }}
                     />
-                    <AppSidebarNavButton
-                        path="/app/satellite-ops/satellites/view-satellite"
-                        icon={<SatelliteAltIcon />}
-                        text="My satellites"
-                    />
                 </AppSidebarNavNested>
             </List>
         }
