@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getSatelliteProgram } from "./program-exports";
 import useAnchorProvider from "components/SolanaProvider";
 
+/** @deprecated Use useSatelliteProgram from app index file. This ensures the program always exists */
 export function useSatelliteProgram() {
     const { connection } = useConnection();
     const provider = useAnchorProvider();

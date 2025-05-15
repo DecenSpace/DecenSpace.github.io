@@ -1,24 +1,22 @@
-import {
-    CardContent,
-    CardHeader,
-    List,
-    ListItem,
-    ListItemText,
-} from "@mui/material";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
 import { useWallet } from "@solana/wallet-adapter-react";
 import BN from "bn.js";
 import { getSatelliteData } from "program/accounts/satellite";
-import { useSatelliteProgram } from "program/program-data-access";
 import { useEffect, useState } from "react";
 import DashboardCard from "routes/app/components/DashboardCard";
 import { SatelliteDataValues } from "../utils/satelliteDataValues";
+import { useSatelliteProgram } from "routes/app";
 
 interface SatelliteDataBoardProps {
     noradId: BN;
 }
 
 const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId }) => {
-    const { program } = useSatelliteProgram();
+    const program = useSatelliteProgram();
     const [satelliteData, setSatelliteData] = useState<SatelliteDataValues>();
     const [loading, setLoading] = useState(false);
     const wallet = useWallet();
