@@ -7,6 +7,7 @@ import { PublicKey, Transaction } from "@solana/web3.js";
 import { BN } from "bn.js";
 import { SATELLITE_SEEDS } from "program/utils/Seeds";
 import adminPubkey from "routes/app/admin/utils/adminPubkey";
+import { useNavigate } from "react-router";
 
 const RegisterSatellite: React.FC = () => {
 
@@ -14,6 +15,7 @@ const RegisterSatellite: React.FC = () => {
     const walletContext = useWallet();
     const satellitesProgram = useSatelliteProgram();
     const programAddresses = useProgramAddresses();
+    const navigate = useNavigate();
 
     const handleSubmit = async (formValues: ISatelliteFormValues) => {
 
@@ -72,6 +74,11 @@ const RegisterSatellite: React.FC = () => {
             blockhash,
             lastValidBlockHeight,
         });
+
+        // TODO: snackbar message 
+
+        // TODO: add select satellite ID
+        navigate("/app/satellite-ops/satellites");
     };
 
     return (
