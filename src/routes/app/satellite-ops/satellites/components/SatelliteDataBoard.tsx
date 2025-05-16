@@ -20,7 +20,10 @@ interface SatelliteDataBoardProps {
     onSatelliteRemoved: (noradId: BN) => void;
 }
 
-const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId, onSatelliteRemoved }) => {
+const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({
+    noradId,
+    onSatelliteRemoved,
+}) => {
     const program = useSatelliteProgram();
     const [satelliteData, setSatelliteData] = useState<SatelliteDataValues>();
     const [loading, setLoading] = useState(false);
@@ -29,7 +32,6 @@ const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId, onSate
     // run whenever there is change in norad id
     useEffect(() => {
         const fetchSatelliteData = async () => {
-
             if (!wallet.publicKey) return;
 
             try {
@@ -56,7 +58,6 @@ const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId, onSate
 
     // func to close the satellite
     const closeSatellite = async () => {
-
         if (wallet.publicKey) {
             await closeSatelliteTx(program, args, wallet.publicKey, wallet);
             onSatelliteRemoved(noradId);
@@ -92,6 +93,12 @@ const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId, onSate
                             <ListItemText
                                 primary="Semi-Major axis"
                                 secondary={satelliteData?.semiMajorAxis}
+                            />
+                        </ListItem>
+                        <ListItem>
+                            <ListItemText
+                                primary="Eccentricity"
+                                secondary={satelliteData?.eccentricity}
                             />
                         </ListItem>
                     </List>

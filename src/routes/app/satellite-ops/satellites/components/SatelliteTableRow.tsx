@@ -4,6 +4,8 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { SatelliteDataValues } from "program/types/SatelliteDataValues";
+import getOperationStatusColor from "utils/getOperationStatusColor";
+import { parseOperationStatus } from "program/types/OperationStatus";
 
 interface ISatelliteTableRowProps {
     satellite: SatelliteDataValues;
@@ -19,6 +21,8 @@ const SatelliteTableRow: React.FC<ISatelliteTableRowProps> = ({
     onMenuClick,
 }) => {
 
+    const [r, g, b, a] = getOperationStatusColor(parseOperationStatus(satellite.operationStatus));
+
     return (
         <TableRow
             hover
@@ -26,7 +30,7 @@ const SatelliteTableRow: React.FC<ISatelliteTableRowProps> = ({
             onClick={(e) => onSelect(satellite)}
         >
             <TableCell>
-                <Box bgcolor="success.main" width="1em" height="1em" />
+                <Box bgcolor={`rgba(${r}, ${g}, ${b}, ${a})`} width="1em" height="1em" />
             </TableCell>
             <TableCell>{satellite.name}</TableCell>
             <TableCell>{satellite.country}</TableCell>
