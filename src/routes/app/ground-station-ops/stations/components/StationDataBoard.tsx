@@ -38,8 +38,7 @@ const StationDataBoard: React.FC<StationDataBoardProps> = ({
     };
 
     return (
-        <DashboardCard variant="outlined">
-
+        <DashboardCard variant="outlined" sx={{ overflowY: "auto" }}>
             <CardHeader
                 title={station.name}
                 subheader="Selected station"
