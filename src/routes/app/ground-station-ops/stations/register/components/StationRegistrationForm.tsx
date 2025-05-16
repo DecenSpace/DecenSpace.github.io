@@ -1,55 +1,179 @@
-import React, { useState } from "react";
-import Grid from "@mui/material/Grid";
+import type React from "react";
 import Button from "@mui/material/Button";
-import { useWallet } from "@solana/wallet-adapter-react";
-import {
-    clusterApiUrl,
-    Connection,
-    PublicKey,
-} from "@solana/web3.js";
-import adminPubkey from "routes/app/admin/utils/adminPubkey";
+import { useForm } from "react-hook-form";
+import AppContentGrid from "routes/app/components/AppContentGrid";
+import Box from "@mui/material/Box";
+import TextFieldControl from "routes/app/components/form-controls/TextFieldControl";
+import Stack from "@mui/material/Stack";
+import SelectControl from "routes/app/components/form-controls/SelectControl";
+import { OperationStatus } from "program/types/OperationStatus";
+import Typography from "@mui/material/Typography";
+import { FrequencyType } from "program/types/FrequencyType";
 
-interface StationsFormValues {
-    // TODO:
+export interface IStationFormValues {
+    stationId: string;
+    name: string;
+    longitude: number;
+    latitude: number;
+    cost_per_mb: number;
+    frequency_type: FrequencyType;
+    operationStatus: OperationStatus;
 }
 
-const StationRegistrationForm: React.FC = () => {
-    const connection = new Connection(clusterApiUrl("devnet"));
-    const wallet = useWallet();
-    const [stationOwner, setStationOwner] = useState<PublicKey>();
-    const [registryPda, setRegistryPda] = useState<PublicKey>();
-    const [groundStationsPda, setGroundStationsPda] = useState<PublicKey>();
-    // const { program } = useGroundStationsProgram();
-    const [formValues, setFormValues] = useState<StationsFormValues>({
+interface IStationRegistrationFormProps {
+    defaultValues: Partial<IStationFormValues>;
+    onSubmit: (values: IStationFormValues) => void;
+}
+
+const StationRegistrationForm: React.FC<IStationRegistrationFormProps> = ({
+    defaultValues,
+    onSubmit,
+}) => {
+    const { handleSubmit, formState, control } = useForm<IStationFormValues>({
+        defaultValues,
+        mode: "onChange",
     });
 
-    // TODO: get seeds
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        // TODO: prepare args for tx
-
-        // TODO: build tx instruction
-
-        // TODO: build tx
-
-        // TODO: get signature
-    };
-
     return (
-        <form onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
-                {/* TODO: add fields */}
-                <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                >
-                    Register ground station
-                </Button>
-            </Grid>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <AppContentGrid>
+                <Stack direction="column" spacing={3}>
+                    <Typography variant="h4" marginBottom={1}>
+                        Basic Information
+                    </Typography>
+                    <TextFieldControl
+                        controller={{
+                            control,
+                            name: "name",
+                            rules: {
+                                required: true,
+                                minLength: 2,
+                                maxLength: 30,
+                            },
+                        }}
+                        fullWidth
+                        label="Station name"
+                        variant="filled"
+                    />
+                    <TextFieldControl
+                        controller={{
+                            control,
+                            name: "stationId",
+                            rules: {
+                                required: true,
+                                min: 1,
+                            },
+                        }}
+                        fullWidth
+                        label="Station ID"
+                        variant="filled"
+                        type="number"
+                    />
+                    <TextFieldControl
+                        controller={{
+                            control,
+                            name: "longitude",
+                            rules: {
+                                required: true,
+                                min: -180,
+                                max: 180,
+                            },
+                        }}
+                        fullWidth
+                        label="Location longitude"
+                        variant="filled"
+                        type="number"
+                    />
+                    <TextFieldControl
+                        controller={{
+                            control,
+                            name: "latitude",
+                            rules: {
+                                required: true,
+                                min: -180,
+                                max: 180,
+                            },
+                        }}
+                        fullWidth
+                        label="Location latitude"
+                        variant="filled"
+                        type="number"
+                    />
+                    <SelectControl
+                        controller={{
+                            control,
+                            name: "operationStatus",
+                            rules: { required: true },
+                        }}
+                        label="Operation Status"
+                        variant="filled"
+                        options={
+                            [
+                                { label: "Active", value: "active" },
+                                { label: "Offline", value: "offline" },
+                                { label: "Maintenance", value: "maintenance" },
+                            ] satisfies {
+                                label: string;
+                                value: OperationStatus;
+                            }[]
+                        }
+                        fullWidth
+                    />
+                </Stack>
+                <Stack direction="column" spacing={3}>
+                    <Typography variant="h4" marginBottom={1}>
+                        Antenna Information
+                    </Typography>
+                    <SelectControl
+                        controller={{
+                            control,
+                            name: "frequency_type",
+                            rules: { required: true },
+                        }}
+                        label="Frequency type"
+                        variant="filled"
+                        options={
+                            [
+                                { label: "UHF", value: "UHF" },
+                                { label: "VHF", value: "VHF" },
+                                { label: "S-BAND", value: "S-BAND" },
+                                { label: "X-BAND", value: "X-BAND" },
+                                { label: "KU-BAND", value: "KU-BAND" },
+                                { label: "KA-BAND", value: "KA-BAND" },
+                            ] satisfies {
+                                label: string;
+                                value: FrequencyType;
+                            }[]
+                        }
+                        fullWidth
+                    />
+                    <TextFieldControl
+                        controller={{
+                            control,
+                            name: "cost_per_mb",
+                            rules: {
+                                required: true,
+                                min: 0.01,
+                            },
+                        }}
+                        fullWidth
+                        label="Cost per MB"
+                        variant="filled"
+                        type="number"
+                    />
+                </Stack>
+                <Box gridColumn="1 / -1" marginTop={1}>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        size="large"
+                        disabled={!formState.isValid}
+                    >
+                        Register Station
+                    </Button>
+                </Box>
+            </AppContentGrid>
         </form>
     );
 };

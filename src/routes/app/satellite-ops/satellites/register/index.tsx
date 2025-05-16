@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import SatelliteRegistrationForm, { ISatelliteFormValues } from "./components/SatelliteRegistrationForm";
 import { useProgramAddresses, useSatelliteProgram } from "routes/app";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { Keypair, PublicKey, Transaction } from "@solana/web3.js";
+import { PublicKey, Transaction } from "@solana/web3.js";
 import { BN } from "bn.js";
 import { SATELLITE_SEEDS } from "program/utils/Seeds";
 import adminPubkey from "routes/app/admin/utils/adminPubkey";
