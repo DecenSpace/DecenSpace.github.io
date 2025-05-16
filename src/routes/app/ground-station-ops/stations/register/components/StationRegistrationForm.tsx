@@ -18,7 +18,7 @@ export interface IStationFormValues {
     name: string;
     longitude: number;
     latitude: number;
-    cost_per_mb: number;
+    costPerMb: number;
     frequencyType: FrequencyType;
     operationStatus: OperationStatus;
 }
@@ -159,7 +159,7 @@ const StationRegistrationForm: React.FC<IStationRegistrationFormProps> = ({
                     <TextFieldControl
                         controller={{
                             control,
-                            name: "cost_per_mb",
+                            name: "costPerMb",
                             rules: {
                                 required: true,
                                 min: 0.01,

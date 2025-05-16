@@ -32,7 +32,7 @@ export async function mintGroundStationIx(
             name: args.name,
             longitude: args.longitude,
             latitude: args.latitude,
-            costPerMb: args.cost_per_mb,
+            costPerMb: args.costPerMb,
             addedDate: new BN(new Date().getTime()),
             frequencyType: { [args.frequencyType]: {} } as any,
             operationStatus: { [args.operationStatus]: {} } as any,
