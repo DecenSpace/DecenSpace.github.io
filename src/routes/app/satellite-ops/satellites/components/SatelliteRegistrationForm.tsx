@@ -18,7 +18,6 @@ export interface ISatelliteFormValues {
     launchDate: Date;
     // orbitType: string;
     inclination: number;
-    altitude: number;
     semiMajorAxis: number;
     eccentricity: number;
     raan: number;
@@ -122,17 +121,6 @@ const SatelliteRegistrationForm: React.FC<ISatelliteRegistrationFormProps> = ({
                         }}
                         fullWidth
                         label="Inclination"
-                        variant="filled"
-                        type="number"
-                    />
-                    <TextFieldControl
-                        controller={{
-                            control,
-                            name: "altitude",
-                            rules: { required: true, min: 1000 },
-                        }}
-                        fullWidth
-                        label="Altitude"
                         variant="filled"
                         type="number"
                     />

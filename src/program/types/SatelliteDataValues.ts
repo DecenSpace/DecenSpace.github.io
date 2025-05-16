@@ -11,6 +11,7 @@ export interface SatelliteDataValues {
     launchDate: BN;
     orbitType: string;
     inclination: number;
+    /** @deprecated will be removed without replacement */
     altitude?: number;
     semiMajorAxis: number;
     eccentricity: number;

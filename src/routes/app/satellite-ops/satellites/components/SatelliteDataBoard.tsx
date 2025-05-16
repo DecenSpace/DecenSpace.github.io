@@ -90,12 +90,6 @@ const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId, onSate
                         </ListItem>
                         <ListItem>
                             <ListItemText
-                                primary="Altitude"
-                                secondary={satelliteData?.altitude}
-                            />
-                        </ListItem>
-                        <ListItem>
-                            <ListItemText
                                 primary="Semi-Major axis"
                                 secondary={satelliteData?.semiMajorAxis}
                             />
