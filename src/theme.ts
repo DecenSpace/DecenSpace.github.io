@@ -49,13 +49,14 @@ const grey = {
     300: "#A2B1D7",
     200: "#B4B6C1",
     100: "#C9CBD6",
-    50:  "#EEEFF4"
+    50: "#EEEFF4"
 
 } satisfies ColorPartial;
 
 export const heroGradient = `linear-gradient(90deg, ${blue[800]} 0%, ${blue[600]} 22%, ${blue[600]} 30%, ${red[500]} 85%, ${orange[400]} 100%)`;
 
 const transparentHighlightOverlay = "rgba(100, 100, 150, 0.2)";
+const transparentHighlightOverlay2 = "rgba(100, 100, 150, 0.4)";
 
 const palette: PaletteOptions = {
     mode: "dark",
@@ -181,6 +182,9 @@ const theme: ThemeOptions = {
                     [theme.breakpoints.up("sm")]: {
                         paddingLeft: theme.spacing(6),
                         paddingRight: theme.spacing(6)
+                    },
+                    [theme.breakpoints.up("xl")]: {
+                        maxWidth: "1440px"
                     }
                 })
             }
@@ -237,7 +241,8 @@ const theme: ThemeOptions = {
                 variant: "contained"
             },
             styleOverrides: {
-                root:  {
+                root: {
+                    lineHeight: "1.5",
                     paddingLeft: "1.75em",
                     paddingRight: "1.75em"
                 },
@@ -250,21 +255,32 @@ const theme: ThemeOptions = {
                         backgroundColor: theme.palette.grey[600]
                     }
                 }),
-                text: ({ theme }) => ({
-                    color: theme.palette.primary.light,
+                text: {
                     paddingLeft: "0.75em",
                     paddingRight: "0.75em",
                     "&:hover": {
-                        backgroundColor: theme.palette.grey[700]
+                        backgroundColor: transparentHighlightOverlay2
                     }
+                },
+                textPrimary: ({ theme }) => ({
+                    color: theme.palette.text.primary
                 }),
-                outlined: ({ theme }) => ({
-                    color: theme.palette.primary.light,
-                    borderColor: theme.palette.primary.light,
+                textSecondary: ({ theme }) => ({
+                    color: theme.palette.text.secondary
+                }),
+                outlined: {
                     "&:hover": {
-                        backgroundColor: theme.palette.grey[700]
+                        backgroundColor: transparentHighlightOverlay
                     }
-                })
+                },
+                outlinedPrimary: ({ theme }) => ({
+                    color: theme.palette.primary.light,
+                    borderColor: theme.palette.primary.light
+                }),
+                outlinedSecondary: ({ theme }) => ({
+                    color: theme.palette.grey[300],
+                    borderColor: theme.palette.grey[300]
+                }),
             }
         },
         MuiFab: {
@@ -313,16 +329,6 @@ const theme: ThemeOptions = {
                     },
                     "& .MuiListItemIcon-root": {
                         minWidth: theme.spacing(5)
-                    },
-                })
-            }
-        },
-        MuiListItemText: {
-            styleOverrides: {
-                // Dense Lists had the color set to secondary. Don't wanted that.
-                root: ({ theme }) => ({
-                    "& .MuiTypography-root": {
-                        color: theme.palette.text.primary
                     }
                 })
             }
@@ -363,6 +369,15 @@ const theme: ThemeOptions = {
                         color: theme.palette.text.primary
                     }
                 })
+            }
+        },
+        MuiTableRow: {
+            styleOverrides: {
+                root: {
+                    "&.MuiTableRow-hover:hover": {
+                        backgroundColor: transparentHighlightOverlay
+                    }
+                }
             }
         },
         MuiTableCell: {
@@ -417,7 +432,7 @@ const theme: ThemeOptions = {
                     backgroundColor: theme.palette.background.default,
                     borderRadius: 0,
                     "&:not(.Mui-disabled):hover": {
-                        backgroundColor:theme.palette.background.default
+                        backgroundColor: theme.palette.background.default
                     },
                     "&.Mui-focused": {
                         backgroundColor: darken(theme.palette.background.default, 0.1)
@@ -430,7 +445,18 @@ const theme: ThemeOptions = {
                     },
                     "&::after": {
                         borderWidth: 1
+                    },
+                    "&:not(.Mui-focused) .MuiInputBase-input[type=date]": {
+                        color: "transparent"
                     }
+                }),
+                input: ({ value }) => ({
+                    "::-webkit-calendar-picker-indicator": {
+                        display: "none"
+                    },
+                    "&[type=date]:not(.Mui-error)": value ? {
+                        color: "inherit !important"
+                    } : undefined
                 })
             }
         },
@@ -546,17 +572,30 @@ const theme: ThemeOptions = {
             styleOverrides: {
                 root: ({ theme }) => ({
                     color: theme.palette.primary.light,
-                    "&:hover": {
+                    "&:not(.MuiButton-root):hover": {
                         color: theme.palette.primary.main
                     }
                 }),
                 underlineAlways: ({ theme }) => ({
                     color: "inherit",
                     textDecorationColor: "inherit",
-                    "&:hover": {
+                    "&:not(.MuiButton-root):hover": {
                         color: theme.palette.primary.light
                     }
                 })
+            }
+        },
+        MuiListItemText: {
+            defaultProps: {
+                // Wanted dense lists to have the same colors as normal lists
+                slotProps: {
+                    primary: {
+                        variant: "body1"
+                    },
+                    secondary: {
+                        variant: "body2"
+                    }
+                }
             }
         }
     }

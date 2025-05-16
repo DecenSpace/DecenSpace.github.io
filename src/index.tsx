@@ -1,36 +1,47 @@
 import { createRoot } from "react-dom/client";
-import { lazy, StrictMode } from "react";
+import { StrictMode, useMemo } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import theme from "theme";
-import Home from "routes/home";
+import { RouterProvider } from "react-router";
 import {
-    createHashRouter,
-    Outlet,
-    RouterProvider,
-} from "react-router";
+    ConnectionProvider,
+    WalletProvider,
+} from "@solana/wallet-adapter-react";
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+import { clusterApiUrl } from "@solana/web3.js";
+import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
+import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
+import WalletAutoConnect from "components/WalletAutoConnect";
+import router from "router";
+import ReactQueryProvider from "providers/ReactQueryProvider";
+import SnackbarProvider from "components/SnackbarProvider";
 
-// can't have real SPA routing on GH pages.
-// Will use createBrowserRouter if we have an Nginx server
-const router = createHashRouter([
-    {
-        path: "/",
-        element: <Outlet />,
-        children: [
-            {
-                index: true,
-                Component: Home,
-            }, {
-                path: "/theme-test",
-                Component: lazy(() => import("routes/theme-test"))
-            }
-        ]
-    }
-]);
+const App: React.FC = () => {
+    const network = WalletAdapterNetwork.Devnet;
 
-createRoot(document.body).render(
-    <StrictMode>
-        <ThemeProvider theme={createTheme(theme)}>
-            <RouterProvider router={router} />
-        </ThemeProvider>
-    </StrictMode>
-);
+    // You can also provide a custom RPC endpoint
+    const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+
+    const wallets = useMemo(() => [new PhantomWalletAdapter()], [network]);
+
+    return (
+        <StrictMode>
+            <ReactQueryProvider>
+                <ThemeProvider theme={createTheme(theme)}>
+                    <ConnectionProvider endpoint={endpoint}>
+                        <WalletProvider wallets={wallets}>
+                            <WalletModalProvider>
+                                <SnackbarProvider>
+                                    <RouterProvider router={router} />
+                                    <WalletAutoConnect />
+                                </SnackbarProvider>
+                            </WalletModalProvider>
+                        </WalletProvider>
+                    </ConnectionProvider>
+                </ThemeProvider>
+            </ReactQueryProvider>
+        </StrictMode>
+    );
+};
+
+createRoot(document.body).render(<App />);
