@@ -9,6 +9,7 @@ import SelectControl from "routes/app/components/form-controls/SelectControl";
 import countries from "utils/countries";
 import { ManeuverType } from "program/types/ManeuverType";
 import { OperationStatus } from "program/types/OperationStatus";
+import Typography from "@mui/material/Typography";
 
 export interface ISatelliteFormValues {
     // owner: PublicKey;
@@ -44,6 +45,9 @@ const SatelliteRegistrationForm: React.FC<ISatelliteRegistrationFormProps> = ({
         <form onSubmit={handleSubmit(onSubmit)}>
             <AppContentGrid>
                 <Stack direction="column" spacing={3}>
+                    <Typography variant="h4" marginBottom={1}>
+                        Basic Information
+                    </Typography>
                     <TextFieldControl
                         controller={{
                             control,
@@ -111,8 +115,75 @@ const SatelliteRegistrationForm: React.FC<ISatelliteRegistrationFormProps> = ({
                             },
                         }}
                     />
+                    <SelectControl
+                        controller={{
+                            control,
+                            name: "operationStatus",
+                            rules: { required: true },
+                        }}
+                        label="Operation Status"
+                        variant="filled"
+                        options={
+                            [
+                                { label: "Active", value: "active" },
+                                { label: "Offline", value: "offline" },
+                                { label: "Maintenance", value: "maintenance" },
+                            ] satisfies {
+                                label: string;
+                                value: OperationStatus;
+                            }[]
+                        }
+                        fullWidth
+                    />
                 </Stack>
                 <Stack direction="column" spacing={3}>
+                    <Typography variant="h4" marginBottom={1}>
+                        Orbit Information
+                    </Typography>
+                    <TextFieldControl
+                        controller={{
+                            control,
+                            name: "semiMajorAxis",
+                            rules: { required: true },
+                        }}
+                        fullWidth
+                        label="Semi-Major Axis"
+                        variant="filled"
+                        type="number"
+                    />
+                    <TextFieldControl
+                        controller={{
+                            control,
+                            name: "eccentricity",
+                            rules: { required: true },
+                        }}
+                        fullWidth
+                        label="Eccentricity"
+                        variant="filled"
+                        type="number"
+                    />
+                    <TextFieldControl
+                        controller={{
+                            control,
+                            name: "raan",
+                            rules: { required: true },
+                        }}
+                        fullWidth
+                        label="RAAN value"
+                        variant="filled"
+                        type="number"
+                    />
+                    <TextFieldControl
+                        controller={{
+                            control,
+                            name: "argOfPeriapsis",
+                            rules: { required: true },
+                        }}
+                        fullWidth
+                        label="Argument of Periapsis"
+                        variant="filled"
+                        type="number"
+                    />
                     <TextFieldControl
                         controller={{
                             control,
@@ -166,72 +237,6 @@ const SatelliteRegistrationForm: React.FC<ISatelliteRegistrationFormProps> = ({
                             ] satisfies { label: string; value: ManeuverType }[]
                         }
                         fullWidth
-                    />
-                    <SelectControl
-                        controller={{
-                            control,
-                            name: "operationStatus",
-                            rules: { required: true },
-                        }}
-                        label="Operation Status"
-                        variant="filled"
-                        options={
-                            [
-                                { label: "Active", value: "active" },
-                                { label: "Offline", value: "offline" },
-                                { label: "Maintenance", value: "maintenance" },
-                            ] satisfies {
-                                label: string;
-                                value: OperationStatus;
-                            }[]
-                        }
-                        fullWidth
-                    />
-                </Stack>
-                <Stack direction="column" spacing={3}>
-                    <TextFieldControl
-                        controller={{
-                            control,
-                            name: "semiMajorAxis",
-                            rules: { required: true },
-                        }}
-                        fullWidth
-                        label="Semi-Major Axis"
-                        variant="filled"
-                        type="number"
-                    />
-                    <TextFieldControl
-                        controller={{
-                            control,
-                            name: "eccentricity",
-                            rules: { required: true },
-                        }}
-                        fullWidth
-                        label="Eccentricity"
-                        variant="filled"
-                        type="number"
-                    />
-                    <TextFieldControl
-                        controller={{
-                            control,
-                            name: "raan",
-                            rules: { required: true },
-                        }}
-                        fullWidth
-                        label="RAAN value"
-                        variant="filled"
-                        type="number"
-                    />
-                    <TextFieldControl
-                        controller={{
-                            control,
-                            name: "argOfPeriapsis",
-                            rules: { required: true },
-                        }}
-                        fullWidth
-                        label="Argument of Periapsis"
-                        variant="filled"
-                        type="number"
                     />
                 </Stack>
                 <Box gridColumn="1 / -1" marginTop={1}>
