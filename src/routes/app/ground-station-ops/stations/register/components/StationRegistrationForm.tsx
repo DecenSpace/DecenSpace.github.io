@@ -8,10 +8,13 @@ import Stack from "@mui/material/Stack";
 import SelectControl from "routes/app/components/form-controls/SelectControl";
 import { OperationStatus } from "program/types/OperationStatus";
 import Typography from "@mui/material/Typography";
-import { FrequencyType, getFrequencyTypeText } from "program/types/FrequencyType";
+import {
+    FrequencyType,
+    getFrequencyTypeText,
+} from "program/types/FrequencyType";
 
 export interface IStationFormValues {
-    stationId: string;
+    stationId: number;
     name: string;
     longitude: number;
     latitude: number;
@@ -132,11 +135,25 @@ const StationRegistrationForm: React.FC<IStationRegistrationFormProps> = ({
                         }}
                         label="Frequency type"
                         variant="filled"
-                        options={
-                            (["uhf", "vhf", "sband", "kband", "kuBand", "kaBand"] satisfies FrequencyType[]).map(type => (
-                                { label: getFrequencyTypeText(type), value: type } satisfies { label: string; value: FrequencyType }
-                            ))
-                        }
+                        options={(
+                            [
+                                "uhf",
+                                "vhf",
+                                "sband",
+                                "kband",
+                                "kuBand",
+                                "kaBand",
+                            ] satisfies FrequencyType[]
+                        ).map(
+                            (type) =>
+                            ({
+                                label: getFrequencyTypeText(type),
+                                value: type,
+                            } satisfies {
+                                label: string;
+                                value: FrequencyType;
+                            })
+                        )}
                         fullWidth
                     />
                     <TextFieldControl
