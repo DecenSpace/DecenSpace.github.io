@@ -1,10 +1,7 @@
 import { BN, Program } from "@coral-xyz/anchor";
 import { PublicKey } from "@solana/web3.js";
+import { getSatellitePda } from "program/pda/satellite";
 import { SatelliteMint } from "program/satellite-mint-program";
-import { SATELLITE_SEEDS } from "program/utils/Seeds";
-import adminPubkey from "routes/app/admin/utils/adminPubkey";
-
-const admin = adminPubkey;
 
 export async function getSatelliteData(
     satelliteOperatorPubkey: PublicKey,
@@ -12,39 +9,13 @@ export async function getSatelliteData(
     satelliteNoradId: BN
 ) {
     // get satellite pda
-    let [satellitePda] = PublicKey.findProgramAddressSync(
-        [
-            SATELLITE_SEEDS,
-            satelliteOperatorPubkey.toBuffer(),
-            admin.toBuffer(),
-            satelliteNoradId.toArrayLike(Buffer, "le", 8),
-        ],
-        program.programId
+    const satellitePda = await getSatellitePda(
+        satelliteOperatorPubkey,
+        satelliteNoradId,
+        program
     );
 
-    const {
-        owner,
-        name,
-        country,
-        noradId,
-        launchDate,
-        orbitType,
-        inclination,
-        altitude,
-        maneuverType,
-        operationStatus,
-    } = await program.account.satellite.fetch(satellitePda);
+    const satellite = await program.account.satellite.fetch(satellitePda);
 
-    return {
-        owner,
-        name,
-        country,
-        noradId,
-        launchDate,
-        orbitType,
-        inclination,
-        altitude,
-        maneuverType,
-        operationStatus,
-    };
+    return satellite;
 }

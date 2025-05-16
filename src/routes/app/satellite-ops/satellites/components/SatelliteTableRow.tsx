@@ -12,12 +12,14 @@ import { useSatelliteProgram } from "routes/app";
 
 interface ISatelliteTableRowProps {
     noradId: BN;
+    selected: boolean;
     onSelect: (item: SatelliteDataValues) => void;
     onMenuClick: (item: SatelliteDataValues, element: HTMLElement) => void;
 }
 
 const SatelliteTableRow: React.FC<ISatelliteTableRowProps> = ({
     noradId,
+    selected,
     onSelect,
     onMenuClick,
 }) => {
@@ -39,24 +41,36 @@ const SatelliteTableRow: React.FC<ISatelliteTableRowProps> = ({
     }, [program.programId, wallet.publicKey]);
 
     return (
-        <TableRow hover onClick={(e) => onSelect(satelliteData!)}>
-            <TableCell>
-                <Box bgcolor="success.main" width="1em" height="1em" />
-            </TableCell>
-            <TableCell>{satelliteData?.name}</TableCell>
-            <TableCell>{satelliteData?.country}</TableCell>
-            <TableCell>{satelliteData?.altitude}</TableCell>
-            <TableCell>
-                <IconButton
-                    size="small"
-                    onClick={(e) => {
-                        onMenuClick(satelliteData!, e.currentTarget);
-                        e.stopPropagation();
-                    }}
-                >
-                    <MoreHorizIcon />
-                </IconButton>
-            </TableCell>
+        <TableRow
+            hover
+            selected={selected}
+            onClick={(e) => onSelect(satelliteData!)}
+        >
+            {satelliteData && (
+                <>
+                    <TableCell>
+                        <Box bgcolor="success.main" width="1em" height="1em" />
+                    </TableCell>
+                    <TableCell>{satelliteData?.name}</TableCell>
+                    <TableCell>{satelliteData?.country}</TableCell>
+                    <TableCell>
+                        {new Date(
+                            satelliteData.launchDate.toNumber()
+                        ).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell>
+                        <IconButton
+                            size="small"
+                            onClick={(e) => {
+                                onMenuClick(satelliteData!, e.currentTarget);
+                                e.stopPropagation();
+                            }}
+                        >
+                            <MoreHorizIcon />
+                        </IconButton>
+                    </TableCell>
+                </>
+            )}
         </TableRow>
     );
 };
