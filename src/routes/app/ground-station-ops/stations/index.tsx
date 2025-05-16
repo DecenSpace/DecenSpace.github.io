@@ -11,22 +11,22 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AppContentGrid from "routes/app/components/AppContentGrid";
 import DashboardCard from "routes/app/components/DashboardCard";
 import DashboardCardButton from "routes/app/components/DashboardCardButton";
 import { useState } from "react";
-import SatelliteTableRow from "./components/SatelliteTableRow";
+import StationTableRow from "./components/StationTableRow";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import BN from "bn.js";
-import SatelliteDataBoard from "./components/SatelliteDataBoard";
-import SatellitesViewer from "./components/SatellitesViewer";
-import useUsersSatellites from "./hooks/useUsersSatellites";
+import StationDataBoard from "./components/StationDataBoard";
+import StationsViewer from "./components/StationsViewer";
+import useUserGroundStations from "../hooks/useUserGroundStations";
 import { useShowSnackbar } from "components/SnackbarProvider";
-import { SatelliteDataValues } from "program/types/SatelliteDataValues";
+import { GroundStationDataValue } from "program/types/GroundStationDataValue";
 
-const SatellitesTableElement = styled(Table)({
+const StationsTableElement = styled(Table)({
     "th:first-child, td:first-child": {
         width: 56,
     },
@@ -35,58 +35,54 @@ const SatellitesTableElement = styled(Table)({
     },
 });
 
-const Satellites: React.FC = () => {
+const Stations: React.FC = () => {
 
     const showSnackbar = useShowSnackbar();
 
-    const { satellites, removeSatellite } = useUsersSatellites();
-    const [selectedSatellite, setSelectedSatellite] = useState<SatelliteDataValues | null>(null);
+    const { stations, removeStation } = useUserGroundStations();
+    const [selectedStation, setSelectedStation] = useState<GroundStationDataValue | null>(null);
 
     const [tablePageSize, setTablePageSize] = useState(10);
     const [selectedMenuItem, setSelectedMenuItem] = useState<[id: string, element: HTMLElement] | null>(null);
 
-    const navigate = useNavigate();
-
-    const onTableItemClick = (satellite: SatelliteDataValues) => {
-        setSelectedSatellite(satellite === selectedSatellite ? null : satellite);
+    const onTableItemClick = (station: GroundStationDataValue) => {
+        setSelectedStation(station === selectedStation ? null : station);
     };
 
     const onTableItemMenuClick = (
-        satellite: SatelliteDataValues,
+        station: GroundStationDataValue,
         element: HTMLElement
     ) => {
-        setSelectedMenuItem([satellite.noradId.toString(), element]);
-        setSelectedSatellite(satellite);
+        setSelectedMenuItem([station.station_id.toString(), element]);
+        setSelectedStation(station);
     };
 
-    const onSatelliteRemoved = async (noradId: BN) => {
-        await removeSatellite(noradId);
-        showSnackbar("Satellite removed");
+    const onStationRemoved = (stationId: BN) => {
+        removeStation(stationId);
+        showSnackbar("Station removed");
     };
 
-    const activeCount = satellites.filter((satellite) => !!satellite.operationStatus.active).length;
+    const activeCount = stations.filter((station) => !!station.operationStatus.active).length;
 
     return (
         <>
             <Typography variant="h3" marginBottom={3}>
-                Fleet
+                Stations
             </Typography>
             <AppContentGrid sx={{ gridAutoRows: "400px" }}>
-                {selectedSatellite?.noradId ? (
-                    <SatelliteDataBoard
-                        satellite={selectedSatellite}
-                        onSatelliteRemoved={onSatelliteRemoved} />
+                {selectedStation?.station_id ? (
+                    <StationDataBoard
+                        station={selectedStation}
+                        onStationRemoved={onStationRemoved}
+                    />
                 ) : (
                     <DashboardCard>
-                        <CardHeader title="Fleet" subheader={`${activeCount}/${satellites.length} active`} />
+                        <CardHeader title="Stations" subheader={`${activeCount}/${stations.length} active`} />
                         <CardContent>
                             {/* TODO: contribution-type graph */}
                         </CardContent>
                         <CardActions>
-                            <DashboardCardButton
-                                component={Link}
-                                to="/app/satellite-ops/satellites/register"
-                            >
+                            <DashboardCardButton component={Link} to="/app/ground-station-ops/stations/register">
                                 Register
                             </DashboardCardButton>
                         </CardActions>
@@ -102,42 +98,43 @@ const Satellites: React.FC = () => {
                         height: "100%",
                     }}
                 >
-                    <SatellitesViewer
-                        satellites={satellites}
-                        selectedSatellite={selectedSatellite}
+                    <StationsViewer
+                        stations={stations}
+                        selected={selectedStation}
+                        onSelect={onTableItemClick}
                     />
                 </Paper>
             </AppContentGrid>
             <Paper variant="outlined" sx={{ marginTop: 3 }}>
                 <TableContainer>
-                    <SatellitesTableElement size="small">
+                    <StationsTableElement size="small">
                         <TableHead>
                             <TableRow>
                                 <TableCell />
                                 <TableCell>Name</TableCell>
-                                <TableCell>Country</TableCell>
-                                <TableCell>Added</TableCell>
+                                <TableCell>Frequency</TableCell>
+                                <TableCell>Cost per MB</TableCell>
                                 <TableCell></TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {satellites.map((satellite, index) => (
-                                <SatelliteTableRow
+                            {stations.map((station, index) => (
+                                <StationTableRow
                                     key={index}
-                                    satellite={satellite}
-                                    selected={satellite === selectedSatellite}
+                                    station={station}
+                                    selected={station === selectedStation}
                                     onSelect={onTableItemClick}
                                     onMenuClick={onTableItemMenuClick}
                                 />
                             ))}
                         </TableBody>
-                    </SatellitesTableElement>
+                    </StationsTableElement>
                 </TableContainer>
                 <TablePagination
                     size="small"
                     rowsPerPageOptions={[10, 25, 100]}
                     component="div"
-                    count={satellites.length}
+                    count={stations.length}
                     rowsPerPage={tablePageSize}
                     page={0}
                     onPageChange={() => { }}
@@ -153,13 +150,11 @@ const Satellites: React.FC = () => {
                     transformOrigin={{ vertical: "top", horizontal: "right" }}
                 >
                     <MenuItem>Edit details</MenuItem>
-                    <MenuItem onClick={() => navigate("/app/satellite-ops/satellites/register")}>
-                        Remove
-                    </MenuItem>
+                    <MenuItem>Set inactive</MenuItem>
                 </Menu>
             </Paper>
         </>
     );
 };
 
-export default Satellites;
+export default Stations;

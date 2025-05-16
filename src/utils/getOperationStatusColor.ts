@@ -1,8 +1,8 @@
 import { OperationStatus } from "program/types/OperationStatus";
 
-export default function getOperationStatusColor(status: OperationStatus, disabled?: boolean): [number, number, number, number] {
+export default function getOperationStatusColor(status: OperationStatus, disabled?: boolean, disabledAlpha = 0.2): [number, number, number, number] {
 
-    const opacity = disabled ? 0.25 : 1;
+    const opacity = disabled ? disabledAlpha : 1;
 
     switch (status) {
         case "active":
