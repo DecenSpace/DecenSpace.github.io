@@ -62,6 +62,8 @@ const Satellites: React.FC = () => {
         showSnackbar("Satellite removed");
     };
 
+    const activeCount = satellites.filter((satellite) => !!satellite.operationStatus.active).length;
+
     return (
         <>
             <Typography variant="h3" marginBottom={3}>
@@ -74,7 +76,7 @@ const Satellites: React.FC = () => {
                         onSatelliteRemoved={onSatelliteRemoved} />
                 ) : (
                     <DashboardCard>
-                        <CardHeader title="Fleet" subheader="0/0 active" />
+                        <CardHeader title="Fleet" subheader={`${activeCount}/${satellites.length} active`} />
                         <CardContent>
                             {/* TODO: contribution-type graph */}
                         </CardContent>
