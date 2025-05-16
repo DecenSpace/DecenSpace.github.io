@@ -16,42 +16,53 @@ import AppContentGrid from "routes/app/components/AppContentGrid";
 import DashboardCard from "routes/app/components/DashboardCard";
 import DashboardCardButton from "routes/app/components/DashboardCardButton";
 import { useState } from "react";
-import { TableDemoData, tableDemoData } from "./utils/tableDemoData";
 import StationTableRow from "./components/StationTableRow";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import { ClickAwayListener } from "@mui/material";
+import BN from "bn.js";
+import StationDataBoard from "./components/StationDataBoard";
+import StationsViewer from "./components/StationsViewer";
+import useUserGroundStations from "../hooks/useUserGroundStations";
+import { useShowSnackbar } from "components/SnackbarProvider";
+import { GroundStationDataValue } from "program/types/GroundStationDataValue";
 
-const StationsTable = styled(Table)({
+const StationsTableElement = styled(Table)({
     "th:first-child, td:first-child": {
-        width: 56
+        width: 56,
     },
     "th:last-child, td:last-child": {
-        width: 56
-    }
+        width: 56,
+    },
 });
 
 const Stations: React.FC = () => {
 
+    const showSnackbar = useShowSnackbar();
+
+    const { stations, removeStation } = useUserGroundStations();
+    const [selectedStation, setSelectedStation] = useState<GroundStationDataValue | null>(null);
+
     const [tablePageSize, setTablePageSize] = useState(10);
-
-    const tableData = tableDemoData.slice(0, tablePageSize);
-
-    const [selectedItem, setSelectedItem] = useState<TableDemoData | null>(null);
     const [selectedMenuItem, setSelectedMenuItem] = useState<[id: string, element: HTMLElement] | null>(null);
 
-    const onTableItemClick = (item: TableDemoData) => {
-        setSelectedItem(item);
+    const onTableItemClick = (station: GroundStationDataValue) => {
+        setSelectedStation(station === selectedStation ? null : station);
     };
 
-    const onTableItemMenuClick = (item: TableDemoData, element: HTMLElement) => {
-
-        setSelectedMenuItem([item.id, element]);
-        setSelectedItem(item);
+    const onTableItemMenuClick = (
+        station: GroundStationDataValue,
+        element: HTMLElement
+    ) => {
+        setSelectedMenuItem([station.station_id.toString(), element]);
+        setSelectedStation(station);
     };
+
+    const onStationRemoved = (stationId: BN) => {
+        removeStation(stationId);
+        showSnackbar("Station removed");
+    };
+
+    const activeCount = stations.filter((station) => !!station.operationStatus.active).length;
 
     return (
         <>
@@ -59,75 +70,76 @@ const Stations: React.FC = () => {
                 Stations
             </Typography>
             <AppContentGrid sx={{ gridAutoRows: "400px" }}>
-                {selectedItem ? (
-                    <DashboardCard variant="outlined">
-                        <CardHeader title={selectedItem.name} subheader="Selected station" />
-                        {/* <CardContent>
-                            <Typography variant="body2">Name: {selectedItem.name}</Typography>
-                            <Typography variant="body2">Date added: {selectedItem.added}</Typography>
-                        </CardContent> */}
-                        <List dense disablePadding>
-                            <ListItem>
-                                <ListItemText primary="Name" secondary={selectedItem.name} />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemText primary="Added" secondary={selectedItem.added} />
-                            </ListItem>
-                        </List>
-                    </DashboardCard>
+                {selectedStation?.station_id ? (
+                    <StationDataBoard
+                        station={selectedStation}
+                        onStationRemoved={onStationRemoved}
+                    />
                 ) : (
                     <DashboardCard>
-                        <CardHeader title="Stations" subheader="0/0 active" />
+                        <CardHeader title="Stations" subheader={`${activeCount}/${stations.length} active`} />
                         <CardContent>
                             {/* TODO: contribution-type graph */}
                         </CardContent>
                         <CardActions>
-                            <DashboardCardButton component={Link} to="/app/ground-station-ops/register">
+                            <DashboardCardButton component={Link} to="/app/ground-station-ops/stations/register">
                                 Register
                             </DashboardCardButton>
                         </CardActions>
                     </DashboardCard>
                 )}
-                <Paper sx={{ backgroundColor: "rgb(0, 0, 0)", gridColumn: { xs: "span 1", sm: "2 / -1" }, gridRow: "1 / -1", height: "100%" }}>
-                    {/* TODO: super cool 3d earth */}
+
+                <Paper
+                    sx={{
+                        position: "relative",
+                        backgroundColor: "rgb(0, 0, 0)",
+                        gridColumn: { xs: "span 1", sm: "2 / -1" },
+                        gridRow: "1 / -1",
+                        height: "100%",
+                    }}
+                >
+                    <StationsViewer
+                        stations={stations}
+                        selectedStation={selectedStation}
+                    />
                 </Paper>
             </AppContentGrid>
             <Paper variant="outlined" sx={{ marginTop: 3 }}>
-                <ClickAwayListener onClickAway={() => setSelectedItem(null)}>
-                    <TableContainer>
-                        <StationsTable size="small">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell />
-                                    <TableCell>Name</TableCell>
-                                    <TableCell>Transmissions</TableCell>
-                                    <TableCell>Added</TableCell>
-                                    <TableCell></TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {tableData.map(data => (
-                                    <StationTableRow
-                                        key={data.id}
-                                        data={data}
-                                        selected={selectedItem === data}
-                                        onSelect={onTableItemClick}
-                                        onMenuClick={onTableItemMenuClick}
-                                    />
-                                ))}
-                            </TableBody>
-                        </StationsTable>
-                    </TableContainer>
-                </ClickAwayListener>
+                <TableContainer>
+                    <StationsTableElement size="small">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell />
+                                <TableCell>Name</TableCell>
+                                <TableCell>Frequency</TableCell>
+                                <TableCell>Cost per MB</TableCell>
+                                <TableCell></TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {stations.map((station, index) => (
+                                <StationTableRow
+                                    key={index}
+                                    station={station}
+                                    selected={station === selectedStation}
+                                    onSelect={onTableItemClick}
+                                    onMenuClick={onTableItemMenuClick}
+                                />
+                            ))}
+                        </TableBody>
+                    </StationsTableElement>
+                </TableContainer>
                 <TablePagination
                     size="small"
                     rowsPerPageOptions={[10, 25, 100]}
                     component="div"
-                    count={tableDemoData.length}
+                    count={stations.length}
                     rowsPerPage={tablePageSize}
                     page={0}
                     onPageChange={() => { }}
-                    onRowsPerPageChange={r => setTablePageSize(+r.target.value)}
+                    onRowsPerPageChange={(r) =>
+                        setTablePageSize(+r.target.value)
+                    }
                 />
                 <Menu
                     open={!!selectedMenuItem}

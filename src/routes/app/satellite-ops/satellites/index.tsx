@@ -72,7 +72,7 @@ const Satellites: React.FC = () => {
             <AppContentGrid sx={{ gridAutoRows: "400px" }}>
                 {selectedSatellite?.noradId ? (
                     <SatelliteDataBoard
-                        noradId={selectedSatellite.noradId}
+                        satellite={selectedSatellite}
                         onSatelliteRemoved={onSatelliteRemoved} />
                 ) : (
                     <DashboardCard>
