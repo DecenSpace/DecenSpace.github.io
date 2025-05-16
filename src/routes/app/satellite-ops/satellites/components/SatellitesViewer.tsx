@@ -1,24 +1,9 @@
 import EarthViewer, { IEarthViewerProps } from "components/EarthViewer";
 import { Entity } from "resium";
-import { Cartesian3, Color, JulianDate, SampledPositionProperty, Math as CesiumMath, Matrix3, LagrangePolynomialApproximation } from "cesium";
-import { ManeuverTypes, OperationStatus } from "../utils/RegistrationUtils";
-
-// hopefully this will look like the blockchain record
-export interface ISatellite {
-    owner: string;
-    name: string;
-    country: string;
-    noradId: string;
-    launchDate: Date;
-    mintDate: Date;
-    // orbitType: string;
-    inclination: number;
-    altitude: number;
-    maneuverType: ManeuverTypes;
-    operationStatus: OperationStatus;
-
-    semiMajorAxis: number;
-}
+import { Cartesian3, Color, JulianDate, SampledPositionProperty, Math as CesiumMath, Matrix3 } from "cesium";
+import { SatelliteDataValues } from "program/types/SatelliteDataValues";
+import getOperationStatusColor from "utils/getOperationStatusColor";
+import { OperationStatus } from "program/types/OperationStatus";
 
 function createEciPosition(
     angleDeg: number,
@@ -56,7 +41,7 @@ function createEciPosition(
 };
 
 function createSampledPosition(
-    satellite: ISatellite,
+    satellite: SatelliteDataValues,
     start: JulianDate,
     steps = 360
 ): SampledPositionProperty {
@@ -70,11 +55,10 @@ function createSampledPosition(
         const eciPosition = createEciPosition(
             deg,
             satellite.semiMajorAxis,
-            0,
+            satellite.eccentricity,
             satellite.inclination,
-            180,
-            90
-
+            satellite.raan,
+            satellite.argOfPeriapsis,
         );
 
         position.addSample(time, eciPosition);
@@ -83,36 +67,46 @@ function createSampledPosition(
     return position;
 };
 
-const SatelliteEntity: React.FC<ISatellite> = (satellite) => (
-    <Entity
-        name={satellite.name}
-        position={createSampledPosition(satellite, JulianDate.now())}
-        path={{
-            resolution: 1,
-            material: new Color(255, 0, 0),
-            width: 2,
-            leadTime: Number.POSITIVE_INFINITY,
-            trailTime: Number.POSITIVE_INFINITY,
-        }}
-        point={{
-            pixelSize: 8,
-            color: new Color(255, 0, 0),
-            outlineColor: Color.BLACK,
-            outlineWidth: 1,
-        }}
-        description={`Name: ${satellite.name}, Owner: ${satellite.owner}, Country: ${satellite.country}`}
-    />
-);
+const SatelliteEntity: React.FC<{ satellite: SatelliteDataValues, selected: boolean }> = ({ satellite, selected }) => {
+
+    const [r, g, b, a] = getOperationStatusColor(
+        Object.keys(satellite.operationStatus)[0] as OperationStatus,
+        selected
+    );
+
+    const color = new Color(r, g, b, a);
+
+    return (
+        <Entity
+            name={satellite.name}
+            position={createSampledPosition(satellite, JulianDate.now())}
+            path={{
+                resolution: 1,
+                material: color,
+                width: 2,
+                leadTime: Number.POSITIVE_INFINITY,
+                trailTime: Number.POSITIVE_INFINITY,
+            }}
+            point={{
+                pixelSize: 8,
+                color: color,
+                outlineColor: Color.BLACK,
+                outlineWidth: 1,
+            }}
+            description={`Name: ${satellite.name}, Owner: ${satellite.owner}, Country: ${satellite.country}`}
+        />
+    );
+};
 
 interface ISatellitesViewerProps extends IEarthViewerProps {
-    satellites: ISatellite[];
-    selectedSatelliteId?: string;
+    satellites: SatelliteDataValues[];
+    selectedSatellite?: SatelliteDataValues | null;
     fullWidthAndHeight?: boolean;
 }
 
 const SatellitesViewer: React.FC<ISatellitesViewerProps> = ({
     satellites,
-    selectedSatelliteId,
+    selectedSatellite,
     fullWidthAndHeight = true,
     ...props
 }) => {
@@ -121,8 +115,9 @@ const SatellitesViewer: React.FC<ISatellitesViewerProps> = ({
         <EarthViewer {...props}>
             {satellites?.map(satellite => (
                 <SatelliteEntity
-                    key={satellite.noradId}
-                    {...satellite}
+                    key={satellite.noradId.toString()}
+                    satellite={satellite}
+                    selected={satellite === selectedSatellite}
                 />
             ))}
         </EarthViewer>

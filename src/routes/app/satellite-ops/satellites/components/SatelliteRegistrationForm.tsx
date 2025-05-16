@@ -7,18 +7,8 @@ import TextFieldControl from "routes/app/components/form-controls/TextFieldContr
 import Stack from "@mui/material/Stack";
 import SelectControl from "routes/app/components/form-controls/SelectControl";
 import countries from "utils/countries";
-
-type ManeuverType =
-    | "stationKeeping"
-    | "orbitRaising"
-    | "orbitLowering"
-    | "inclinationChange"
-    | "phaseAdjustment"
-    | "collisionAvoidance"
-    | "endOfLife"
-    | "desaturation";
-
-type OperationStatus = "active" | "offline" | "maintenance";
+import { ManeuverType } from "program/types/ManeuverType";
+import { OperationStatus } from "program/types/OperationStatus";
 
 export interface ISatelliteFormValues {
     // owner: PublicKey;

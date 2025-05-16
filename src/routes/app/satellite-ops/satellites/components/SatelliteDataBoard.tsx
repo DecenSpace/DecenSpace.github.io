@@ -8,12 +8,12 @@ import BN from "bn.js";
 import { getSatelliteData } from "program/accounts/satellite";
 import { useEffect, useState } from "react";
 import DashboardCard from "routes/app/components/DashboardCard";
-import { SatelliteDataValues } from "../utils/satelliteDataValues";
 import DashboardCardButton from "routes/app/components/DashboardCardButton";
 import { closeSatelliteTx } from "program/transactions/closeSatelliteTx";
 import { closeSatelliteArgs } from "program/instructions/closeSatellite";
 import { useSatelliteProgram } from "routes/app";
 import CardActions from "@mui/material/CardActions";
+import { SatelliteDataValues } from "program/types/SatelliteDataValues";
 
 interface SatelliteDataBoardProps {
     noradId: BN;
