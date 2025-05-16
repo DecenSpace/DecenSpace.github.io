@@ -6,7 +6,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { GroundStationDataValue } from "program/types/GroundStationDataValue";
 import getOperationStatusColor from "utils/getOperationStatusColor";
 import { parseOperationStatus } from "program/types/OperationStatus";
-import { parseFrequencyType } from "program/types/FrequencyType";
+import { getFrequencyTypeText } from "program/types/FrequencyType";
 
 const priceFormatter = new Intl.NumberFormat(undefined, {
     style: "decimal",
@@ -40,7 +40,7 @@ const StationTableRow: React.FC<IStationTableRowProps> = ({
                 <Box bgcolor={`rgba(${r}, ${g}, ${b}, ${a})`} width="1em" height="1em" />
             </TableCell>
             <TableCell>{station.name}</TableCell>
-            <TableCell>{parseFrequencyType(station.frequency_type)}</TableCell>
+            <TableCell>{getFrequencyTypeText(station.frequency_type)}</TableCell>
             <TableCell>{priceFormatter.format(station.cost_per_mb)}</TableCell>
             <TableCell>
                 <IconButton

@@ -8,7 +8,7 @@ import DashboardCard from "routes/app/components/DashboardCard";
 import DashboardCardButton from "routes/app/components/DashboardCardButton";
 import CardActions from "@mui/material/CardActions";
 import { GroundStationDataValue } from "program/types/GroundStationDataValue";
-import { parseFrequencyType } from "program/types/FrequencyType";
+import { getFrequencyTypeText } from "program/types/FrequencyType";
 import { parseOperationStatus } from "program/types/OperationStatus";
 
 const priceFormatter = new Intl.NumberFormat(undefined, {
@@ -54,7 +54,7 @@ const StationDataBoard: React.FC<StationDataBoardProps> = ({
                 <ListItem>
                     <ListItemText
                         primary="Frequency"
-                        secondary={parseFrequencyType(station.frequency_type)}
+                        secondary={getFrequencyTypeText(station.frequency_type)}
                     />
                 </ListItem>
                 <ListItem>

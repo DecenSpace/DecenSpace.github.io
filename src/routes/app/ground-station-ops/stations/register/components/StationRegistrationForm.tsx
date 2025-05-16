@@ -8,7 +8,7 @@ import Stack from "@mui/material/Stack";
 import SelectControl from "routes/app/components/form-controls/SelectControl";
 import { OperationStatus } from "program/types/OperationStatus";
 import Typography from "@mui/material/Typography";
-import { FrequencyType } from "program/types/FrequencyType";
+import { FrequencyType, getFrequencyTypeText } from "program/types/FrequencyType";
 
 export interface IStationFormValues {
     stationId: string;
@@ -133,17 +133,9 @@ const StationRegistrationForm: React.FC<IStationRegistrationFormProps> = ({
                         label="Frequency type"
                         variant="filled"
                         options={
-                            [
-                                { label: "UHF", value: "UHF" },
-                                { label: "VHF", value: "VHF" },
-                                { label: "S-BAND", value: "S-BAND" },
-                                { label: "X-BAND", value: "X-BAND" },
-                                { label: "KU-BAND", value: "KU-BAND" },
-                                { label: "KA-BAND", value: "KA-BAND" },
-                            ] satisfies {
-                                label: string;
-                                value: FrequencyType;
-                            }[]
+                            (["uhf", "vhf", "sband", "kband", "kuBand", "kaBand"] satisfies FrequencyType[]).map(type => (
+                                { label: getFrequencyTypeText(type), value: type } satisfies { label: string; value: FrequencyType }
+                            ))
                         }
                         fullWidth
                     />
