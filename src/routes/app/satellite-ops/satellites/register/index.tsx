@@ -25,73 +25,81 @@ const RegisterSatellite: React.FC = () => {
             !programAddresses ||
             !walletContext.wallet ||
             !walletContext.publicKey
-        )
+        ) {
             return;
+        }
 
-        const noradId = new BN(formValues.noradId);
+        try {
 
-        // get satellite pda
-        const [satellitePda] = PublicKey.findProgramAddressSync(
-            [
-                SATELLITE_SEEDS,
-                walletContext.publicKey.toBuffer(),
-                adminPubkey.toBuffer(),
-                noradId.toArrayLike(Buffer, "le", 8),
-            ],
-            satellitesProgram.programId
-        );
+            const noradId = new BN(formValues.noradId);
+    
+            // get satellite pda
+            const [satellitePda] = PublicKey.findProgramAddressSync(
+                [
+                    SATELLITE_SEEDS,
+                    walletContext.publicKey.toBuffer(),
+                    adminPubkey.toBuffer(),
+                    noradId.toArrayLike(Buffer, "le", 8),
+                ],
+                satellitesProgram.programId
+            );
+    
+            // build tx instruction
+            const txInstruction = await satellitesProgram.methods
+                .mintSatellite({
+                    owner: programAddresses.walletPubkey,
+                    name: formValues.name,
+                    orbitType: "",
+                    country: formValues.country,
+                    noradId,
+                    launchDate: new BN(formValues.launchDate.getTime()),
+                    inclination: formValues.inclination,
+                    altitude: 7000, // TODO: remove form contract
+                    semiMajorAxis: formValues.semiMajorAxis,
+                    eccentricity: formValues.eccentricity,
+                    raan: formValues.raan,
+                    argOfPeriapsis: formValues.argOfPeriapsis,
+                    maneuverType: { [formValues.maneuverType]: {} } as any,
+                    operationStatus: { [formValues.operationStatus]: {} } as any,
+                })
+                .accounts({
+                    authority: programAddresses.walletPubkey,
+                    registry: programAddresses.registryPda,
+                    satellite: satellitePda,
+                    satelliteOperator: programAddresses.satelliteOperatorPda,
+                    systemProgram: programAddresses.systemPda,
+                })
+                .instruction();
+    
+            const { blockhash, lastValidBlockHeight } =
+                await connection.getLatestBlockhash();
+    
+            // build tx
+            const tx = new Transaction({
+                feePayer: programAddresses.walletPubkey,
+                blockhash,
+                lastValidBlockHeight,
+            });
+            tx.add(txInstruction);
+    
+            const signature = await walletContext.sendTransaction(tx, connection);
+    
+            await connection.confirmTransaction({
+                signature,
+                blockhash,
+                lastValidBlockHeight,
+            });
+    
+            // TODO: snackbar message
+            showSnackbar("Satellite registered successfully");
+    
+            // TODO: add select satellite ID
+            navigate("/app/satellite-ops/satellites");
 
-        // build tx instruction
-        const txInstruction = await satellitesProgram.methods
-            .mintSatellite({
-                owner: programAddresses.walletPubkey,
-                name: formValues.name,
-                orbitType: "",
-                country: formValues.country,
-                noradId,
-                launchDate: new BN(formValues.launchDate.getTime()),
-                inclination: formValues.inclination,
-                altitude: 7000, // TODO: remove form contract
-                semiMajorAxis: formValues.semiMajorAxis,
-                eccentricity: formValues.eccentricity,
-                raan: formValues.raan,
-                argOfPeriapsis: formValues.argOfPeriapsis,
-                maneuverType: { [formValues.maneuverType]: {} } as any,
-                operationStatus: { [formValues.operationStatus]: {} } as any,
-            })
-            .accounts({
-                authority: programAddresses.walletPubkey,
-                registry: programAddresses.registryPda,
-                satellite: satellitePda,
-                satelliteOperator: programAddresses.satelliteOperatorPda,
-                systemProgram: programAddresses.systemPda,
-            })
-            .instruction();
-
-        const { blockhash, lastValidBlockHeight } =
-            await connection.getLatestBlockhash();
-
-        // build tx
-        const tx = new Transaction({
-            feePayer: programAddresses.walletPubkey,
-            blockhash,
-            lastValidBlockHeight,
-        });
-        tx.add(txInstruction);
-
-        const signature = await walletContext.sendTransaction(tx, connection);
-
-        await connection.confirmTransaction({
-            signature,
-            blockhash,
-            lastValidBlockHeight,
-        });
-
-        // TODO: snackbar message
-        showSnackbar("Satellite registered successfully");
-
-        // TODO: add select satellite ID
-        navigate("/app/satellite-ops/satellites");
+        } catch (error) {
+            console.error("Error registering satellite:", error);
+            showSnackbar("Error registering satellite", "error");
+        }
     };
 
     return (
