@@ -38,7 +38,7 @@ const Home: React.FC = () => {
                         <DashboardCardButton component={Link} to="/app/satellite-ops/satellites">
                             View more
                         </DashboardCardButton>
-                        <DashboardCardButton component={Link} to="/app/satellite-ops/register-satellite">
+                        <DashboardCardButton component={Link} to="/app/satellite-ops/satellites/register">
                             Register
                         </DashboardCardButton>
                     </CardActions>

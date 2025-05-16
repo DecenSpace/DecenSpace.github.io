@@ -5,11 +5,12 @@ import SatelliteRegistrationForm, {
 } from "../components/SatelliteRegistrationForm";
 import { useProgramAddresses, useSatelliteProgram } from "routes/app";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { Keypair, PublicKey, Transaction } from "@solana/web3.js";
+import { PublicKey, Transaction } from "@solana/web3.js";
 import { BN } from "bn.js";
 import { SATELLITE_SEEDS } from "program/utils/Seeds";
 import adminPubkey from "routes/app/admin/utils/adminPubkey";
 import { useNavigate } from "react-router";
+import { useShowSnackbar } from "components/SnackbarProvider";
 
 const RegisterSatellite: React.FC = () => {
     const { connection } = useConnection();
@@ -17,6 +18,7 @@ const RegisterSatellite: React.FC = () => {
     const satellitesProgram = useSatelliteProgram();
     const programAddresses = useProgramAddresses();
     const navigate = useNavigate();
+    const showSnackbar = useShowSnackbar();
 
     const handleSubmit = async (formValues: ISatelliteFormValues) => {
         if (
@@ -86,6 +88,7 @@ const RegisterSatellite: React.FC = () => {
         });
 
         // TODO: snackbar message
+        showSnackbar("Satellite registered successfully");
 
         // TODO: add select satellite ID
         navigate("/app/satellite-ops/satellites");
