@@ -5,11 +5,12 @@ import { OperationStatus } from "./OperationStatus";
 
 export interface GroundStationDataValue {
     owner: PublicKey;
-    station_id: BN;
+    stationId: BN;
     name: string;
     longitude: BN;
-    latitude: BN
-    cost_per_mb: number;
-    frequency_type: { [K in FrequencyType]?: {}} ;
-    operationStatus: { [K in OperationStatus]?: {}} ;
+    latitude: BN;
+    addedDate: Date;
+    costPerMb: number;
+    frequencyType: { [K in FrequencyType]?: {} };
+    operationStatus: { [K in OperationStatus]?: {} };
 }
