@@ -40,7 +40,7 @@ const StationTableRow: React.FC<IStationTableRowProps> = ({
                 <Box bgcolor={`rgba(${r}, ${g}, ${b}, ${a})`} width="1em" height="1em" />
             </TableCell>
             <TableCell>{station.name}</TableCell>
-            <TableCell>{getFrequencyTypeText(station.frequency_type)}</TableCell>
+            <TableCell>{getFrequencyTypeText(station.frequencyType)}</TableCell>
             <TableCell>{priceFormatter.format(station.cost_per_mb)}</TableCell>
             <TableCell>
                 <IconButton

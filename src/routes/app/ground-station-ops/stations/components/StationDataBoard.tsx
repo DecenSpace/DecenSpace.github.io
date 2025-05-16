@@ -53,7 +53,7 @@ const StationDataBoard: React.FC<StationDataBoardProps> = ({
                 <ListItem>
                     <ListItemText
                         primary="Frequency"
-                        secondary={getFrequencyTypeText(station.frequency_type)}
+                        secondary={getFrequencyTypeText(station.frequencyType)}
                     />
                 </ListItem>
                 <ListItem>

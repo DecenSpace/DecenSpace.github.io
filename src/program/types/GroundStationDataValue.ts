@@ -10,6 +10,6 @@ export interface GroundStationDataValue {
     longitude: BN;
     latitude: BN
     cost_per_mb: number;
-    frequency_type: { [K in FrequencyType]?: {}} ;
+    frequencyType: { [K in FrequencyType]?: {}} ;
     operationStatus: { [K in OperationStatus]?: {}} ;
 }
