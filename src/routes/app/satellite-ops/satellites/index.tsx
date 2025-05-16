@@ -81,7 +81,7 @@ const Satellites: React.FC = () => {
                             {/* TODO: contribution-type graph */}
                         </CardContent>
                         <CardActions>
-                            <DashboardCardButton component={Link} to="/app/atellite-ops/satellites/register">
+                            <DashboardCardButton component={Link} to="/app/satellite-ops/satellites/register">
                                 Register
                             </DashboardCardButton>
                         </CardActions>
