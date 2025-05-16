@@ -1,16 +1,17 @@
 import { Box, Card, CardContent } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import SatelliteRegistrationForm, { ISatelliteFormValues } from "../components/SatelliteRegistrationForm";
+import SatelliteRegistrationForm, {
+    ISatelliteFormValues,
+} from "../components/SatelliteRegistrationForm";
 import { useProgramAddresses, useSatelliteProgram } from "routes/app";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { PublicKey, Transaction } from "@solana/web3.js";
+import { Keypair, PublicKey, Transaction } from "@solana/web3.js";
 import { BN } from "bn.js";
 import { SATELLITE_SEEDS } from "program/utils/Seeds";
 import adminPubkey from "routes/app/admin/utils/adminPubkey";
 import { useNavigate } from "react-router";
 
 const RegisterSatellite: React.FC = () => {
-
     const { connection } = useConnection();
     const walletContext = useWallet();
     const satellitesProgram = useSatelliteProgram();
@@ -18,8 +19,12 @@ const RegisterSatellite: React.FC = () => {
     const navigate = useNavigate();
 
     const handleSubmit = async (formValues: ISatelliteFormValues) => {
-
-        if (!programAddresses || !walletContext.wallet || !walletContext.publicKey) return;
+        if (
+            !programAddresses ||
+            !walletContext.wallet ||
+            !walletContext.publicKey
+        )
+            return;
 
         const noradId = new BN(formValues.noradId);
 
@@ -45,8 +50,12 @@ const RegisterSatellite: React.FC = () => {
                 launchDate: new BN(formValues.launchDate.getTime()),
                 inclination: formValues.inclination,
                 altitude: formValues.altitude,
+                semiMajorAxis: formValues.semiMajorAxis,
+                eccentricity: formValues.eccentricity,
+                raan: formValues.raan,
+                argOfPeriapsis: formValues.argOfPeriapsis,
                 maneuverType: { [formValues.maneuverType]: {} } as any,
-                operationStatus: { [formValues.operationStatus]: {} } as any
+                operationStatus: { [formValues.operationStatus]: {} } as any,
             })
             .accounts({
                 authority: programAddresses.walletPubkey,
@@ -57,7 +66,8 @@ const RegisterSatellite: React.FC = () => {
             })
             .instruction();
 
-        const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash();
+        const { blockhash, lastValidBlockHeight } =
+            await connection.getLatestBlockhash();
 
         // build tx
         const tx = new Transaction({
@@ -75,7 +85,7 @@ const RegisterSatellite: React.FC = () => {
             lastValidBlockHeight,
         });
 
-        // TODO: snackbar message 
+        // TODO: snackbar message
 
         // TODO: add select satellite ID
         navigate("/app/satellite-ops/satellites");

@@ -10,4 +10,8 @@ export interface SatelliteDataValues {
     orbitType: string;
     inclination: number;
     altitude: number;
+    semiMajorAxis: number;
+    eccentricity: number;
+    raan: number;
+    argOfPeriapsis: number;
 }

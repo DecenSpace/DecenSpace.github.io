@@ -9,7 +9,11 @@ import { getSatelliteData } from "program/accounts/satellite";
 import { useEffect, useState } from "react";
 import DashboardCard from "routes/app/components/DashboardCard";
 import { SatelliteDataValues } from "../utils/satelliteDataValues";
+import DashboardCardButton from "routes/app/components/DashboardCardButton";
+import { closeSatelliteTx } from "program/transactions/closeSatelliteTx";
+import { closeSatelliteArgs } from "program/instructions/closeSatellite";
 import { useSatelliteProgram } from "routes/app";
+import CardActions from "@mui/material/CardActions";
 
 interface SatelliteDataBoardProps {
     noradId: BN;
@@ -21,6 +25,7 @@ const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId }) => {
     const [loading, setLoading] = useState(false);
     const wallet = useWallet();
 
+    // run whenever there is change in norad id
     useEffect(() => {
         const fetchSatelliteData = async () => {
             try {
@@ -42,6 +47,14 @@ const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId }) => {
         fetchSatelliteData();
     }, [program.programId, wallet.publicKey, noradId]);
 
+    // prepare tx args
+    const args: closeSatelliteArgs = { noradId };
+
+    // func to close the satellite
+    const closeSatellite = async () => {
+        await closeSatelliteTx(program, args, wallet.publicKey!, wallet);
+    };
+
     return (
         <DashboardCard variant="outlined">
             {loading ? (
@@ -57,17 +70,34 @@ const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId }) => {
                     <List dense disablePadding>
                         <ListItem>
                             <ListItemText
-                                primary="Name"
-                                secondary={satelliteData?.name}
+                                primary="NORAD ID"
+                                secondary={satelliteData?.noradId.toNumber()}
                             />
                         </ListItem>
                         <ListItem>
                             <ListItemText
-                                primary="Added"
-                                secondary={satelliteData?.launchDate.toNumber()}
+                                primary="Inclination"
+                                secondary={satelliteData?.inclination}
+                            />
+                        </ListItem>
+                        <ListItem>
+                            <ListItemText
+                                primary="Altitude"
+                                secondary={satelliteData?.altitude}
+                            />
+                        </ListItem>
+                        <ListItem>
+                            <ListItemText
+                                primary="Semi-Major axis"
+                                secondary={satelliteData?.semiMajorAxis}
                             />
                         </ListItem>
                     </List>
+                    <CardActions>
+                        <DashboardCardButton onClick={closeSatellite}>
+                            Close
+                        </DashboardCardButton>
+                    </CardActions>
                 </>
             )}
         </DashboardCard>
