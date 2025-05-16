@@ -11,7 +11,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AppContentGrid from "routes/app/components/AppContentGrid";
 import DashboardCard from "routes/app/components/DashboardCard";
 import DashboardCardButton from "routes/app/components/DashboardCardButton";
@@ -45,6 +45,8 @@ const Satellites: React.FC = () => {
     const [tablePageSize, setTablePageSize] = useState(10);
     const [selectedMenuItem, setSelectedMenuItem] = useState<[id: string, element: HTMLElement] | null>(null);
 
+    const navigate = useNavigate();
+
     const onTableItemClick = (satellite: SatelliteDataValues) => {
         setSelectedSatellite(satellite === selectedSatellite ? null : satellite);
     };
@@ -57,8 +59,8 @@ const Satellites: React.FC = () => {
         setSelectedSatellite(satellite);
     };
 
-    const onSatelliteRemoved = (noradId: BN) => {
-        removeSatellite(noradId);
+    const onSatelliteRemoved = async (noradId: BN) => {
+        await removeSatellite(noradId);
         showSnackbar("Satellite removed");
     };
 
@@ -81,7 +83,10 @@ const Satellites: React.FC = () => {
                             {/* TODO: contribution-type graph */}
                         </CardContent>
                         <CardActions>
-                            <DashboardCardButton component={Link} to="/app/satellite-ops/satellites/register">
+                            <DashboardCardButton
+                                component={Link}
+                                to="/app/satellite-ops/satellites/register"
+                            >
                                 Register
                             </DashboardCardButton>
                         </CardActions>
@@ -148,7 +153,9 @@ const Satellites: React.FC = () => {
                     transformOrigin={{ vertical: "top", horizontal: "right" }}
                 >
                     <MenuItem>Edit details</MenuItem>
-                    <MenuItem>Set inactive</MenuItem>
+                    <MenuItem onClick={() => navigate("/app/satellite-ops/satellites/register")}>
+                        Remove
+                    </MenuItem>
                 </Menu>
             </Paper>
         </>

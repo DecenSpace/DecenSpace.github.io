@@ -13,36 +13,38 @@ export default function useUsersSatellites() {
 
     const [satellites, setSatellites] = useState<SatelliteDataValues[]>([]);
 
+    const fetchSatellites = (async () => {
+
+        if (!wallet.publicKey) return;
+
+        const walletPublicKey = wallet.publicKey;
+
+        const { satellites: satelliteNoradIds } = await getSatelliteOwnerData(
+            walletPublicKey,
+            program
+        );
+
+        const satellites = await Promise.all(satelliteNoradIds.map((noradId) => getSatelliteData(
+            walletPublicKey,
+            program,
+            noradId
+        )));
+
+        setSatellites(satellites);
+    });
+
     useEffect(() => {
 
-        (async () => {
-
-            if (!wallet.publicKey) return;
-
-            const walletPublicKey = wallet.publicKey;  
-
-            const { satellites: satelliteNoradIds } = await getSatelliteOwnerData(
-                walletPublicKey,
-                program
-            );
-    
-            const satellites = await Promise.all(satelliteNoradIds.map((noradId) => getSatelliteData(
-                walletPublicKey,
-                program,
-                noradId
-            )));
-
-            setSatellites(satellites);
-        })();
-
+        fetchSatellites();
 
     }, [wallet.publicKey, program.programId]);
 
-    const removeSatellite = (noradId: BN) => {
+    const removeSatellite = async (noradId: BN) => {
 
         setSatellites((prevSatellites) =>
             prevSatellites.filter((satellite) => !satellite.noradId.eq(noradId))
         );
+        await fetchSatellites();
     };
 
     return { satellites, removeSatellite };
