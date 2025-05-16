@@ -54,7 +54,7 @@ function createSampledPosition(
 
         const eciPosition = createEciPosition(
             deg,
-            satellite.semiMajorAxis,
+            satellite.semiMajorAxis * 1000, // kilometers to meters
             satellite.eccentricity,
             satellite.inclination,
             satellite.raan,
@@ -75,6 +75,8 @@ const SatelliteEntity: React.FC<{ satellite: SatelliteDataValues, selected: bool
     );
 
     const color = new Color(r, g, b, a);
+
+    console.log("entity", satellite);
 
     return (
         <Entity
