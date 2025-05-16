@@ -26,28 +26,24 @@ const StationDataBoard: React.FC<StationDataBoardProps> = ({
     station,
     onStationRemoved,
 }) => {
-
     const wallet = useWallet();
 
     // func to close the station
     const closeStation = async () => {
         if (wallet.publicKey) {
             // TODO: await closeStationTX(program, args, wallet.publicKey, wallet);
-            onStationRemoved(station.station_id);
+            onStationRemoved(station.stationId);
         }
     };
 
     return (
         <DashboardCard variant="outlined" sx={{ overflowY: "auto" }}>
-            <CardHeader
-                title={station.name}
-                subheader="Selected station"
-            />
+            <CardHeader title={station.name} subheader="Selected station" />
             <List dense disablePadding>
                 <ListItem>
                     <ListItemText
                         primary="Station ID"
-                        secondary={station.station_id.toString()}
+                        secondary={station.stationId.toString()}
                     />
                 </ListItem>
                 <ListItem>
@@ -59,13 +55,15 @@ const StationDataBoard: React.FC<StationDataBoardProps> = ({
                 <ListItem>
                     <ListItemText
                         primary="Cost per MB"
-                        secondary={priceFormatter.format(station.cost_per_mb)}
+                        secondary={priceFormatter.format(station.costPerMb)}
                     />
                 </ListItem>
                 <ListItem>
                     <ListItemText
                         primary="Operation Status"
-                        secondary={parseOperationStatus(station.operationStatus)}
+                        secondary={parseOperationStatus(
+                            station.operationStatus
+                        )}
                     />
                 </ListItem>
                 <ListItem>
@@ -73,8 +71,9 @@ const StationDataBoard: React.FC<StationDataBoardProps> = ({
                         primary="Location"
                         secondary={
                             <span>
-                                Lat: {station.latitude.toNumber().toFixed(8)}<br />
-                                Lon: {station.longitude.toNumber().toFixed(8)}
+                                Lat: {station.latitude.toFixed(8)}
+                                <br />
+                                Lon: {station.longitude.toFixed(8)}
                             </span>
                         }
                     />

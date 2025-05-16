@@ -27,21 +27,22 @@ const StationTableRow: React.FC<IStationTableRowProps> = ({
     onSelect,
     onMenuClick,
 }) => {
-
-    const [r, g, b, a] = getOperationStatusColor(parseOperationStatus(station.operationStatus));
+    const [r, g, b, a] = getOperationStatusColor(
+        parseOperationStatus(station.operationStatus)
+    );
 
     return (
-        <TableRow
-            hover
-            selected={selected}
-            onClick={(e) => onSelect(station)}
-        >
+        <TableRow hover selected={selected} onClick={(e) => onSelect(station)}>
             <TableCell>
-                <Box bgcolor={`rgba(${r}, ${g}, ${b}, ${a})`} width="1em" height="1em" />
+                <Box
+                    bgcolor={`rgba(${r}, ${g}, ${b}, ${a})`}
+                    width="1em"
+                    height="1em"
+                />
             </TableCell>
             <TableCell>{station.name}</TableCell>
             <TableCell>{getFrequencyTypeText(station.frequencyType)}</TableCell>
-            <TableCell>{priceFormatter.format(station.cost_per_mb)}</TableCell>
+            <TableCell>{priceFormatter.format(station.costPerMb)}</TableCell>
             <TableCell>
                 <IconButton
                     size="small"

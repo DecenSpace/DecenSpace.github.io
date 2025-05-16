@@ -36,14 +36,16 @@ const StationsTableElement = styled(Table)({
 });
 
 const Stations: React.FC = () => {
-
     const showSnackbar = useShowSnackbar();
 
-    const { stations, removeStation } = useUserGroundStations();
-    const [selectedStation, setSelectedStation] = useState<GroundStationDataValue | null>(null);
+    const { groundStations, removeGroundStation } = useUserGroundStations();
+    const [selectedStation, setSelectedStation] =
+        useState<GroundStationDataValue | null>(null);
 
     const [tablePageSize, setTablePageSize] = useState(10);
-    const [selectedMenuItem, setSelectedMenuItem] = useState<[id: string, element: HTMLElement] | null>(null);
+    const [selectedMenuItem, setSelectedMenuItem] = useState<
+        [id: string, element: HTMLElement] | null
+    >(null);
 
     const onTableItemClick = (station: GroundStationDataValue) => {
         setSelectedStation(station === selectedStation ? null : station);
@@ -53,16 +55,18 @@ const Stations: React.FC = () => {
         station: GroundStationDataValue,
         element: HTMLElement
     ) => {
-        setSelectedMenuItem([station.station_id.toString(), element]);
+        setSelectedMenuItem([station.stationId.toString(), element]);
         setSelectedStation(station);
     };
 
     const onStationRemoved = (stationId: BN) => {
-        removeStation(stationId);
+        removeGroundStation(stationId);
         showSnackbar("Station removed");
     };
 
-    const activeCount = stations.filter((station) => !!station.operationStatus.active).length;
+    const activeCount = groundStations.filter(
+        (station) => !!station.operationStatus.active
+    ).length;
 
     return (
         <>
@@ -70,19 +74,25 @@ const Stations: React.FC = () => {
                 Stations
             </Typography>
             <AppContentGrid sx={{ gridAutoRows: "400px" }}>
-                {selectedStation?.station_id ? (
+                {selectedStation?.stationId ? (
                     <StationDataBoard
                         station={selectedStation}
                         onStationRemoved={onStationRemoved}
                     />
                 ) : (
                     <DashboardCard>
-                        <CardHeader title="Stations" subheader={`${activeCount}/${stations.length} active`} />
+                        <CardHeader
+                            title="Stations"
+                            subheader={`${activeCount}/${groundStations.length} active`}
+                        />
                         <CardContent>
                             {/* TODO: contribution-type graph */}
                         </CardContent>
                         <CardActions>
-                            <DashboardCardButton component={Link} to="/app/ground-station-ops/stations/register">
+                            <DashboardCardButton
+                                component={Link}
+                                to="/app/ground-station-ops/stations/register"
+                            >
                                 Register
                             </DashboardCardButton>
                         </CardActions>
@@ -99,7 +109,7 @@ const Stations: React.FC = () => {
                     }}
                 >
                     <StationsViewer
-                        stations={stations}
+                        stations={groundStations}
                         selected={selectedStation}
                         onSelect={onTableItemClick}
                     />
@@ -118,7 +128,7 @@ const Stations: React.FC = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {stations.map((station, index) => (
+                            {groundStations.map((station, index) => (
                                 <StationTableRow
                                     key={index}
                                     station={station}
@@ -134,7 +144,7 @@ const Stations: React.FC = () => {
                     size="small"
                     rowsPerPageOptions={[10, 25, 100]}
                     component="div"
-                    count={stations.length}
+                    count={groundStations.length}
                     rowsPerPage={tablePageSize}
                     page={0}
                     onPageChange={() => { }}

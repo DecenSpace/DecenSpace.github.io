@@ -14,5 +14,5 @@ export async function getGroundStation(
         groundStationId
     );
 
-    await program.account.groundStation.fetch(groundStationPda);
+    return program.account.groundStation.fetch(groundStationPda);
 }
