@@ -118,6 +118,77 @@ export type SatelliteMint = {
             ];
         },
         {
+            name: "mintGroundStation";
+            accounts: [
+                {
+                    name: "authority";
+                    isMut: true;
+                    isSigner: true;
+                },
+                {
+                    name: "groundStation";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "groundStationOperator";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "registry";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "systemProgram";
+                    isMut: false;
+                    isSigner: false;
+                }
+            ];
+            args: [
+                {
+                    name: "args";
+                    type: {
+                        defined: "GroundStationMintArgs";
+                    };
+                }
+            ];
+        },
+        {
+            name: "closeGroundStation";
+            accounts: [
+                {
+                    name: "authority";
+                    isMut: true;
+                    isSigner: true;
+                },
+                {
+                    name: "groundStation";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "groundStationOperator";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "registry";
+                    isMut: true;
+                    isSigner: false;
+                }
+            ];
+            args: [
+                {
+                    name: "args";
+                    type: {
+                        defined: "GroundStationCloseArgs";
+                    };
+                }
+            ];
+        },
+        {
             name: "updateRegistryAuthority";
             accounts: [
                 {
@@ -143,6 +214,72 @@ export type SatelliteMint = {
     ];
     accounts: [
         {
+            name: "groundStationOperator";
+            type: {
+                kind: "struct";
+                fields: [
+                    {
+                        name: "owner";
+                        type: "publicKey";
+                    },
+                    {
+                        name: "groundStations";
+                        type: {
+                            vec: "u64";
+                        };
+                    }
+                ];
+            };
+        },
+        {
+            name: "groundStation";
+            type: {
+                kind: "struct";
+                fields: [
+                    {
+                        name: "owner";
+                        type: "publicKey";
+                    },
+                    {
+                        name: "stationId";
+                        type: "u64";
+                    },
+                    {
+                        name: "name";
+                        type: "string";
+                    },
+                    {
+                        name: "longitude";
+                        type: "f64";
+                    },
+                    {
+                        name: "latitude";
+                        type: "f64";
+                    },
+                    {
+                        name: "addedDate";
+                        type: "i64";
+                    },
+                    {
+                        name: "costPerMb";
+                        type: "u32";
+                    },
+                    {
+                        name: "frequencyType";
+                        type: {
+                            defined: "FrequencyType";
+                        };
+                    },
+                    {
+                        name: "operationStatus";
+                        type: {
+                            defined: "OperationStatus";
+                        };
+                    }
+                ];
+            };
+        },
+        {
             name: "registry";
             type: {
                 kind: "struct";
@@ -153,6 +290,10 @@ export type SatelliteMint = {
                     },
                     {
                         name: "satelliteCount";
+                        type: "u64";
+                    },
+                    {
+                        name: "groundStationCount";
                         type: "u64";
                     }
                 ];
@@ -250,6 +391,66 @@ export type SatelliteMint = {
         }
     ];
     types: [
+        {
+            name: "GroundStationCloseArgs";
+            type: {
+                kind: "struct";
+                fields: [
+                    {
+                        name: "stationId";
+                        type: "u64";
+                    }
+                ];
+            };
+        },
+        {
+            name: "GroundStationMintArgs";
+            type: {
+                kind: "struct";
+                fields: [
+                    {
+                        name: "owner";
+                        type: "publicKey";
+                    },
+                    {
+                        name: "stationId";
+                        type: "u64";
+                    },
+                    {
+                        name: "name";
+                        type: "string";
+                    },
+                    {
+                        name: "longitude";
+                        type: "f64";
+                    },
+                    {
+                        name: "latitude";
+                        type: "f64";
+                    },
+                    {
+                        name: "costPerMb";
+                        type: "u32";
+                    },
+                    {
+                        name: "addedDate";
+                        type: "i64";
+                    },
+                    {
+                        name: "frequencyType";
+                        type: {
+                            defined: "FrequencyType";
+                        };
+                    },
+                    {
+                        name: "operationStatus";
+                        type: {
+                            defined: "OperationStatus";
+                        };
+                    }
+                ];
+            };
+        },
         {
             name: "UpdateRegistryAuthorityArgs";
             type: {
@@ -350,6 +551,32 @@ export type SatelliteMint = {
                         type: {
                             defined: "OperationStatus";
                         };
+                    }
+                ];
+            };
+        },
+        {
+            name: "FrequencyType";
+            type: {
+                kind: "enum";
+                variants: [
+                    {
+                        name: "Uhf";
+                    },
+                    {
+                        name: "Vhf";
+                    },
+                    {
+                        name: "Sband";
+                    },
+                    {
+                        name: "Xband";
+                    },
+                    {
+                        name: "KuBand";
+                    },
+                    {
+                        name: "KaBand";
                     }
                 ];
             };
@@ -565,6 +792,77 @@ export const IDL: SatelliteMint = {
             ],
         },
         {
+            name: "mintGroundStation",
+            accounts: [
+                {
+                    name: "authority",
+                    isMut: true,
+                    isSigner: true,
+                },
+                {
+                    name: "groundStation",
+                    isMut: true,
+                    isSigner: false,
+                },
+                {
+                    name: "groundStationOperator",
+                    isMut: true,
+                    isSigner: false,
+                },
+                {
+                    name: "registry",
+                    isMut: true,
+                    isSigner: false,
+                },
+                {
+                    name: "systemProgram",
+                    isMut: false,
+                    isSigner: false,
+                },
+            ],
+            args: [
+                {
+                    name: "args",
+                    type: {
+                        defined: "GroundStationMintArgs",
+                    },
+                },
+            ],
+        },
+        {
+            name: "closeGroundStation",
+            accounts: [
+                {
+                    name: "authority",
+                    isMut: true,
+                    isSigner: true,
+                },
+                {
+                    name: "groundStation",
+                    isMut: true,
+                    isSigner: false,
+                },
+                {
+                    name: "groundStationOperator",
+                    isMut: true,
+                    isSigner: false,
+                },
+                {
+                    name: "registry",
+                    isMut: true,
+                    isSigner: false,
+                },
+            ],
+            args: [
+                {
+                    name: "args",
+                    type: {
+                        defined: "GroundStationCloseArgs",
+                    },
+                },
+            ],
+        },
+        {
             name: "updateRegistryAuthority",
             accounts: [
                 {
@@ -590,6 +888,72 @@ export const IDL: SatelliteMint = {
     ],
     accounts: [
         {
+            name: "groundStationOperator",
+            type: {
+                kind: "struct",
+                fields: [
+                    {
+                        name: "owner",
+                        type: "publicKey",
+                    },
+                    {
+                        name: "groundStations",
+                        type: {
+                            vec: "u64",
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            name: "groundStation",
+            type: {
+                kind: "struct",
+                fields: [
+                    {
+                        name: "owner",
+                        type: "publicKey",
+                    },
+                    {
+                        name: "stationId",
+                        type: "u64",
+                    },
+                    {
+                        name: "name",
+                        type: "string",
+                    },
+                    {
+                        name: "longitude",
+                        type: "f64",
+                    },
+                    {
+                        name: "latitude",
+                        type: "f64",
+                    },
+                    {
+                        name: "addedDate",
+                        type: "i64",
+                    },
+                    {
+                        name: "costPerMb",
+                        type: "u32",
+                    },
+                    {
+                        name: "frequencyType",
+                        type: {
+                            defined: "FrequencyType",
+                        },
+                    },
+                    {
+                        name: "operationStatus",
+                        type: {
+                            defined: "OperationStatus",
+                        },
+                    },
+                ],
+            },
+        },
+        {
             name: "registry",
             type: {
                 kind: "struct",
@@ -600,6 +964,10 @@ export const IDL: SatelliteMint = {
                     },
                     {
                         name: "satelliteCount",
+                        type: "u64",
+                    },
+                    {
+                        name: "groundStationCount",
                         type: "u64",
                     },
                 ],
@@ -697,6 +1065,66 @@ export const IDL: SatelliteMint = {
         },
     ],
     types: [
+        {
+            name: "GroundStationCloseArgs",
+            type: {
+                kind: "struct",
+                fields: [
+                    {
+                        name: "stationId",
+                        type: "u64",
+                    },
+                ],
+            },
+        },
+        {
+            name: "GroundStationMintArgs",
+            type: {
+                kind: "struct",
+                fields: [
+                    {
+                        name: "owner",
+                        type: "publicKey",
+                    },
+                    {
+                        name: "stationId",
+                        type: "u64",
+                    },
+                    {
+                        name: "name",
+                        type: "string",
+                    },
+                    {
+                        name: "longitude",
+                        type: "f64",
+                    },
+                    {
+                        name: "latitude",
+                        type: "f64",
+                    },
+                    {
+                        name: "costPerMb",
+                        type: "u32",
+                    },
+                    {
+                        name: "addedDate",
+                        type: "i64",
+                    },
+                    {
+                        name: "frequencyType",
+                        type: {
+                            defined: "FrequencyType",
+                        },
+                    },
+                    {
+                        name: "operationStatus",
+                        type: {
+                            defined: "OperationStatus",
+                        },
+                    },
+                ],
+            },
+        },
         {
             name: "UpdateRegistryAuthorityArgs",
             type: {
@@ -797,6 +1225,32 @@ export const IDL: SatelliteMint = {
                         type: {
                             defined: "OperationStatus",
                         },
+                    },
+                ],
+            },
+        },
+        {
+            name: "FrequencyType",
+            type: {
+                kind: "enum",
+                variants: [
+                    {
+                        name: "Uhf",
+                    },
+                    {
+                        name: "Vhf",
+                    },
+                    {
+                        name: "Sband",
+                    },
+                    {
+                        name: "Xband",
+                    },
+                    {
+                        name: "KuBand",
+                    },
+                    {
+                        name: "KaBand",
                     },
                 ],
             },
