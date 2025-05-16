@@ -28,11 +28,14 @@ const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId }) => {
     // run whenever there is change in norad id
     useEffect(() => {
         const fetchSatelliteData = async () => {
+
+            if (!wallet.publicKey) return;
+
             try {
                 setLoading(true);
                 // get the satellite data and store it
                 const storeSatelliteData = await getSatelliteData(
-                    wallet.publicKey!,
+                    wallet.publicKey,
                     program,
                     noradId
                 );
@@ -51,8 +54,11 @@ const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId }) => {
     const args: closeSatelliteArgs = { noradId };
 
     // func to close the satellite
-    const closeSatellite = async () => {
-        await closeSatelliteTx(program, args, wallet.publicKey!, wallet);
+    const closeSatellite = () => {
+
+        if (wallet.publicKey) {
+            closeSatelliteTx(program, args, wallet.publicKey, wallet);
+        }
     };
 
     return (

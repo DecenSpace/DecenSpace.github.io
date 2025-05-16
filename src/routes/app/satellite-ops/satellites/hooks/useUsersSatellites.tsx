@@ -16,13 +16,17 @@ export default function useUsersSatellites() {
 
         (async () => {
 
+            if (!wallet.publicKey) return;
+
+            const walletPublicKey = wallet.publicKey;  
+
             const { satellites: satelliteNoradIds } = await getSatelliteOwnerData(
-                wallet.publicKey!,
+                walletPublicKey,
                 program
             );
     
             const satellites = await Promise.all(satelliteNoradIds.map((noradId) => getSatelliteData(
-                wallet.publicKey!,
+                walletPublicKey,
                 program,
                 noradId
             )));

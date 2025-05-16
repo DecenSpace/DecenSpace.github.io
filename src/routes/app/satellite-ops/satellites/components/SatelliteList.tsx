@@ -13,15 +13,20 @@ const SatelliteList: React.FC = ({ }) => {
     const wallet = useWallet();
 
     useEffect(() => {
+
         const storeSatelliteIds = async () => {
-            const { satellites } = await getSatelliteOwnerData(
-                wallet.publicKey!,
-                program
-            );
-            setSatelliteIds(satellites.map((id) => id.toString()));
+
+            if (wallet.publicKey) {
+                const { satellites } = await getSatelliteOwnerData(
+                    wallet.publicKey,
+                    program
+                );
+                setSatelliteIds(satellites.map((id) => id.toString()));
+            }
         };
 
         storeSatelliteIds();
+
     }, [program.programId, wallet.publicKey]);
 
     return (
