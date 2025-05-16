@@ -17,9 +17,10 @@ import { SatelliteDataValues } from "program/types/SatelliteDataValues";
 
 interface SatelliteDataBoardProps {
     noradId: BN;
+    onSatelliteRemoved: (noradId: BN) => void;
 }
 
-const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId }) => {
+const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId, onSatelliteRemoved }) => {
     const program = useSatelliteProgram();
     const [satelliteData, setSatelliteData] = useState<SatelliteDataValues>();
     const [loading, setLoading] = useState(false);
@@ -54,10 +55,11 @@ const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId }) => {
     const args: closeSatelliteArgs = { noradId };
 
     // func to close the satellite
-    const closeSatellite = () => {
+    const closeSatellite = async () => {
 
         if (wallet.publicKey) {
-            closeSatelliteTx(program, args, wallet.publicKey, wallet);
+            await closeSatelliteTx(program, args, wallet.publicKey, wallet);
+            onSatelliteRemoved(noradId);
         }
     };
 
@@ -101,7 +103,7 @@ const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId }) => {
                     </List>
                     <CardActions>
                         <DashboardCardButton onClick={closeSatellite}>
-                            Close
+                            Remove
                         </DashboardCardButton>
                     </CardActions>
                 </>

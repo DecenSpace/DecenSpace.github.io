@@ -19,12 +19,12 @@ import { useState } from "react";
 import SatelliteTableRow from "./components/SatelliteTableRow";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { useSatelliteProgram } from "program/program-data-access";
 import SatelliteDataBoard from "./components/SatelliteDataBoard";
 import SatellitesViewer from "./components/SatellitesViewer";
 import useUsersSatellites from "./hooks/useUsersSatellites";
 import { SatelliteDataValues } from "program/types/SatelliteDataValues";
+import BN from "bn.js";
+import { useShowSnackbar } from "components/SnackbarProvider";
 
 const SatellitesTableElement = styled(Table)({
     "th:first-child, td:first-child": {
@@ -37,14 +37,13 @@ const SatellitesTableElement = styled(Table)({
 
 const Satellites: React.FC = () => {
 
-    const satellites = useUsersSatellites();
+    const showSnackbar = useShowSnackbar();
+
+    const { satellites, removeSatellite } = useUsersSatellites();
     const [selectedSatellite, setSelectedSatellite] = useState<SatelliteDataValues | null>(null);
 
     const [tablePageSize, setTablePageSize] = useState(10);
     const [selectedMenuItem, setSelectedMenuItem] = useState<[id: string, element: HTMLElement] | null>(null);
-
-    const wallet = useWallet();
-    const { program } = useSatelliteProgram();
 
     const onTableItemClick = (satellite: SatelliteDataValues) => {
         setSelectedSatellite(satellite === selectedSatellite ? null : satellite);
@@ -58,6 +57,11 @@ const Satellites: React.FC = () => {
         setSelectedSatellite(satellite);
     };
 
+    const onSatelliteRemoved = (noradId: BN) => {
+        removeSatellite(noradId);
+        showSnackbar("Satellite removed");
+    };
+
     return (
         <>
             <Typography variant="h3" marginBottom={3}>
@@ -65,7 +69,9 @@ const Satellites: React.FC = () => {
             </Typography>
             <AppContentGrid sx={{ gridAutoRows: "400px" }}>
                 {selectedSatellite?.noradId ? (
-                    <SatelliteDataBoard noradId={selectedSatellite.noradId} />
+                    <SatelliteDataBoard
+                        noradId={selectedSatellite.noradId}
+                        onSatelliteRemoved={onSatelliteRemoved} />
                 ) : (
                     <DashboardCard>
                         <CardHeader title="Fleet" subheader="0/0 active" />

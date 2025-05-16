@@ -1,4 +1,5 @@
 import { useWallet } from "@solana/wallet-adapter-react";
+import BN from "bn.js";
 import { getSatelliteData } from "program/accounts/satellite";
 import { getSatelliteOwnerData } from "program/accounts/satelliteOwner";
 import { useSatelliteProgram } from "program/program-data-access";
@@ -37,5 +38,12 @@ export default function useUsersSatellites() {
 
     }, [wallet.publicKey, program.programId]);
 
-    return satellites;
+    const removeSatellite = (noradId: BN) => {
+
+        setSatellites((prevSatellites) =>
+            prevSatellites.filter((satellite) => !satellite.noradId.eq(noradId))
+        );
+    };
+
+    return { satellites, removeSatellite };
 }
