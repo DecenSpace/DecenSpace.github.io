@@ -13,6 +13,7 @@ import {
 import { getRegistryPda } from "program/pda/registry";
 import { getSatelliteOperatorPda } from "program/pda/satelliteOperator";
 import { SatelliteMint } from "program/satellite-mint-program";
+import { getExplorerLink } from "program/utils/getExplorerLink";
 
 export async function closeSatelliteTx(
     program: Program<SatelliteMint>,
@@ -46,5 +47,6 @@ export async function closeSatelliteTx(
         lastValidBlockHeight,
     });
 
-    console.log("close tx: ", signature);
+    const explorerLink = getExplorerLink(signature);
+    console.log("close tx: ", explorerLink);
 }
