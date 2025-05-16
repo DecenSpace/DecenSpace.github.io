@@ -7,18 +7,8 @@ import TextFieldControl from "routes/app/components/form-controls/TextFieldContr
 import Stack from "@mui/material/Stack";
 import SelectControl from "routes/app/components/form-controls/SelectControl";
 import countries from "utils/countries";
-
-type ManeuverType =
-    | "stationKeeping"
-    | "orbitRaising"
-    | "orbitLowering"
-    | "inclinationChange"
-    | "phaseAdjustment"
-    | "collisionAvoidance"
-    | "endOfLife"
-    | "desaturation";
-
-type OperationStatus = "active" | "offline" | "maintenance";
+import { ManeuverType } from "program/types/ManeuverType";
+import { OperationStatus } from "program/types/OperationStatus";
 
 export interface ISatelliteFormValues {
     // owner: PublicKey;
@@ -28,7 +18,6 @@ export interface ISatelliteFormValues {
     launchDate: Date;
     // orbitType: string;
     inclination: number;
-    altitude: number;
     semiMajorAxis: number;
     eccentricity: number;
     raan: number;
@@ -132,17 +121,6 @@ const SatelliteRegistrationForm: React.FC<ISatelliteRegistrationFormProps> = ({
                         }}
                         fullWidth
                         label="Inclination"
-                        variant="filled"
-                        type="number"
-                    />
-                    <TextFieldControl
-                        controller={{
-                            control,
-                            name: "altitude",
-                            rules: { required: true, min: 1000 },
-                        }}
-                        fullWidth
-                        label="Altitude"
                         variant="filled"
                         type="number"
                     />

@@ -8,18 +8,19 @@ import BN from "bn.js";
 import { getSatelliteData } from "program/accounts/satellite";
 import { useEffect, useState } from "react";
 import DashboardCard from "routes/app/components/DashboardCard";
-import { SatelliteDataValues } from "../utils/satelliteDataValues";
 import DashboardCardButton from "routes/app/components/DashboardCardButton";
 import { closeSatelliteTx } from "program/transactions/closeSatelliteTx";
 import { closeSatelliteArgs } from "program/instructions/closeSatellite";
 import { useSatelliteProgram } from "routes/app";
 import CardActions from "@mui/material/CardActions";
+import { SatelliteDataValues } from "program/types/SatelliteDataValues";
 
 interface SatelliteDataBoardProps {
     noradId: BN;
+    onSatelliteRemoved: (noradId: BN) => void;
 }
 
-const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId }) => {
+const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId, onSatelliteRemoved }) => {
     const program = useSatelliteProgram();
     const [satelliteData, setSatelliteData] = useState<SatelliteDataValues>();
     const [loading, setLoading] = useState(false);
@@ -28,11 +29,14 @@ const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId }) => {
     // run whenever there is change in norad id
     useEffect(() => {
         const fetchSatelliteData = async () => {
+
+            if (!wallet.publicKey) return;
+
             try {
                 setLoading(true);
                 // get the satellite data and store it
                 const storeSatelliteData = await getSatelliteData(
-                    wallet.publicKey!,
+                    wallet.publicKey,
                     program,
                     noradId
                 );
@@ -52,7 +56,11 @@ const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId }) => {
 
     // func to close the satellite
     const closeSatellite = async () => {
-        await closeSatelliteTx(program, args, wallet.publicKey!, wallet);
+
+        if (wallet.publicKey) {
+            await closeSatelliteTx(program, args, wallet.publicKey, wallet);
+            onSatelliteRemoved(noradId);
+        }
     };
 
     return (
@@ -82,12 +90,6 @@ const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId }) => {
                         </ListItem>
                         <ListItem>
                             <ListItemText
-                                primary="Altitude"
-                                secondary={satelliteData?.altitude}
-                            />
-                        </ListItem>
-                        <ListItem>
-                            <ListItemText
                                 primary="Semi-Major axis"
                                 secondary={satelliteData?.semiMajorAxis}
                             />
@@ -95,7 +97,7 @@ const SatelliteDataBoard: React.FC<SatelliteDataBoardProps> = ({ noradId }) => {
                     </List>
                     <CardActions>
                         <DashboardCardButton onClick={closeSatellite}>
-                            Close
+                            Remove
                         </DashboardCardButton>
                     </CardActions>
                 </>

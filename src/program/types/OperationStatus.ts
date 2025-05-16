@@ -1,0 +1,1 @@
+export type OperationStatus = "active" | "offline" | "maintenance";

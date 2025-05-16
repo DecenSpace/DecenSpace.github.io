@@ -15,26 +15,18 @@ import { Link } from "react-router-dom";
 import AppContentGrid from "routes/app/components/AppContentGrid";
 import DashboardCard from "routes/app/components/DashboardCard";
 import DashboardCardButton from "routes/app/components/DashboardCardButton";
-import { useEffect, useState } from "react";
-import { TableDemoData, tableDemoData } from "./utils/tableDemoData";
+import { useState } from "react";
 import SatelliteTableRow from "./components/SatelliteTableRow";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import { ClickAwayListener } from "@mui/material";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { useSatelliteProgram } from "program/program-data-access";
-import BN from "bn.js";
-import { getSatelliteOwnerData } from "program/accounts/satelliteOwner";
-import { SatelliteDataValues } from "./utils/satelliteDataValues";
 import SatelliteDataBoard from "./components/SatelliteDataBoard";
-import { ISatellite } from "./components/SatellitesViewer";
 import SatellitesViewer from "./components/SatellitesViewer";
-import { ManeuverTypes, OperationStatus } from "./utils/RegistrationUtils";
+import useUsersSatellites from "./hooks/useUsersSatellites";
+import { SatelliteDataValues } from "program/types/SatelliteDataValues";
+import BN from "bn.js";
+import { useShowSnackbar } from "components/SnackbarProvider";
 
-const SatellitesTable = styled(Table)({
+const SatellitesTableElement = styled(Table)({
     "th:first-child, td:first-child": {
         width: 56,
     },
@@ -43,56 +35,32 @@ const SatellitesTable = styled(Table)({
     },
 });
 
-const satellite: ISatellite = {
-    owner: "Space Y",
-    name: "Space Y 69420",
-    country: "US",
-    noradId: "69420",
-    launchDate: new Date(),
-    mintDate: new Date(),
-    inclination: 55,
-    altitude: 35786000,
-    maneuverType: ManeuverTypes.InclinationChange,
-    operationStatus: OperationStatus.Active,
-    semiMajorAxis: 42164000,
-};
-
 const Satellites: React.FC = () => {
-    const [tablePageSize, setTablePageSize] = useState(10);
-    const tableData = tableDemoData.slice(0, tablePageSize);
-    const [satelliteNoradIds, setSatelliteNoradIds] = useState<BN[]>([]);
-    const [selectedItem, setSelectedItem] =
-        useState<SatelliteDataValues | null>(null);
-    const [selectedMenuItem, setSelectedMenuItem] = useState<
-        [id: number, element: HTMLElement] | null
-    >(null);
-    const wallet = useWallet();
-    const { program } = useSatelliteProgram();
 
-    const onTableItemClick = (item: SatelliteDataValues) => {
-        setSelectedItem(item);
+    const showSnackbar = useShowSnackbar();
+
+    const { satellites, removeSatellite } = useUsersSatellites();
+    const [selectedSatellite, setSelectedSatellite] = useState<SatelliteDataValues | null>(null);
+
+    const [tablePageSize, setTablePageSize] = useState(10);
+    const [selectedMenuItem, setSelectedMenuItem] = useState<[id: string, element: HTMLElement] | null>(null);
+
+    const onTableItemClick = (satellite: SatelliteDataValues) => {
+        setSelectedSatellite(satellite === selectedSatellite ? null : satellite);
     };
 
     const onTableItemMenuClick = (
-        item: SatelliteDataValues,
+        satellite: SatelliteDataValues,
         element: HTMLElement
     ) => {
-        setSelectedMenuItem([item.noradId.toNumber(), element]);
-        setSelectedItem(item);
+        setSelectedMenuItem([satellite.noradId.toString(), element]);
+        setSelectedSatellite(satellite);
     };
 
-    useEffect(() => {
-        const storeSatelliteNoradId = async () => {
-            const { satellites } = await getSatelliteOwnerData(
-                wallet.publicKey!,
-                program
-            );
-
-            setSatelliteNoradIds(satellites.map((id) => new BN(id)));
-        };
-
-        storeSatelliteNoradId();
-    }, [program.programId, wallet.publicKey]);
+    const onSatelliteRemoved = (noradId: BN) => {
+        removeSatellite(noradId);
+        showSnackbar("Satellite removed");
+    };
 
     return (
         <>
@@ -100,8 +68,10 @@ const Satellites: React.FC = () => {
                 Fleet
             </Typography>
             <AppContentGrid sx={{ gridAutoRows: "400px" }}>
-                {selectedItem?.noradId ? (
-                    <SatelliteDataBoard noradId={selectedItem.noradId} />
+                {selectedSatellite?.noradId ? (
+                    <SatelliteDataBoard
+                        noradId={selectedSatellite.noradId}
+                        onSatelliteRemoved={onSatelliteRemoved} />
                 ) : (
                     <DashboardCard>
                         <CardHeader title="Fleet" subheader="0/0 active" />
@@ -128,48 +98,45 @@ const Satellites: React.FC = () => {
                         height: "100%",
                     }}
                 >
-                    <SatellitesViewer satellites={[satellite]} />
+                    <SatellitesViewer
+                        satellites={satellites}
+                        selectedSatellite={selectedSatellite}
+                    />
                 </Paper>
             </AppContentGrid>
             <Paper variant="outlined" sx={{ marginTop: 3 }}>
-                <ClickAwayListener onClickAway={() => setSelectedItem(null)}>
-                    <TableContainer>
-                        <SatellitesTable size="small">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell />
-                                    <TableCell>Name</TableCell>
-                                    <TableCell>Country</TableCell>
-                                    <TableCell>Added</TableCell>
-                                    <TableCell></TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {satelliteNoradIds.map((id, index) => (
-                                    <SatelliteTableRow
-                                        key={index}
-                                        selected={
-                                            !!selectedItem &&
-                                            id &&
-                                            selectedItem.noradId.eq(id)
-                                        }
-                                        noradId={id}
-                                        onSelect={onTableItemClick}
-                                        onMenuClick={onTableItemMenuClick}
-                                    />
-                                ))}
-                            </TableBody>
-                        </SatellitesTable>
-                    </TableContainer>
-                </ClickAwayListener>
+                <TableContainer>
+                    <SatellitesTableElement size="small">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell />
+                                <TableCell>Name</TableCell>
+                                <TableCell>Country</TableCell>
+                                <TableCell>Added</TableCell>
+                                <TableCell></TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {satellites.map((satellite, index) => (
+                                <SatelliteTableRow
+                                    key={index}
+                                    satellite={satellite}
+                                    selected={satellite === selectedSatellite}
+                                    onSelect={onTableItemClick}
+                                    onMenuClick={onTableItemMenuClick}
+                                />
+                            ))}
+                        </TableBody>
+                    </SatellitesTableElement>
+                </TableContainer>
                 <TablePagination
                     size="small"
                     rowsPerPageOptions={[10, 25, 100]}
                     component="div"
-                    count={tableDemoData.length}
+                    count={satellites.length}
                     rowsPerPage={tablePageSize}
                     page={0}
-                    onPageChange={() => {}}
+                    onPageChange={() => { }}
                     onRowsPerPageChange={(r) =>
                         setTablePageSize(+r.target.value)
                     }
