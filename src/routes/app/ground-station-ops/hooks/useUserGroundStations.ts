@@ -22,7 +22,7 @@ const demoData = [
         owner: PublicKey.default,
         frequency_type: { uhf: {} },
         cost_per_mb: 0.07,
-        operationStatus: { active: {} },
+        operationStatus: { offline: {} },
     },
     {
         station_id: new BN(1003),

@@ -100,7 +100,8 @@ const Stations: React.FC = () => {
                 >
                     <StationsViewer
                         stations={stations}
-                        selectedStation={selectedStation}
+                        selected={selectedStation}
+                        onSelect={onTableItemClick}
                     />
                 </Paper>
             </AppContentGrid>

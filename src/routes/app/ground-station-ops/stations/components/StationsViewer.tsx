@@ -1,47 +1,64 @@
 import EarthViewer, { IEarthViewerProps } from "components/EarthViewer";
-import { Color } from "cesium";
-import getOperationStatusColor from "utils/getOperationStatusColor";
-import { OperationStatus } from "program/types/OperationStatus";
 import { GroundStationDataValue } from "program/types/GroundStationDataValue";
-
-const StationEntity: React.FC<{ station: GroundStationDataValue, selected: boolean }> = ({ station, selected }) => {
-
-    const [r, g, b, a] = getOperationStatusColor(
-        Object.keys(station.operationStatus)[0] as OperationStatus,
-        selected
-    );
-
-    const color = new Color(r, g, b, a);
-
-    return (
-        null // TODO: 
-    );
-};
+import { Cartesian3, Color } from "cesium";
+import { CameraFlyTo, Entity } from "resium";
+import { parseOperationStatus } from "program/types/OperationStatus";
 
 interface IStationsViewerProps extends IEarthViewerProps {
     stations: GroundStationDataValue[];
-    selectedStation?: GroundStationDataValue | null;
-    fullWidthAndHeight?: boolean;
+    selected: GroundStationDataValue | null;
+    onSelect?: (station: GroundStationDataValue) => void;
 }
 
-const StationsViewer: React.FC<IStationsViewerProps> = ({
-    stations,
-    selectedStation,
-    fullWidthAndHeight = true,
-    ...props
-}) => {
+const StationEntity: React.FC<{ station: GroundStationDataValue, selected: boolean, onClick?: () => void }> = ({ station, selected, onClick }) => {
+
+    const status = parseOperationStatus(station.operationStatus);
 
     return (
-        <EarthViewer {...props}>
-            {stations?.map(station => (
+        <Entity
+            key={station.station_id.toString()}
+            name={station.name}
+            position={
+                Cartesian3.fromDegrees(
+                    station.longitude.toNumber(),
+                    station.latitude.toNumber()
+                )
+            }
+            point={{
+                pixelSize: 10,
+                color: status === "active" ? Color.GREEN : status === "maintenance" ? Color.GREY : Color.RED,
+            }}
+            onClick={onClick}
+        />
+    );
+};
+
+const StationsViewer: React.FC<IStationsViewerProps> = ({ stations, selected, onSelect }) => {
+
+    return (
+        <EarthViewer>
+            {stations.map(station => (
                 <StationEntity
                     key={station.station_id.toString()}
                     station={station}
-                    selected={station === selectedStation}
+                    selected={station === selected}
+                    onClick={() => onSelect?.(station)}
                 />
             ))}
+            {selected && (
+                <CameraFlyTo
+                    destination={
+                        Cartesian3.fromDegrees(
+                            selected.longitude.toNumber(),
+                            selected.latitude.toNumber(),
+                            10000000
+                        )
+                    }
+                    duration={0.8}
+                />
+            )}
         </EarthViewer>
     );
-};
+}
 
 export default StationsViewer;
