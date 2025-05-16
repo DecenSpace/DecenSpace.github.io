@@ -246,6 +246,7 @@ const SatelliteRegistrationForm: React.FC<ISatelliteRegistrationFormProps> = ({
                         color="primary"
                         size="large"
                         disabled={!formState.isValid}
+                        loading={formState.isSubmitting}
                     >
                         Register Satellite
                     </Button>
