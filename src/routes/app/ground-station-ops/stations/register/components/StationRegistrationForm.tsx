@@ -8,15 +8,18 @@ import Stack from "@mui/material/Stack";
 import SelectControl from "routes/app/components/form-controls/SelectControl";
 import { OperationStatus } from "program/types/OperationStatus";
 import Typography from "@mui/material/Typography";
-import { FrequencyType, getFrequencyTypeText } from "program/types/FrequencyType";
+import {
+    FrequencyType,
+    getFrequencyTypeText,
+} from "program/types/FrequencyType";
 
 export interface IStationFormValues {
-    stationId: string;
+    stationId: number;
     name: string;
     longitude: number;
     latitude: number;
-    cost_per_mb: number;
-    frequency_type: FrequencyType;
+    costPerMb: number;
+    frequencyType: FrequencyType;
     operationStatus: OperationStatus;
 }
 
@@ -127,22 +130,36 @@ const StationRegistrationForm: React.FC<IStationRegistrationFormProps> = ({
                     <SelectControl
                         controller={{
                             control,
-                            name: "frequency_type",
+                            name: "frequencyType",
                             rules: { required: true },
                         }}
                         label="Frequency type"
                         variant="filled"
-                        options={
-                            (["uhf", "vhf", "sband", "kband", "kuBand", "kaBand"] satisfies FrequencyType[]).map(type => (
-                                { label: getFrequencyTypeText(type), value: type } satisfies { label: string; value: FrequencyType }
-                            ))
-                        }
+                        options={(
+                            [
+                                "uhf",
+                                "vhf",
+                                "sband",
+                                "kband",
+                                "kuBand",
+                                "kaBand",
+                            ] satisfies FrequencyType[]
+                        ).map(
+                            (type) =>
+                            ({
+                                label: getFrequencyTypeText(type),
+                                value: type,
+                            } satisfies {
+                                label: string;
+                                value: FrequencyType;
+                            })
+                        )}
                         fullWidth
                     />
                     <TextFieldControl
                         controller={{
                             control,
-                            name: "cost_per_mb",
+                            name: "costPerMb",
                             rules: {
                                 required: true,
                                 min: 0.01,

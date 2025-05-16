@@ -14,9 +14,9 @@ const Home: React.FC = () => {
     const gstTokenAddress = "0x4f3b1a2c5e8f7c6e9a2b3c4e5f6a7b8c9d0e1f2g3h4i5j6k7l8m9n0o1p2q3r4s5t6u7v8w9x0y1z2a3b4c5d6e7f8g9h0i1j2k3l4m5n6o7p8q9r0s1t2u3v4w5x6y7z8a9b0c1d2e3f4g5h6i7j8k9l0m1n2o3p4q5r6s7t8u9v0w1x2y3z4a5b6c7d8e9f0g1h2i3j4k5l6m7n8o9p0q1r2s3t4u5v6w7x8y9z0";
     const raydiumTokenSwapUrl = "https://raydium.io/swap?inputCurrency=" + gstTokenAddress;
 
-    const { stations } = useUserGroundStations();
+    const { groundStations } = useUserGroundStations();
 
-    const activeCount = stations.filter((station) => !!station.operationStatus.active).length;
+    const activeCount = groundStations.filter((groundStation) => !!groundStation.operationStatus.active).length;
 
     return (
         <>
@@ -28,10 +28,10 @@ const Home: React.FC = () => {
             </Typography>
             <AppContentGrid>
                 <DashboardCard>
-                    <CardHeader title="Stations" subheader={`${activeCount}/${stations.length} active`} />
+                    <CardHeader title="Stations" subheader={`${activeCount}/${groundStations.length} active`} />
                     <CardContent>
                         <Typography variant="h2">
-                            {stations.length}
+                            {groundStations.length}
                         </Typography>
                     </CardContent>
                     <CardActions>
