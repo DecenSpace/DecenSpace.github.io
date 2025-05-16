@@ -1,8 +1,6 @@
 import { Box, Card, CardContent } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import SatelliteRegistrationForm, {
-    ISatelliteFormValues,
-} from "../components/SatelliteRegistrationForm";
+import SatelliteRegistrationForm, { ISatelliteFormValues } from "./components/SatelliteRegistrationForm";
 import { useProgramAddresses, useSatelliteProgram } from "routes/app";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, Transaction } from "@solana/web3.js";

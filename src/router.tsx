@@ -20,9 +20,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/start/ground-station-ops",
-                Component: lazy(
-                    () => import("routes/start/ground-station-ops")
-                ),
+                Component: lazy(() => import("routes/start/ground-station-ops")),
             },
             {
                 path: "/start/satellite-ops",
@@ -31,12 +29,30 @@ const router = createBrowserRouter([
         ],
     },
     {
+
         path: "/app",
         Component: lazy(() => import("routes/app")),
         children: [
             {
                 path: "/app/ground-station-ops",
                 Component: lazy(() => import("routes/app/ground-station-ops")),
+                children: [
+                    {
+                        index: true,
+                        Component: lazy(() => import("routes/app/ground-station-ops/home")),
+                    },
+                    {
+                        path: "/app/ground-station-ops/stations",
+                        Component: lazy(() => import("routes/app/ground-station-ops/stations")),
+                    },
+                    {
+                        // Only semantically a nested route
+                        path: "/app/ground-station-ops/stations/register",
+                        Component: lazy(
+                            () => import("routes/app/ground-station-ops/stations/register")
+                        ),
+                    },
+                ]
             },
             {
                 path: "/app/satellite-ops",
