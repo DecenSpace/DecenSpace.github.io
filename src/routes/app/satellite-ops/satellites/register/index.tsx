@@ -47,7 +47,7 @@ const RegisterSatellite: React.FC = () => {
                 noradId,
                 launchDate: new BN(formValues.launchDate.getTime()),
                 inclination: formValues.inclination,
-                altitude: formValues.altitude,
+                altitude: 7000, // TODO: remove form contract
                 semiMajorAxis: formValues.semiMajorAxis,
                 eccentricity: formValues.eccentricity,
                 raan: formValues.raan,
