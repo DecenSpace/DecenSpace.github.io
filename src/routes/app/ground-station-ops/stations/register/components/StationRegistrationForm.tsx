@@ -19,7 +19,7 @@ export interface IStationFormValues {
     longitude: number;
     latitude: number;
     cost_per_mb: number;
-    frequency_type: FrequencyType;
+    frequencyType: FrequencyType;
     operationStatus: OperationStatus;
 }
 
@@ -130,7 +130,7 @@ const StationRegistrationForm: React.FC<IStationRegistrationFormProps> = ({
                     <SelectControl
                         controller={{
                             control,
-                            name: "frequency_type",
+                            name: "frequencyType",
                             rules: { required: true },
                         }}
                         label="Frequency type"
