@@ -4,6 +4,7 @@
   "description": "DecenSpace website",
   "scripts": {
     "postinstall": "npm run generate-icons",
+    "dev": "tsx build.ts serve",
     "build": "tsx build.ts",
     "start": "tsx build.ts serve",
     "test": "tsc -p . --noEmit",
