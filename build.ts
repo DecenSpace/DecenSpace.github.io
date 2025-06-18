@@ -81,7 +81,7 @@ const buildOptions: BuildOptions = {
         await context.watch();
         const { port } = await context.serve({
             servedir: outdir,
-            port: 8080,
+            port: 3000,
             fallback: spaRouting ? `${outdir}/${htmlFileName}` : undefined
         });
 
