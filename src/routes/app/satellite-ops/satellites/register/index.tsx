@@ -1,6 +1,8 @@
 import { Box, Card, CardContent } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import SatelliteRegistrationForm, { ISatelliteFormValues } from "./components/SatelliteRegistrationForm";
+import SatelliteRegistrationForm, {
+    ISatelliteFormValues,
+} from "./components/SatelliteRegistrationForm";
 import { useProgramAddresses, useSatelliteProgram } from "routes/app";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, Transaction } from "@solana/web3.js";
@@ -28,9 +30,8 @@ const RegisterSatellite: React.FC = () => {
         }
 
         try {
-
             const noradId = new BN(formValues.noradId);
-    
+
             // get satellite pda
             const [satellitePda] = PublicKey.findProgramAddressSync(
                 [
@@ -41,7 +42,8 @@ const RegisterSatellite: React.FC = () => {
                 ],
                 satellitesProgram.programId
             );
-    
+            console.log("pda: ", satellitePda.toBase58());
+
             // build tx instruction
             const txInstruction = await satellitesProgram.methods
                 .mintSatellite({
@@ -58,7 +60,9 @@ const RegisterSatellite: React.FC = () => {
                     raan: formValues.raan,
                     argOfPeriapsis: formValues.argOfPeriapsis,
                     maneuverType: { [formValues.maneuverType]: {} } as any,
-                    operationStatus: { [formValues.operationStatus]: {} } as any,
+                    operationStatus: {
+                        [formValues.operationStatus]: {},
+                    } as any,
                 })
                 .accounts({
                     authority: programAddresses.walletPubkey,
@@ -68,10 +72,10 @@ const RegisterSatellite: React.FC = () => {
                     systemProgram: programAddresses.systemPda,
                 })
                 .instruction();
-    
+
             const { blockhash, lastValidBlockHeight } =
                 await connection.getLatestBlockhash();
-    
+
             // build tx
             const tx = new Transaction({
                 feePayer: programAddresses.walletPubkey,
@@ -79,21 +83,23 @@ const RegisterSatellite: React.FC = () => {
                 lastValidBlockHeight,
             });
             tx.add(txInstruction);
-    
-            const signature = await walletContext.sendTransaction(tx, connection);
-    
+
+            const signature = await walletContext.sendTransaction(
+                tx,
+                connection
+            );
+
             await connection.confirmTransaction({
                 signature,
                 blockhash,
                 lastValidBlockHeight,
             });
-    
+
             // TODO: snackbar message
             showSnackbar("Satellite registered successfully");
-    
+
             // TODO: add select satellite ID
             navigate("/app/satellite-ops/satellites");
-
         } catch (error) {
             console.error("Error registering satellite:", error);
             showSnackbar("Error registering satellite", "error");

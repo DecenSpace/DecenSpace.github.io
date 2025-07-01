@@ -1,9 +1,18 @@
 import EarthViewer, { IEarthViewerProps } from "components/EarthViewer";
 import { Entity } from "resium";
-import { Cartesian3, Color, JulianDate, SampledPositionProperty, Math as CesiumMath, Matrix3 } from "cesium";
+import {
+    Cartesian3,
+    Color,
+    JulianDate,
+    SampledPositionProperty,
+    Math as CesiumMath,
+    Matrix3,
+} from "cesium";
 import { SatelliteDataValues } from "program/types/SatelliteDataValues";
 import getOperationStatusColor from "utils/getOperationStatusColor";
 import { OperationStatus } from "program/types/OperationStatus";
+import { getSatellitePda } from "program/pda/satellite";
+import { useSatelliteProgram } from "program/program-data-access";
 
 function createEciPosition(
     angleDeg: number,
@@ -13,7 +22,6 @@ function createEciPosition(
     raan: number,
     argOfPeriapsis: number
 ): Cartesian3 {
-
     const angleAsRadians = CesiumMath.toRadians(angleDeg);
     const a = semiMajorAxis;
     const e = eccentricity;
@@ -33,23 +41,25 @@ function createEciPosition(
 
     const rotation = Matrix3.multiply(
         rotationZRaan,
-        Matrix3.multiply(rotationXInclination, rotationXArgPeriapsis, new Matrix3()),
+        Matrix3.multiply(
+            rotationXInclination,
+            rotationXArgPeriapsis,
+            new Matrix3()
+        ),
         new Matrix3()
     );
 
     return Matrix3.multiplyByVector(rotation, perifocal, new Cartesian3());
-};
+}
 
 function createSampledPosition(
     satellite: SatelliteDataValues,
     start: JulianDate,
     steps = 360
 ): SampledPositionProperty {
-
     const position = new SampledPositionProperty();
 
     for (let deg = 0; deg <= 360; deg += 360 / steps) {
-
         const time = JulianDate.addSeconds(start, deg, new JulianDate());
 
         const eciPosition = createEciPosition(
@@ -58,17 +68,20 @@ function createSampledPosition(
             satellite.eccentricity,
             satellite.inclination,
             satellite.raan,
-            satellite.argOfPeriapsis,
+            satellite.argOfPeriapsis
         );
 
         position.addSample(time, eciPosition);
     }
 
     return position;
-};
+}
 
-const SatelliteEntity: React.FC<{ satellite: SatelliteDataValues, selected: boolean }> = ({ satellite, selected }) => {
-
+const SatelliteEntity: React.FC<{
+    satellite: SatelliteDataValues;
+    selected: boolean;
+}> = ({ satellite, selected }) => {
+    const { program } = useSatelliteProgram();
     const [r, g, b, a] = getOperationStatusColor(
         Object.keys(satellite.operationStatus)[0] as OperationStatus,
         selected
@@ -112,10 +125,9 @@ const SatellitesViewer: React.FC<ISatellitesViewerProps> = ({
     fullWidthAndHeight = true,
     ...props
 }) => {
-
     return (
         <EarthViewer {...props}>
-            {satellites?.map(satellite => (
+            {satellites?.map((satellite) => (
                 <SatelliteEntity
                     key={satellite.noradId.toString()}
                     satellite={satellite}
