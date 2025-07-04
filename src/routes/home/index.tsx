@@ -12,6 +12,7 @@ import X from "@mui/icons-material/X";
 import LinkedIn from "@mui/icons-material/LinkedIn";
 import Typography from "@mui/material/Typography";
 import StartPageButton from "components/StartPageButton";
+import EmailIcon from "@mui/icons-material/Email";
 
 const GlowLogo = () => (
   <Box marginBottom={5} position="relative">
@@ -36,6 +37,120 @@ const GlowLogo = () => (
   </Box>
 );
 
+const SponsorsSection = () => (
+  <Box
+    sx={{
+      backgroundColor: "background.paper",
+      paddingY: 8,
+      marginTop: 8,
+    }}
+  >
+    <Container>
+      <Typography variant="h3" textAlign="center" marginBottom={6}>
+        Supported by
+      </Typography>
+      <Box
+        display="flex"
+        flexDirection={{ xs: "column", sm: "row" }}
+        justifyContent="center"
+        alignItems="center"
+        gap={6}
+        flexWrap="wrap"
+      >
+        <a
+          href="https://1kx.network/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Box
+            component="img"
+            src="/assets/1kx-logo.png"
+            alt="1kx"
+            sx={{
+              height: 60,
+              objectFit: "contain",
+              filter: "grayscale(100%)",
+              opacity: 0.7,
+              transition: "all 0.3s ease",
+              "&:hover": {
+                filter: "grayscale(0%)",
+                opacity: 1,
+              },
+            }}
+          />
+        </a>
+        <a
+          href="https://outlierventures.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Box
+            component="img"
+            src="/assets/ov-logo.png"
+            alt="OV"
+            sx={{
+              height: 60,
+              objectFit: "contain",
+              filter: "grayscale(100%)",
+              opacity: 0.7,
+              transition: "all 0.3s ease",
+              "&:hover": {
+                filter: "grayscale(0%)",
+                opacity: 1,
+              },
+            }}
+          />
+        </a>
+        <a
+          href="https://www.euspa.europa.eu/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Box
+            component="img"
+            src="/assets/euspa-logo.png"
+            alt="EUSPA"
+            sx={{
+              height: 60,
+              objectFit: "contain",
+              filter: "grayscale(100%)",
+              opacity: 0.7,
+              transition: "all 0.3s ease",
+              "&:hover": {
+                filter: "grayscale(0%)",
+                opacity: 1,
+              },
+            }}
+          />
+        </a>
+        <a
+          href="https://esa-bic.de/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Box
+            component="img"
+            src="/assets/ESA_BIC_NG_White.png"
+            alt="ESA BIC Northern Germany"
+            sx={{
+              height: 60,
+              maxWidth: 350,
+              objectFit: "contain",
+              filter: "grayscale(100%)",
+              opacity: 0.7,
+              transition: "all 0.3s ease",
+              "&:hover": {
+                filter: "grayscale(0%)",
+                opacity: 1,
+              },
+            }}
+          />
+        </a>
+      </Box>
+    </Container>
+  </Box>
+);
+
 const Home: React.FC = () => (
   <ParallaxProvider>
     <PageGridContainer>
@@ -49,79 +164,131 @@ const Home: React.FC = () => (
           size="large"
           component="a"
           href="mailto:info@decenspace.com"
-          sx={{ textDecoration: "none" }}
+          sx={{
+            textDecoration: "none",
+            background: "linear-gradient(90deg, rgba(20,30,48,0.85) 0%, rgba(36,0,70,0.85) 100%)",
+            color: "#fff",
+            paddingX: 4,
+            paddingY: 2,
+            borderRadius: 999,
+            boxShadow: "0 4px 24px 0 rgba(36,0,70,0.18)",
+            fontWeight: 700,
+            fontSize: { xs: "1.1rem", sm: "1.25rem" },
+            display: "flex",
+            alignItems: "center",
+            gap: 1.5,
+            border: "1.5px solid rgba(106,90,249,0.25)",
+            backdropFilter: "blur(6px)",
+            transition: "all 0.2s cubic-bezier(.4,2,.6,1)",
+            '&:hover': {
+              background: "linear-gradient(90deg, rgba(36,0,70,0.95) 0%, rgba(20,30,48,0.95) 100%)",
+              boxShadow: "0 0 16px 4px #6a5af9, 0 8px 32px 0 rgba(36,0,70,0.22)",
+              borderColor: "#6a5af9",
+              transform: "scale(1.06)",
+            },
+          }}
         >
-          Contact us
+          <EmailIcon sx={{ mr: 1, fontSize: 28 }} /> Contact us
         </StartPageButton>
       </Box>
       <Box component="header" gridArea={GridArea.head}>
         <GlowLogo />
         <Typography variant="h2" marginBottom={3}>
-          Democratizing space communications
+          Powering the Future of Space Communications
         </Typography>
         <Box marginRight={{ xs: 0, sm: 6 }}>
           <Typography variant="h4">
-            Bringing satellite companies and ground station operators together
-            using distributed marketplace technology. Our vision is to provide a
-            protocol for a sustainable and accelerating marketplace for the
-            space industry, where all parties benefit from commitment, long term
-            participation and growth.
+            The Space Communications Revolution Starts Here. We're building the infrastructure backbone for the new space economy. As satellites multiply from thousands to tens of thousands, the ground station bottleneck threatens to limit humanity's space ambitions. Decen Space solves this with a decentralized marketplace that turns distributed ground stations into a unified, efficient network.
           </Typography>
           <MobileParallaxDishImage marginTop={4} marginBottom={8} />
         </Box>
       </Box>
       <Box gridArea={GridArea.main} paddingTop={{ xs: 8, sm: 16 }}>
-        <TextSection heading="Why we built it" first>
+        <TextSection heading="The Problem We're Solving" first>
           <Typography variant="body1">
-            The space industry faces a critical infrastructure challenge: ground
-            station access is expensive, bottlenecked, and inefficient.
-            Satellite operators struggle with limited coverage while existing
-            ground stations sit underutilized. We built Decen Space to create a
-            marketplace that transforms how the space industry communicates with
-            satellites, democratizing access while rewarding participation.
+            The space industry is hitting a wall. Traditional ground station infrastructure is expensive, centralized, and can't scale fast enough. Satellite operators pay premium prices for limited coverage windows, while potential ground station operators have no easy way to monetize their infrastructure.
           </Typography>
           <Typography
             variant="h3"
             color="primary"
             sx={{ marginTop: 3, marginBottom: 3 }}
           >
-            28,000 satellites
+            28,000 satellites by 2030
           </Typography>
           <Typography variant="body1">
-            By 2030, over 28,000 satellites will be in orbit, creating
-            unprecedented demand for ground station capacity. Traditional
-            solutions can't scale efficiently to meet this need. Our
-            decentralized network approach turns this challenge into an
-            opportunity by enabling anyone with suitable hardware to join the
-            network and provide essential communications infrastructure.
+            By 2030, over 28,000 satellites will orbit Earth. Current ground station capacity simply won't meet this demand. The result? Higher costs, communication delays, and missed opportunities that could slow space innovation when we need it most.
           </Typography>
         </TextSection>
-        <TextSection heading="How Decentralized Infrastructure can help">
+        <TextSection heading="Our Solution: A Decentralized Space Communications Network">
           <Typography variant="body1">
-            Decentralized Physical Infrastructure Networks enable secure,
-            transparent, and trustless coordination between satellite operators
-            and ground station owners. We can automate everything from
-            scheduling, payment, and quality verification without middlemen.
-            This creates a self-sustaining network where participants are fairly
-            rewarded for their contributions, while cryptographic verification
-            ensures reliable service quality.
+            Decen Space transforms scattered ground stations into a unified, efficient marketplace. Using blockchain technology and cryptographic verification, we create trustless coordination between satellite operators and ground station owners worldwide.
           </Typography>
-          <Typography variant="h3" color="primary" sx={{ marginTop: 3 }}>
-            Lower costs by higher efficiency
+          <Typography variant="h6" color="primary" sx={{ marginTop: 3, marginBottom: 2 }}>
+            Here's how it works:
           </Typography>
+          <Box component="ul" sx={{ marginLeft: 2 }}>
+            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+              Automated scheduling matches satellites with optimal ground stations based on location, timing, and performance
+            </Typography>
+            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+              Smart contracts handle payments automatically, eliminating middlemen and reducing costs
+            </Typography>
+            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+              Cryptographic verification ensures service quality without centralized oversight
+            </Typography>
+            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+              Economic incentives reward ground station operators for strategic positioning and reliable service
+            </Typography>
+          </Box>
         </TextSection>
-        <TextSection heading="The network incentives">
+        <TextSection heading="The Benefits">
+          <Typography variant="h6" color="primary" sx={{ marginBottom: 2 }}>
+            For Satellite Operators:
+          </Typography>
+          <Box component="ul" sx={{ marginLeft: 2, marginBottom: 3 }}>
+            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+              Dramatically lower costs through competitive marketplace pricing
+            </Typography>
+            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+              Global coverage with access to distributed ground stations worldwide
+            </Typography>
+            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+              Transparent performance metrics with real-time quality verification
+            </Typography>
+            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+              Scalable capacity that grows with your mission needs
+            </Typography>
+          </Box>
+          <Typography variant="h6" color="primary" sx={{ marginBottom: 2 }}>
+            For Ground Station Operators:
+          </Typography>
+          <Box component="ul" sx={{ marginLeft: 2 }}>
+            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+              New revenue streams from existing or new infrastructure
+            </Typography>
+            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+              Fair compensation based on contribution quality and strategic value
+            </Typography>
+            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+              Automated operations with minimal manual intervention required
+            </Typography>
+            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+              Growing market opportunity as satellite demand accelerates
+            </Typography>
+          </Box>
+        </TextSection>
+        <TextSection heading="Why Decentralized Infrastructure Matters">
           <Typography variant="body1">
-            Our economic model creates fair incentives for all participants,
-            rewarding ground station operators based on contribution quality and
-            strategic location. Satellite operators gain cost-effective access
-            to a global communications network, with transparent pricing and
-            performance metrics. This value-sharing approach ensures sustainable
-            growth and aligns the interests of all participants for long-term
-            success.
+            Traditional centralized solutions create single points of failure and bottlenecks. Our decentralized approach distributes both risk and opportunity, creating a more resilient and efficient network.
+          </Typography>
+          <Typography variant="body1" sx={{ marginTop: 2 }}>
+            Blockchain technology enables what wasn't possible before: trustless coordination at global scale, automated quality verification, and fair value distribution without central authorities taking outsized profits.
           </Typography>
           <Typography variant="h3" color="primary" sx={{ marginTop: 3 }}>
-            Join a growing network
+            Join the Network
+          </Typography>
+          <Typography variant="body1" sx={{ marginTop: 2 }}>
+            The space economy is expanding rapidly. Companies and organizations that build the infrastructure backbone today will capture the most value as this market scales. Ready to be part of the space communications revolution?
           </Typography>
         </TextSection>
       </Box>
@@ -136,12 +303,8 @@ const Home: React.FC = () => (
         />
         <AudienceButtons />
       </Box>
-      {/* <Box gridArea={GridArea.below}>
-                <StartPageButton size="large" onClick={() => window.alert("We are working on that. Please contact us for any questions.")}>
-                    Read the whitepaper
-                </StartPageButton>
-            </Box> */}
     </PageGridContainer>
+    <SponsorsSection />
     <Box component="footer" height={240}>
       <Container sx={{ paddingTop: 6, paddingBottom: 6 }}>
         <Typography variant="body1">© 2025 DecenSpace</Typography>
