@@ -130,3 +130,6 @@ dist
 .pnp.*
 
 src/icons/*
+
+# firebase creds
+FirebaseConfig.tsx
