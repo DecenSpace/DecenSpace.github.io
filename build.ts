@@ -14,89 +14,102 @@ const outdir = "dist";
 const htmlFileName = "index.html";
 const spaRouting = false;
 
-const entryPoints = [
-    `${sourcedir}/index.tsx`,
-    `${sourcedir}/index.css`
-];
+const entryPoints = [`${sourcedir}/index.tsx`, `${sourcedir}/index.css`];
 
 env.NODE_ENV = serveDev ? "development" : "production";
 
-const pickAsJsonFromEnv = (keys: string[]) => keys
-    .reduce((all, key) => ({ ...all, ["process.env." + key]: JSON.stringify(env[key] ?? null) }), {});
+const pickAsJsonFromEnv = (keys: string[]) =>
+  keys.reduce(
+    (all, key) => ({
+      ...all,
+      ["process.env." + key]: JSON.stringify(env[key] ?? null),
+    }),
+    {}
+  );
 
-const loader = [".png", ".jpg", ".svg", ".webp", ".webm", ".weba", ".mp3", ".mp4", ".otf", ".woff", ".woff2"]
-    .reduce((loaders, ext) => ({ ...loaders, [ext]: "file" }), {});
+const loader = [
+  ".png",
+  ".jpg",
+  ".svg",
+  ".webp",
+  ".webm",
+  ".weba",
+  ".mp3",
+  ".mp4",
+  ".otf",
+  ".woff",
+  ".woff2",
+].reduce((loaders, ext) => ({ ...loaders, [ext]: "file" }), {});
 
 const buildOptions: BuildOptions = {
-    entryPoints,
-    entryNames: "[name]-[hash]",
-    chunkNames: "[name]-[hash]",
-    outdir,
-    publicPath: "/",
-    bundle: true,
-    minify: !serveDev,
-    sourcemap: true,
-    splitting: true,
-    metafile: true,
-    target: "es2020",
-    format: "esm",
-    define: pickAsJsonFromEnv([
-        "NODE_ENV"
-    ]),
-    loader,
-    plugins: [
-        htmlPlugin({
-            files: [{
-                entryPoints,
-                filename: htmlFileName, 
-                scriptLoading: "module",
-                htmlTemplate: `${sourcedir}/${htmlFileName}`,
-                define: env as {}
-            }]
-        })
-    ],
-    logLevel: serveDev ? "error" : "info"
+  entryPoints,
+  entryNames: "[name]-[hash]",
+  chunkNames: "[name]-[hash]",
+  outdir,
+  publicPath: "/",
+  bundle: true,
+  minify: !serveDev,
+  sourcemap: true,
+  splitting: true,
+  metafile: true,
+  target: "es2020",
+  format: "esm",
+  define: pickAsJsonFromEnv(["NODE_ENV", "NEXT_PUBLIC_FIREBASE_API_KEY"]),
+  loader,
+  plugins: [
+    htmlPlugin({
+      files: [
+        {
+          entryPoints,
+          filename: htmlFileName,
+          scriptLoading: "module",
+          htmlTemplate: `${sourcedir}/${htmlFileName}`,
+          define: env as {},
+        },
+      ],
+    }),
+  ],
+  logLevel: serveDev ? "error" : "info",
 };
 
 (async () => {
+  for (const f of await readdir(outdir)) {
+    if (!f.startsWith(".")) await rm(`${outdir}/${f}`, { recursive: true });
+  }
 
-    for (const f of await readdir(outdir)) {
-        if (!f.startsWith(".")) await rm(`${outdir}/${f}`, { recursive: true });
+  await cp(`${sourcedir}/assets`, `${outdir}/assets`, { recursive: true });
+
+  if (serveDev) {
+    const context = await esbuild.context(buildOptions);
+
+    const terminate = async () => {
+      await context.dispose();
+      process.exit();
+    };
+
+    process.on("SIGINT", terminate);
+    process.on("SIGTERM", terminate);
+
+    await context.watch();
+    const { port } = await context.serve({
+      servedir: outdir,
+      port: 3000,
+      fallback: spaRouting ? `${outdir}/${htmlFileName}` : undefined,
+    });
+
+    console.info(`Server started on http://localhost:${port}`);
+  } else {
+    const result = await esbuild.build(buildOptions);
+
+    if (analyze && result.metafile) {
+      await writeFile(
+        `${outdir}/build-meta.json`,
+        JSON.stringify(result.metafile)
+      );
+
+      console.info(
+        await esbuild.analyzeMetafile(result.metafile, { verbose: false })
+      );
     }
-
-    await cp(`${sourcedir}/assets`, `${outdir}/assets`, { recursive: true });
-
-    if (serveDev) {
-    
-        const context = await esbuild.context(buildOptions);
-
-        const terminate = async () => {
-            await context.dispose();
-            process.exit();
-        };
-
-        process.on("SIGINT", terminate);
-        process.on("SIGTERM", terminate);
-
-        await context.watch();
-        const { port } = await context.serve({
-            servedir: outdir,
-            port: 3000,
-            fallback: spaRouting ? `${outdir}/${htmlFileName}` : undefined
-        });
-
-        console.info(`Server started on http://localhost:${port}`);
-    
-    } else {
-
-        const result = await esbuild.build(buildOptions);
-
-        if (analyze && result.metafile) {
-
-            await writeFile(`${outdir}/build-meta.json`, JSON.stringify(result.metafile));
-
-            console.info(await esbuild.analyzeMetafile(result.metafile, { verbose: false }));
-        }
-    }
-
+  }
 })();
