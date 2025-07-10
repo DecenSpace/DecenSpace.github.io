@@ -323,7 +323,40 @@ const Home: React.FC = () => (
             communications revolution?
           </Typography>
         </TextSection>
+        <StartPageButton
+          size="large"
+          component="a"
+          href="/#newsletter-signup-form"
+          sx={{
+            textDecoration: "none",
+            background:
+              "linear-gradient(90deg, rgba(20,30,48,0.85) 0%, rgba(36,0,70,0.85) 100%)",
+            color: "#fff",
+            paddingX: 4,
+            paddingY: 2,
+            borderRadius: 999,
+            boxShadow: "0 4px 24px 0 rgba(36,0,70,0.18)",
+            fontWeight: 700,
+            fontSize: { xs: "1.1rem", sm: "1.25rem" },
+            display: "flex",
+            alignItems: "center",
+            gap: 1.5,
+            border: "1.5px solid rgba(106,90,249,0.25)",
+            backdropFilter: "blur(6px)",
+            transition: "all 0.2s cubic-bezier(.4,2,.6,1)",
+            "&:hover": {
+              backgroundColor: "rgba(0, 0, 153, 1)",
+              boxShadow:
+                "0 0 16px 4px #4169E1, 0 8px 32px 0 rgba(0, 0, 153, 1)",
+              borderColor: "#4169E1",
+              transform: "scale(1.06)",
+            },
+          }}
+        >
+          Subscribe to our newsletter
+        </StartPageButton>
       </Box>
+
       <Box gridArea={GridArea.aside}>
         <Box
           component="img"
