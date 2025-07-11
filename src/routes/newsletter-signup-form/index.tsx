@@ -22,13 +22,13 @@ import {
 } from "@mui/material";
 
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+  apiKey: "AIzaSyA4zLn2sm3n629lOUhM0LTqLS6xH0Va7q4",
+  authDomain: "decen-space-api.firebaseapp.com",
+  projectId: "decen-space-api",
+  storageBucket: "decen-space-api.firebasestorage.app",
+  messagingSenderId: "525198382796",
+  appId: "1:525198382796:web:51f9ce2872b6a18fac9469",
+  measurementId: "G-VZMFJHJJME",
 };
 
 // initialize firestore
@@ -48,6 +48,12 @@ const NewsletterSignupForm: React.FC = () => {
     // sanity checks
     if (!name.trim() && !email.trim()) {
       setError("Please enter both name and email.");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address.");
       return;
     }
 
