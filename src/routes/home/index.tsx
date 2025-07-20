@@ -327,6 +327,7 @@ const Home: React.FC = () => (
           size="large"
           component="a"
           href="/#newsletter-signup-form"
+          disabled
           sx={{
             textDecoration: "none",
             background:
@@ -353,7 +354,7 @@ const Home: React.FC = () => (
             },
           }}
         >
-          Subscribe to our newsletter
+          Newsletter in development
         </StartPageButton>
       </Box>
 
