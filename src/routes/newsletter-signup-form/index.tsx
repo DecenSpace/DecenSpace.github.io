@@ -20,6 +20,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import SvgIcon from "components/SvgIcon";
+import DecenSpaceLogoReuse from "icons/DecenSpaceLogoReuse";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA4zLn2sm3n629lOUhM0LTqLS6xH0Va7q4",
@@ -101,104 +103,160 @@ const NewsletterSignupForm: React.FC = () => {
   return (
     <Box
       sx={{
-        bgcolor: "#f7f7f7",
         minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        p: 2,
+        backgroundColor: "#DBE5FF", // base bg color
+        position: "relative",
+        overflow: "hidden",
+        paddingY: 3,
+        paddingX: 5,
+
+        "&::before, &::after": {
+          content: '""',
+          position: "absolute",
+          zIndex: 0,
+          borderRadius: "50%",
+          filter: "blur(100px)",
+        },
+
+        // top-left blob
+        "&::before": {
+          width: "700px",
+          height: "700px",
+          backgroundColor: "rgba(2, 24, 165, 0.2)",
+          top: "-150px",
+          left: "-200px",
+        },
+
+        // bottom-right blob
+        "&::after": {
+          width: "700px",
+          height: "700px",
+          backgroundColor: "rgba(2, 24, 165, 0.2)",
+          bottom: "-250px",
+          right: "-200px",
+        },
       }}
     >
-      <Container maxWidth="md">
-        <Box component="header" sx={{ textAlign: "center", mb: 5 }}>
-          <Typography
-            variant="h1"
-            component="h1"
-            fontWeight="bold"
-            gutterBottom
-            sx={{ color: "grey.900" }}
-          >
-            Join Our Newsletter
-          </Typography>
-          <Typography variant="h6" color="text.secondary">
-            Stay up to date with our latest news and articles.
-          </Typography>
-        </Box>
-
-        <Paper
-          elevation={3}
-          sx={{
-            p: { xs: 3, md: 4 },
-            borderRadius: 3,
-            maxWidth: "500px",
-            mx: "auto",
-          }}
-        >
-          <Typography
-            variant="h5"
-            component="h2"
-            fontWeight="600"
-            sx={{ mb: 3, textAlign: "center" }}
-          >
-            Subscribe Now
-          </Typography>
-          <Box component="form" onSubmit={handleSubscribe} noValidate>
-            <TextField
-              label="Name"
-              variant="outlined"
-              fullWidth
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              margin="normal"
-            />
-            <TextField
-              label="Email Address"
-              type="email"
-              variant="outlined"
-              fullWidth
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              margin="normal"
-            />
-            <Box sx={{ mt: 2, position: "relative" }}>
-              <Button
-                type="submit"
-                variant="contained"
-                size="large"
-                fullWidth
-                disabled={isLoading}
-                sx={{ py: 1.5, textTransform: "none", fontSize: "1.1rem" }}
-              >
-                {isLoading ? "Subscribing..." : "Subscribe"}
-              </Button>
-              {isLoading && (
-                <CircularProgress
-                  size={24}
-                  sx={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    marginTop: "-12px",
-                    marginLeft: "-12px",
-                  }}
-                />
-              )}
-            </Box>
+      <Box marginBottom={10} position="relative">
+        <a href="/">
+          <SvgIcon
+            component={DecenSpaceLogoReuse}
+            color="text.primary"
+            sx={{
+              opacity: 0.6,
+              position: "absolute",
+              left: 0,
+              top: 0,
+            }}
+          />
+        </a>
+      </Box>
+      <Box
+        sx={{
+          height: "auto",
+          width: "auto",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Container maxWidth="md">
+          <Box component="header" sx={{ textAlign: "center", mb: 5 }}>
+            <Typography
+              variant="h1"
+              gutterBottom
+              fontFamily="Satoshi"
+              fontWeight={900}
+              color="#010532"
+            >
+              Join Our Newsletter
+            </Typography>
+            <Typography
+              variant="h6"
+              color="#010532"
+              fontFamily="Rubik"
+              fontWeight={400}
+            >
+              Stay up to date with our latest news and articles.
+            </Typography>
           </Box>
-          {error && (
-            <Alert severity="error" sx={{ mt: 3 }}>
-              {error}
-            </Alert>
-          )}
-          {successMessage && (
-            <Alert severity="success" sx={{ mt: 3 }}>
-              {successMessage}
-            </Alert>
-          )}
-        </Paper>
-      </Container>
+
+          <Paper
+            elevation={3}
+            sx={{
+              p: { xs: 3, md: 4 },
+              borderRadius: 3,
+              maxWidth: "500px",
+              mx: "auto",
+            }}
+          >
+            <Typography
+              variant="h5"
+              component="h2"
+              fontWeight="600"
+              sx={{ mb: 3, textAlign: "center" }}
+            >
+              Subscribe Now
+            </Typography>
+            <Box component="form" onSubmit={handleSubscribe} noValidate>
+              <TextField
+                label="Name"
+                variant="outlined"
+                fullWidth
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                margin="normal"
+              />
+              <TextField
+                label="Email Address"
+                type="email"
+                variant="outlined"
+                fullWidth
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                margin="normal"
+              />
+              <Box sx={{ mt: 2, position: "relative" }}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  fullWidth
+                  disabled={isLoading}
+                  sx={{ py: 1.5, textTransform: "none", fontSize: "1.1rem" }}
+                >
+                  {isLoading ? "Subscribing..." : "Subscribe"}
+                </Button>
+                {isLoading && (
+                  <CircularProgress
+                    size={24}
+                    sx={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      marginTop: "-12px",
+                      marginLeft: "-12px",
+                    }}
+                  />
+                )}
+              </Box>
+            </Box>
+            {error && (
+              <Alert severity="error" sx={{ mt: 3 }}>
+                {error}
+              </Alert>
+            )}
+            {successMessage && (
+              <Alert severity="success" sx={{ mt: 3 }}>
+                {successMessage}
+              </Alert>
+            )}
+          </Paper>
+        </Container>
+      </Box>
     </Box>
   );
 };

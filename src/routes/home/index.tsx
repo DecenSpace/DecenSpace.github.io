@@ -1,7 +1,5 @@
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import SvgDsLogo from "icons/DsLogo";
-import SvgIcon from "components/SvgIcon";
 import PageGridContainer, { GridArea } from "components/PageGridContainer";
 import TextSection from "components/TextSection";
 import { ParallaxProvider } from "react-scroll-parallax";
@@ -14,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import StartPageButton from "components/StartPageButton";
 import EmailIcon from "@mui/icons-material/Email";
 import SponsorsSection from "components/SponsorsSection";
-import GlowLogo from "components/GlowLogo";
+import DecenSpaceMainPageLogo from "components/DecenSpaceMainPageLogo";
 
 const Home: React.FC = () => (
   <ParallaxProvider>
@@ -59,12 +57,19 @@ const Home: React.FC = () => (
         </StartPageButton>
       </Box>
       <Box component="header" gridArea={GridArea.head}>
-        <GlowLogo />
-        <Typography variant="h2" marginBottom={3}>
+        <DecenSpaceMainPageLogo />
+        <Typography
+          variant="h2"
+          marginBottom={3}
+          sx={{ color: "#010532", fontFamily: "Satoshi", fontWeight: 500 }}
+        >
           Powering the Future of Space Communications
         </Typography>
         <Box marginRight={{ xs: 0, sm: 6 }}>
-          <Typography variant="h4">
+          <Typography
+            variant="h4"
+            sx={{ fontFamily: "Rubik", fontWeight: 400, color: "#010532" }}
+          >
             The Space Communications Revolution Starts Here. We're building the
             infrastructure backbone for the new space economy. As satellites
             multiply from thousands to tens of thousands, the ground station
@@ -77,7 +82,10 @@ const Home: React.FC = () => (
       </Box>
       <Box gridArea={GridArea.main} paddingTop={{ xs: 8, sm: 16 }}>
         <TextSection heading="The Problem We're Solving" first>
-          <Typography variant="body1">
+          <Typography
+            variant="body1"
+            sx={{ fontFamily: "Rubik", fontWeight: 400, color: "#010532" }}
+          >
             The space industry is hitting a wall. Traditional ground station
             infrastructure is expensive, centralized, and can't scale fast
             enough. Satellite operators pay premium prices for limited coverage
@@ -86,12 +94,20 @@ const Home: React.FC = () => (
           </Typography>
           <Typography
             variant="h3"
-            color="primary"
-            sx={{ marginTop: 3, marginBottom: 3 }}
+            sx={{
+              marginTop: 3,
+              marginBottom: 3,
+              color: "#286BDC",
+              fontFamily: "Satoshi",
+              fontWeight: 700,
+            }}
           >
             28,000 satellites by 2030
           </Typography>
-          <Typography variant="body1">
+          <Typography
+            variant="body1"
+            sx={{ fontFamily: "Rubik", fontWeight: 400, color: "#010532" }}
+          >
             By 2030, over 28,000 satellites will orbit Earth. Current ground
             station capacity simply won't meet this demand. The result? Higher
             costs, communication delays, and missed opportunities that could
@@ -99,7 +115,10 @@ const Home: React.FC = () => (
           </Typography>
         </TextSection>
         <TextSection heading="Our Solution: A Decentralized Space Communications Network">
-          <Typography variant="body1">
+          <Typography
+            variant="body1"
+            sx={{ fontFamily: "Rubik", fontWeight: 400, color: "#010532" }}
+          >
             Decen Space transforms scattered ground stations into a unified,
             efficient marketplace. Using blockchain technology and cryptographic
             verification, we create trustless coordination between satellite
@@ -108,84 +127,244 @@ const Home: React.FC = () => (
           <Typography
             variant="h6"
             color="primary"
-            sx={{ marginTop: 3, marginBottom: 2 }}
+            sx={{
+              marginTop: 3,
+              marginBottom: 2,
+              color: "#286BDC",
+              fontFamily: "Satoshi",
+              fontWeight: 700,
+            }}
           >
             Here's how it works:
           </Typography>
           <Box component="ul" sx={{ marginLeft: 2 }}>
-            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+            <Typography
+              component="li"
+              variant="body1"
+              sx={{
+                marginBottom: 1,
+                fontFamily: "Rubik",
+                fontWeight: 400,
+                color: "#010532",
+              }}
+            >
               Automated scheduling matches satellites with optimal ground
               stations based on location, timing, and performance
             </Typography>
-            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+            <Typography
+              component="li"
+              variant="body1"
+              sx={{
+                marginBottom: 1,
+                fontFamily: "Rubik",
+                fontWeight: 400,
+                color: "#010532",
+              }}
+            >
               Smart contracts handle payments automatically, eliminating
               middlemen and reducing costs
             </Typography>
-            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+            <Typography
+              component="li"
+              variant="body1"
+              sx={{
+                marginBottom: 1,
+                fontFamily: "Rubik",
+                fontWeight: 400,
+                color: "#010532",
+              }}
+            >
               Cryptographic verification ensures service quality without
               centralized oversight
             </Typography>
-            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+            <Typography
+              component="li"
+              variant="body1"
+              sx={{
+                marginBottom: 1,
+                fontFamily: "Rubik",
+                fontWeight: 400,
+                color: "#010532",
+              }}
+            >
               Economic incentives reward ground station operators for strategic
               positioning and reliable service
             </Typography>
           </Box>
         </TextSection>
         <TextSection heading="The Benefits">
-          <Typography variant="h6" color="primary" sx={{ marginBottom: 2 }}>
+          <Typography
+            variant="h6"
+            color="primary"
+            sx={{
+              marginBottom: 2,
+              color: "#286BDC",
+              fontFamily: "Satoshi",
+              fontWeight: 700,
+            }}
+          >
             For Satellite Operators:
           </Typography>
           <Box component="ul" sx={{ marginLeft: 2, marginBottom: 3 }}>
-            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+            <Typography
+              component="li"
+              variant="body1"
+              sx={{
+                marginBottom: 1,
+                fontFamily: "Rubik",
+                fontWeight: 400,
+                color: "#010532",
+              }}
+            >
               Dramatically lower costs through competitive marketplace pricing
             </Typography>
-            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+            <Typography
+              component="li"
+              variant="body1"
+              sx={{
+                marginBottom: 1,
+                fontFamily: "Rubik",
+                fontWeight: 400,
+                color: "#010532",
+              }}
+            >
               Global coverage with access to distributed ground stations
               worldwide
             </Typography>
-            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+            <Typography
+              component="li"
+              variant="body1"
+              sx={{
+                marginBottom: 1,
+                fontFamily: "Rubik",
+                fontWeight: 400,
+                color: "#010532",
+              }}
+            >
               Transparent performance metrics with real-time quality
               verification
             </Typography>
-            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+            <Typography
+              component="li"
+              variant="body1"
+              sx={{
+                marginBottom: 1,
+                fontFamily: "Rubik",
+                fontWeight: 400,
+                color: "#010532",
+              }}
+            >
               Scalable capacity that grows with your mission needs
             </Typography>
           </Box>
-          <Typography variant="h6" color="primary" sx={{ marginBottom: 2 }}>
+          <Typography
+            variant="h6"
+            color="primary"
+            sx={{
+              marginBottom: 2,
+              color: "#286BDC",
+              fontFamily: "Satoshi",
+              fontWeight: 700,
+            }}
+          >
             For Ground Station Operators:
           </Typography>
           <Box component="ul" sx={{ marginLeft: 2 }}>
-            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+            <Typography
+              component="li"
+              variant="body1"
+              sx={{
+                marginBottom: 1,
+                fontFamily: "Rubik",
+                fontWeight: 400,
+                color: "#010532",
+              }}
+            >
               New revenue streams from existing or new infrastructure
             </Typography>
-            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+            <Typography
+              component="li"
+              variant="body1"
+              sx={{
+                marginBottom: 1,
+                fontFamily: "Rubik",
+                fontWeight: 400,
+                color: "#010532",
+              }}
+            >
               Fair compensation based on contribution quality and strategic
               value
             </Typography>
-            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+            <Typography
+              component="li"
+              variant="body1"
+              sx={{
+                marginBottom: 1,
+                fontFamily: "Rubik",
+                fontWeight: 400,
+                color: "#010532",
+              }}
+            >
               Automated operations with minimal manual intervention required
             </Typography>
-            <Typography component="li" variant="body1" sx={{ marginBottom: 1 }}>
+            <Typography
+              component="li"
+              variant="body1"
+              sx={{
+                marginBottom: 1,
+                fontFamily: "Rubik",
+                fontWeight: 400,
+                color: "#010532",
+              }}
+            >
               Growing market opportunity as satellite demand accelerates
             </Typography>
           </Box>
         </TextSection>
         <TextSection heading="Why Decentralized Infrastructure Matters">
-          <Typography variant="body1">
+          <Typography
+            variant="body1"
+            sx={{ fontFamily: "Rubik", fontWeight: 400, color: "#010532" }}
+          >
             Traditional centralized solutions create single points of failure
             and bottlenecks. Our decentralized approach distributes both risk
             and opportunity, creating a more resilient and efficient network.
           </Typography>
-          <Typography variant="body1" sx={{ marginTop: 2 }}>
+          <Typography
+            variant="body1"
+            sx={{
+              marginTop: 2,
+              fontFamily: "Rubik",
+              fontWeight: 400,
+              color: "#010532",
+            }}
+          >
             Blockchain technology enables what wasn't possible before: trustless
             coordination at global scale, automated quality verification, and
             fair value distribution without central authorities taking outsized
             profits.
           </Typography>
-          <Typography variant="h3" color="primary" sx={{ marginTop: 3 }}>
+          <Typography
+            variant="h3"
+            color="primary"
+            sx={{
+              marginTop: 3,
+              color: "#286BDC",
+              fontFamily: "Satoshi",
+              fontWeight: 700,
+            }}
+          >
             Join the Network
           </Typography>
-          <Typography variant="body1" sx={{ marginTop: 2 }}>
+          <Typography
+            variant="body1"
+            sx={{
+              marginTop: 2,
+              fontFamily: "Rubik",
+              fontWeight: 400,
+              color: "#010532",
+            }}
+          >
             The space economy is expanding rapidly. Companies and organizations
             that build the infrastructure backbone today will capture the most
             value as this market scales. Ready to be part of the space
