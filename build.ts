@@ -39,6 +39,7 @@ const loader = [
     ".mp3",
     ".mp4",
     ".otf",
+    ".ttf",
     ".woff",
     ".woff2",
 ].reduce((loaders, ext) => ({ ...loaders, [ext]: "file" }), {});
@@ -58,7 +59,7 @@ const buildOptions: BuildOptions = {
     format: "esm",
     define: {
         ...pickAsJsonFromEnv(["NODE_ENV"]),
-        CESIUM_BASE_URL: JSON.stringify(resiumPublicPath)
+        CESIUM_BASE_URL: JSON.stringify(resiumPublicPath),
     },
     loader,
     plugins: [
@@ -83,7 +84,9 @@ const buildOptions: BuildOptions = {
     }
 
     await cp(`${sourcedir}/assets`, `${outdir}/assets`, { recursive: true });
-    await cp("node_modules/cesium/Build/Cesium", outdir + resiumPublicPath, { recursive: true });
+    await cp("node_modules/cesium/Build/Cesium", outdir + resiumPublicPath, {
+        recursive: true,
+    });
     await cp(`${sourcedir}/404.html`, `${outdir}/404.html`);
 
     if (serveDev) {
@@ -115,7 +118,9 @@ const buildOptions: BuildOptions = {
             );
 
             console.info(
-                await esbuild.analyzeMetafile(result.metafile, { verbose: false })
+                await esbuild.analyzeMetafile(result.metafile, {
+                    verbose: false,
+                })
             );
         }
     }

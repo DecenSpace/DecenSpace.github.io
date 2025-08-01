@@ -64,7 +64,6 @@ import Pagination from "@mui/material/Pagination";
 import Link from "@mui/material/Link";
 
 const ThemeTest: React.FC = () => {
-
     const [dialogOpen, setDialogOpen] = useState(false);
     const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -72,19 +71,13 @@ const ThemeTest: React.FC = () => {
         <Stack direction="row" minHeight="100vh">
             <Box minWidth="240px" padding={2}>
                 <Card elevation={0} sx={{ marginBottom: 2 }}>
-                    <CardContent>
-                        Elevation 0
-                    </CardContent>
+                    <CardContent>Elevation 0</CardContent>
                 </Card>
                 <Card sx={{ marginBottom: 2 }}>
-                    <CardContent>
-                        Elevation 1
-                    </CardContent>
+                    <CardContent>Elevation 1</CardContent>
                 </Card>
                 <Card elevation={2} sx={{ marginBottom: 2 }}>
-                    <CardContent>
-                        Elevation 2
-                    </CardContent>
+                    <CardContent>Elevation 2</CardContent>
                 </Card>
                 <List
                     component={Card}
@@ -109,7 +102,7 @@ const ThemeTest: React.FC = () => {
                         <ListItemText primary="Drafts" />
                     </ListItemButton>
                     <Divider />
-                    <ListItemButton onClick={() => { }}>
+                    <ListItemButton onClick={() => {}}>
                         <ListItemIcon>
                             <InboxIcon />
                         </ListItemIcon>
@@ -141,16 +134,28 @@ const ThemeTest: React.FC = () => {
                     <Box display="grid" gridTemplateColumns="1fr 1fr" gap={2}>
                         <div>
                             <Card sx={{ marginBottom: 3 }}>
-                                <CardHeader title="Card" subheader="Subheadline" />
+                                <CardHeader
+                                    title="Card"
+                                    subheader="Subheadline"
+                                />
                                 <CardContent>
                                     <Typography variant="h2" marginBottom={2}>
                                         126
                                     </Typography>
                                     <Stack direction="row" spacing={2}>
                                         <Chip label="Chip Filled" />
-                                        <Chip label="Chip Filled" color="primary" />
-                                        <Chip label="Chip Filled" color="secondary" />
-                                        <Chip label="Chip Outlined" variant="outlined" />
+                                        <Chip
+                                            label="Chip Filled"
+                                            color="primary"
+                                        />
+                                        <Chip
+                                            label="Chip Filled"
+                                            color="secondary"
+                                        />
+                                        <Chip
+                                            label="Chip Outlined"
+                                            variant="outlined"
+                                        />
                                     </Stack>
                                 </CardContent>
                             </Card>
@@ -164,48 +169,135 @@ const ThemeTest: React.FC = () => {
                                     }
                                 />
                                 <Divider />
-                                <CardContent sx={{ display: "flex", flexDirection: "column", gap: 2, alignItems: "flex-start" }}>
+                                <CardContent
+                                    sx={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        gap: 2,
+                                        alignItems: "flex-start",
+                                    }}
+                                >
                                     <Button>Normal button</Button>
                                     <Button disabled>Disabled button</Button>
                                     <Button variant="text">Text button</Button>
-                                    <Button variant="outlined">Outlined button</Button>
-                                    <Button color="secondary" startIcon={<InboxIcon />}>Secondary button</Button>
+                                    <Button variant="outlined">
+                                        Outlined button
+                                    </Button>
+                                    <Button
+                                        color="secondary"
+                                        startIcon={<InboxIcon />}
+                                    >
+                                        Secondary button
+                                    </Button>
                                     <Button size="small">Small button</Button>
                                     <Fab>
                                         <AddIcon />
                                     </Fab>
                                     <FormControl>
-                                        <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
+                                        <FormLabel id="demo-radio-buttons-group-label">
+                                            Gender
+                                        </FormLabel>
                                         <RadioGroup
                                             aria-labelledby="demo-radio-buttons-group-label"
                                             defaultValue="female"
                                             name="radio-buttons-group"
                                         >
-                                            <FormControlLabel value="female" control={<Radio />} label="Female" />
-                                            <FormControlLabel value="male" control={<Radio />} label="Male" />
-                                            <FormControlLabel value="other" control={<Radio />} label="Other" />
+                                            <FormControlLabel
+                                                value="female"
+                                                control={<Radio />}
+                                                label="Female"
+                                            />
+                                            <FormControlLabel
+                                                value="male"
+                                                control={<Radio />}
+                                                label="Male"
+                                            />
+                                            <FormControlLabel
+                                                value="other"
+                                                control={<Radio />}
+                                                label="Other"
+                                            />
                                         </RadioGroup>
                                     </FormControl>
                                     <FormGroup>
-                                        <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
-                                        <FormControlLabel required control={<Checkbox />} label="Required" />
-                                        <FormControlLabel disabled control={<Checkbox />} label="Disabled" />
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox defaultChecked />
+                                            }
+                                            label="Label"
+                                        />
+                                        <FormControlLabel
+                                            required
+                                            control={<Checkbox />}
+                                            label="Required"
+                                        />
+                                        <FormControlLabel
+                                            disabled
+                                            control={<Checkbox />}
+                                            label="Disabled"
+                                        />
                                     </FormGroup>
                                     <FormGroup>
-                                        <FormControlLabel control={<Switch defaultChecked />} label="Label" />
-                                        <FormControlLabel required control={<Switch />} label="Required" />
-                                        <FormControlLabel disabled control={<Switch />} label="Disabled" />
+                                        <FormControlLabel
+                                            control={<Switch defaultChecked />}
+                                            label="Label"
+                                        />
+                                        <FormControlLabel
+                                            required
+                                            control={<Switch />}
+                                            label="Required"
+                                        />
+                                        <FormControlLabel
+                                            disabled
+                                            control={<Switch />}
+                                            label="Disabled"
+                                        />
                                     </FormGroup>
-                                    <TextField label="Outlined" variant="outlined" />
-                                    <TextField label="Filled" variant="filled" />
-                                    <TextField label="Standard" variant="standard" />
-                                    <TextField label="Outlined" variant="outlined" error />
-                                    <TextField label="Filled" variant="filled" error />
-                                    <TextField label="Standard" variant="standard" error />
-                                    <TextField label="Outlined" variant="outlined" disabled />
-                                    <TextField label="Filled" variant="filled" disabled />
-                                    <TextField label="Standard" variant="standard" disabled />
-                                    <LinearProgress sx={{ marginTop: 1, width: "100%" }} />
+                                    <TextField
+                                        label="Outlined"
+                                        variant="outlined"
+                                    />
+                                    <TextField
+                                        label="Filled"
+                                        variant="filled"
+                                    />
+                                    <TextField
+                                        label="Standard"
+                                        variant="standard"
+                                    />
+                                    <TextField
+                                        label="Outlined"
+                                        variant="outlined"
+                                        error
+                                    />
+                                    <TextField
+                                        label="Filled"
+                                        variant="filled"
+                                        error
+                                    />
+                                    <TextField
+                                        label="Standard"
+                                        variant="standard"
+                                        error
+                                    />
+                                    <TextField
+                                        label="Outlined"
+                                        variant="outlined"
+                                        disabled
+                                    />
+                                    <TextField
+                                        label="Filled"
+                                        variant="filled"
+                                        disabled
+                                    />
+                                    <TextField
+                                        label="Standard"
+                                        variant="standard"
+                                        disabled
+                                    />
+                                    <LinearProgress
+                                        sx={{ marginTop: 1, width: "100%" }}
+                                    />
                                 </CardContent>
                             </Card>
                             <div>
@@ -215,14 +307,20 @@ const ThemeTest: React.FC = () => {
                                         aria-controls="panel3-content"
                                         id="panel3-header"
                                     >
-                                        <Typography component="span">Accordion Actions</Typography>
+                                        <Typography component="span">
+                                            Accordion Actions
+                                        </Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                                        malesuada lacus ex, sit amet blandit leo lobortis eget.
+                                        Lorem ipsum dolor sit amet, consectetur
+                                        adipiscing elit. Suspendisse malesuada
+                                        lacus ex, sit amet blandit leo lobortis
+                                        eget.
                                     </AccordionDetails>
                                     <AccordionActions>
-                                        <Button color="secondary">Cancel</Button>
+                                        <Button color="secondary">
+                                            Cancel
+                                        </Button>
                                         <Button>Agree</Button>
                                     </AccordionActions>
                                 </Accordion>
@@ -232,11 +330,15 @@ const ThemeTest: React.FC = () => {
                                         aria-controls="panel3-content"
                                         id="panel3-header"
                                     >
-                                        <Typography component="span">Accordion Actions</Typography>
+                                        <Typography component="span">
+                                            Accordion Actions
+                                        </Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                                        malesuada lacus ex, sit amet blandit leo lobortis eget.
+                                        Lorem ipsum dolor sit amet, consectetur
+                                        adipiscing elit. Suspendisse malesuada
+                                        lacus ex, sit amet blandit leo lobortis
+                                        eget.
                                     </AccordionDetails>
                                 </Accordion>
                                 <Accordion variant="outlined">
@@ -245,11 +347,15 @@ const ThemeTest: React.FC = () => {
                                         aria-controls="panel3-content"
                                         id="panel3-header"
                                     >
-                                        <Typography component="span">Accordion Actions</Typography>
+                                        <Typography component="span">
+                                            Accordion Actions
+                                        </Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                                        malesuada lacus ex, sit amet blandit leo lobortis eget.
+                                        Lorem ipsum dolor sit amet, consectetur
+                                        adipiscing elit. Suspendisse malesuada
+                                        lacus ex, sit amet blandit leo lobortis
+                                        eget.
                                     </AccordionDetails>
                                 </Accordion>
                             </div>
@@ -258,26 +364,53 @@ const ThemeTest: React.FC = () => {
                             <Card sx={{ marginBottom: 3 }}>
                                 <CardHeader title="Dialog" />
                                 <CardContent>
-                                    <Button variant="outlined" onClick={() => setDialogOpen(true)}>
+                                    <Button
+                                        variant="outlined"
+                                        onClick={() => setDialogOpen(true)}
+                                    >
                                         Open dialog
                                     </Button>
-                                    <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+                                    <Dialog
+                                        open={dialogOpen}
+                                        onClose={() => setDialogOpen(false)}
+                                    >
                                         <DialogTitle>Dialog</DialogTitle>
                                         <DialogContent>
                                             <DialogContentText id="alert-dialog-description">
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
+                                                Lorem ipsum dolor sit amet,
+                                                consectetur adipiscing elit.
+                                                Suspendisse malesuada lacus ex,
+                                                sit amet blandit leo lobortis
+                                                eget.
                                             </DialogContentText>
                                         </DialogContent>
                                         <DialogActions>
-                                            <Button color="secondary" onClick={() => setDialogOpen(false)}>Disagree</Button>
-                                            <Button onClick={() => setDialogOpen(false)} autoFocus>
+                                            <Button
+                                                color="secondary"
+                                                onClick={() =>
+                                                    setDialogOpen(false)
+                                                }
+                                            >
+                                                Disagree
+                                            </Button>
+                                            <Button
+                                                onClick={() =>
+                                                    setDialogOpen(false)
+                                                }
+                                                autoFocus
+                                            >
                                                 Agree
                                             </Button>
                                         </DialogActions>
                                     </Dialog>
                                     <br />
                                     <br />
-                                    <Button variant="outlined" onClick={(e) => setMenuAnchorEl(e.currentTarget)}>
+                                    <Button
+                                        variant="outlined"
+                                        onClick={(e) =>
+                                            setMenuAnchorEl(e.currentTarget)
+                                        }
+                                    >
                                         Open Menu
                                     </Button>
                                     <Menu
@@ -291,36 +424,94 @@ const ThemeTest: React.FC = () => {
                                     </Menu>
                                 </CardContent>
                             </Card>
-                            <TableContainer component={Paper} variant="outlined" sx={{ marginBottom: 3 }}>
+                            <TableContainer
+                                component={Paper}
+                                variant="outlined"
+                                sx={{ marginBottom: 3 }}
+                            >
                                 <Table>
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>Dessert (100g serving)</TableCell>
-                                            <TableCell align="right">Calories</TableCell>
-                                            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                                            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                                            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                                            <TableCell>
+                                                Dessert (100g serving)
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                Calories
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                Fat&nbsp;(g)
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                Carbs&nbsp;(g)
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                Protein&nbsp;(g)
+                                            </TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         {[
-                                            { name: "Frozen yoghurt", calories: 159, fat: 6, carbs: 24, protein: 4 },
-                                            { name: "Ice cream sandwich", calories: 237, fat: 9, carbs: 37, protein: 4.3 },
-                                            { name: "Eclair", calories: 262, fat: 16, carbs: 24, protein: 6 },
-                                            { name: "Cupcake", calories: 305, fat: 3.7, carbs: 67, protein: 4.3 },
-                                            { name: "Gingerbread", calories: 356, fat: 16, carbs: 49, protein: 3.9 }
+                                            {
+                                                name: "Frozen yoghurt",
+                                                calories: 159,
+                                                fat: 6,
+                                                carbs: 24,
+                                                protein: 4,
+                                            },
+                                            {
+                                                name: "Ice cream sandwich",
+                                                calories: 237,
+                                                fat: 9,
+                                                carbs: 37,
+                                                protein: 4.3,
+                                            },
+                                            {
+                                                name: "Eclair",
+                                                calories: 262,
+                                                fat: 16,
+                                                carbs: 24,
+                                                protein: 6,
+                                            },
+                                            {
+                                                name: "Cupcake",
+                                                calories: 305,
+                                                fat: 3.7,
+                                                carbs: 67,
+                                                protein: 4.3,
+                                            },
+                                            {
+                                                name: "Gingerbread",
+                                                calories: 356,
+                                                fat: 16,
+                                                carbs: 49,
+                                                protein: 3.9,
+                                            },
                                         ].map((row) => (
                                             <TableRow
                                                 key={row.name}
-                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                sx={{
+                                                    "&:last-child td, &:last-child th":
+                                                        { border: 0 },
+                                                }}
                                             >
-                                                <TableCell component="th" scope="row">
+                                                <TableCell
+                                                    component="th"
+                                                    scope="row"
+                                                >
                                                     {row.name}
                                                 </TableCell>
-                                                <TableCell align="right">{row.calories}</TableCell>
-                                                <TableCell align="right">{row.fat}</TableCell>
-                                                <TableCell align="right">{row.carbs}</TableCell>
-                                                <TableCell align="right">{row.protein}</TableCell>
+                                                <TableCell align="right">
+                                                    {row.calories}
+                                                </TableCell>
+                                                <TableCell align="right">
+                                                    {row.fat}
+                                                </TableCell>
+                                                <TableCell align="right">
+                                                    {row.carbs}
+                                                </TableCell>
+                                                <TableCell align="right">
+                                                    {row.protein}
+                                                </TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>
@@ -329,13 +520,18 @@ const ThemeTest: React.FC = () => {
                             <Card sx={{ marginBottom: 3 }}>
                                 <CardContent>
                                     <Stepper nonLinear activeStep={0}>
-                                        {["Step one", "Step 2", "Step 3"].map((label, index) => (
-                                            <Step key={label} completed={index === 0}>
-                                                <StepButton color="inherit">
-                                                    {label}
-                                                </StepButton>
-                                            </Step>
-                                        ))}
+                                        {["Step one", "Step 2", "Step 3"].map(
+                                            (label, index) => (
+                                                <Step
+                                                    key={label}
+                                                    completed={index === 0}
+                                                >
+                                                    <StepButton color="inherit">
+                                                        {label}
+                                                    </StepButton>
+                                                </Step>
+                                            )
+                                        )}
                                     </Stepper>
                                 </CardContent>
                             </Card>
@@ -347,56 +543,63 @@ const ThemeTest: React.FC = () => {
                             <Stack spacing={2} sx={{ maxWidth: 600 }}>
                                 <SnackbarContent
                                     message="This is the default snackbar style"
-                                    action={(
+                                    action={
                                         <Button size="small">
                                             lorem ipsum dolorem
                                         </Button>
-                                    )}
+                                    }
                                 />
                                 <Alert
-                                    onClose={() => { }}
+                                    onClose={() => {}}
                                     severity="success"
                                     variant="outlined"
                                 >
                                     This is a success Alert
                                 </Alert>
                                 <Alert
-                                    onClose={() => { }}
+                                    onClose={() => {}}
                                     severity="error"
                                     variant="outlined"
                                 >
                                     This is a error Alert
                                 </Alert>
                                 <Alert
-                                    onClose={() => { }}
+                                    onClose={() => {}}
                                     severity="warning"
                                     variant="outlined"
                                 >
                                     This is a warning Alert
                                 </Alert>
                                 <Alert
-                                    onClose={() => { }}
+                                    onClose={() => {}}
                                     severity="success"
                                     variant="filled"
                                 >
                                     This is a success Alert
                                 </Alert>
                                 <Alert
-                                    onClose={() => { }}
+                                    onClose={() => {}}
                                     severity="error"
                                     variant="filled"
                                 >
                                     This is a error Alert
                                 </Alert>
                                 <Alert
-                                    onClose={() => { }}
+                                    onClose={() => {}}
                                     severity="warning"
                                     variant="filled"
                                 >
                                     This is a warning Alert
                                 </Alert>
                             </Stack>
-                            <Box sx={{ width: "100%", height: 200, margin: "20px 0", backgroundImage: heroGradient }} />
+                            <Box
+                                sx={{
+                                    width: "100%",
+                                    height: 200,
+                                    margin: "20px 0",
+                                    backgroundImage: heroGradient,
+                                }}
+                            />
                             <Box marginTop={4}>
                                 <Typography variant="h1" marginBottom={2}>
                                     Headline 1
@@ -414,17 +617,41 @@ const ThemeTest: React.FC = () => {
                                     Headline 5
                                 </Typography>
                                 <Typography variant="body1" marginBottom={2}>
-                                    The space industry faces a <Link href="#">critical infrastructure</Link> challenge: ground station access is expensive, centralized, and inefficient. Satellite operators struggle with limited coverage while existing ground stations sit underutilized. We built Decen Space to create a marketplace that transforms how the space industry communicates with satellites, democratizing access while rewarding participation.
+                                    The space industry faces a{" "}
+                                    <Link href="#">
+                                        critical infrastructure
+                                    </Link>{" "}
+                                    challenge: ground station access is
+                                    expensive, centralized, and inefficient.
+                                    Satellite operators struggle with limited
+                                    coverage while existing ground stations sit
+                                    underutilized. We built Decen Space to
+                                    create a marketplace that transforms how the
+                                    space industry communicates with satellites,
+                                    democratizing access while rewarding
+                                    participation.
                                 </Typography>
                                 <Typography variant="body2" marginBottom={2}>
-                                    The space industry faces a <Link href="#">critical infrastructure</Link> challenge: ground station access is expensive, centralized, and inefficient. Satellite operators struggle with limited coverage while existing ground stations sit underutilized. We built Decen Space to create a marketplace that transforms how the space industry communicates with satellites, democratizing access while rewarding participation.
+                                    The space industry faces a{" "}
+                                    <Link href="#">
+                                        critical infrastructure
+                                    </Link>{" "}
+                                    challenge: ground station access is
+                                    expensive, centralized, and inefficient.
+                                    Satellite operators struggle with limited
+                                    coverage while existing ground stations sit
+                                    underutilized. We built Decen Space to
+                                    create a marketplace that transforms how the
+                                    space industry communicates with satellites,
+                                    democratizing access while rewarding
+                                    participation.
                                 </Typography>
                             </Box>
                         </div>
                     </Box>
                 </Box>
             </Box>
-        </Stack >
+        </Stack>
     );
 };
 

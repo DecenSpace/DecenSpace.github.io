@@ -42,39 +42,55 @@ const ProfileSelectMenu: React.FC<IProfileSelectMenuProps> = ({
             {...props}
         >
             <Button
-                variant="outlined"
+                variant="text"
                 startIcon={<AccountBalanceIcon />}
                 component={Link}
                 to={`/${section}/stakers`}
+                sx={{ fontFamily: "Satoshi", fontWeight: 700 }}
                 disabled
             >
                 Stakers
             </Button>
             <Button
-                variant="outlined"
+                variant="text"
                 startIcon={<IconLanguage />}
                 component={Link}
                 to={profiles.groundStation[pathType]}
-                color={groundStationOpsRoute ? "primary" : "secondary"}
+                sx={{
+                    fontFamily: "Satoshi",
+                    fontWeight: 700,
+                    color: `${groundStationOpsRoute ? "#4C3B93" : "#010532"}`,
+                }}
             >
                 Ground Stations
             </Button>
             <Button
-                variant="outlined"
+                variant="text"
                 startIcon={<IconSatelliteAlt />}
                 component={Link}
                 to={profiles.satelliteOperator[pathType]}
-                color={satelliteOpsRoute ? "primary" : "secondary"}
+                sx={{
+                    fontFamily: "Satoshi",
+                    fontWeight: 700,
+                    color: `${satelliteOpsRoute ? "#4C3B93" : "#010532"}`,
+                }}
             >
                 Satellite Operators
             </Button>
             {wallet.publicKey &&
-                wallet.publicKey.toString() === admin.toString() ? (
+            wallet.publicKey.toString() === admin.toString() ? (
                 <Button
-                    variant="outlined"
+                    variant="text"
                     component={Link}
                     to="/app/admin"
                     color="primary"
+                    sx={{
+                        fontFamily: "Satoshi",
+                        fontWeight: 700,
+                        color: `${
+                            groundStationOpsRoute ? "#4C3B93" : "#010532"
+                        }`,
+                    }}
                 >
                     ADMIN
                 </Button>
