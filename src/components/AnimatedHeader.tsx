@@ -9,7 +9,7 @@ const AnimatedHeader: React.FC = () => {
       component="header"
       sx={{
         position: 'relative',
-        minHeight: '95vh', // Header is now slightly shorter
+        minHeight: 'clamp(40rem, 95vh, 60rem)', // Header is now slightly shorter
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center', // Restored original vertical alignment
@@ -108,7 +108,7 @@ const AnimatedHeader: React.FC = () => {
       opacity: 0.8,
     }}
   >
-    The Space Communications Revolution Starts Here. We're building the
+    The Space Communications Revolution Starts Here. We're building the network
     infrastructure backbone for the new space economy.
   </Typography>
 </Parallax>
@@ -118,7 +118,7 @@ const AnimatedHeader: React.FC = () => {
       <Box
         sx={{
           position: 'absolute',
-          bottom: 'clamp(1rem, 3vw, 4rem)', // Clamped bottom spacing
+          bottom: { xs: '2rem', sm: '3rem' }, // Mobile-friendly bottom spacing
           left: '50%',
           transform: 'translateX(-50%)',
           zIndex: 4,
@@ -128,13 +128,13 @@ const AnimatedHeader: React.FC = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: 'clamp(0.5rem, 1vw, 1.5rem)', // Clamped gap
+          gap: { xs: '0.75rem', sm: '1rem' }, // Mobile-friendly gap
         }}
       >
         <Typography 
           variant="body2" 
           sx={{ 
-            fontSize: 'clamp(0.6rem, 0.8vw, 1rem)', // Clamped font size
+            fontSize: { xs: '0.875rem', sm: '1rem' }, // Mobile-friendly font size
             fontWeight: 500,
             margin: 0,
           }}
@@ -147,22 +147,22 @@ const AnimatedHeader: React.FC = () => {
           sx={{
             '@keyframes bounce-animation': {
               '0%, 20%, 50%, 80%, 100%': { transform: 'translateY(0)' },
-              '40%': { transform: 'translateY(clamp(2px, 0.4vw, 8px))' }, // Clamped animation
-              '60%': { transform: 'translateY(clamp(1px, 0.2vw, 4px))' },
+              '40%': { transform: { xs: 'translateY(4px)', sm: 'translateY(6px)' } }, // Mobile-friendly animation
+              '60%': { transform: { xs: 'translateY(2px)', sm: 'translateY(3px)' } },
             },
             animation: 'bounce-animation 2.5s infinite',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: 'clamp(0.1rem, 0.2vw, 0.4rem)', // Clamped gap
+            gap: { xs: '0.25rem', sm: '0.3rem' }, // Mobile-friendly gap
           }}
         >
           {/* Single SVG with both arrows for better grouping */}
           <Box
             component="svg"
             sx={{
-              width: 'clamp(12px, 1.5vw, 24px)', // Clamped arrow size
-              height: 'clamp(16px, 2vw, 32px)',
+              width: { xs: '18px', sm: '22px' }, // Mobile-friendly arrow size
+              height: { xs: '24px', sm: '28px' },
             }}
             viewBox="0 0 22 32"
             fill="none"
