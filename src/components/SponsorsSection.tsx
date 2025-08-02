@@ -3,13 +3,38 @@ import { Box, Container, Typography } from "@mui/material";
 const SponsorsSection = () => (
   <Box
     sx={{
-      backgroundColor: "background.paper",
+      background: 'linear-gradient(135deg, #F5F5F5 0%, #DBE5FF 100%)',
       paddingY: 8,
-      marginTop: 8,
+      position: 'relative',
+      overflow: 'hidden',
+      '&::before': {
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'url("/assets/gradient-2.jpg")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        opacity: 0.03,
+        zIndex: 0,
+      }
     }}
   >
-    <Container>
-      <Typography variant="h3" textAlign="center" marginBottom={6}>
+    <Container sx={{ position: 'relative', zIndex: 1 }}>
+      <Typography 
+        variant="h3" 
+        textAlign="center" 
+        marginBottom={6}
+        sx={{
+          color: '#010532',
+          fontFamily: 'Satoshi',
+          fontWeight: 500,
+          fontSize: { xs: '1.75rem', sm: '2rem' },
+          opacity: 0.9,
+        }}
+      >
         Supported by
       </Typography>
       <Box
@@ -30,14 +55,13 @@ const SponsorsSection = () => (
             src="/assets/1kx-logo.png"
             alt="1kx"
             sx={{
-              height: 60,
+              height: 50,
               objectFit: "contain",
-              filter: "grayscale(100%)",
               opacity: 0.7,
               transition: "all 0.3s ease",
               "&:hover": {
-                filter: "grayscale(0%)",
                 opacity: 1,
+                transform: "translateY(-2px)",
               },
             }}
           />
@@ -52,14 +76,13 @@ const SponsorsSection = () => (
             src="/assets/ov-logo.png"
             alt="OV"
             sx={{
-              height: 60,
+              height: 50,
               objectFit: "contain",
-              filter: "grayscale(100%)",
               opacity: 0.7,
               transition: "all 0.3s ease",
               "&:hover": {
-                filter: "grayscale(0%)",
                 opacity: 1,
+                transform: "translateY(-2px)",
               },
             }}
           />
@@ -74,14 +97,14 @@ const SponsorsSection = () => (
             src="/assets/euspa-logo.png"
             alt="EUSPA"
             sx={{
-              height: 60,
+              height: 50,
               objectFit: "contain",
-              filter: "grayscale(100%)",
-              opacity: 0.7,
+              filter: "brightness(0) saturate(100%)",
+              opacity: 0.6,
               transition: "all 0.3s ease",
               "&:hover": {
-                filter: "grayscale(0%)",
-                opacity: 1,
+                opacity: 0.9,
+                transform: "translateY(-2px)",
               },
             }}
           />
@@ -92,15 +115,15 @@ const SponsorsSection = () => (
             src="/assets/ESA_BIC_NG_White.png"
             alt="ESA BIC Northern Germany"
             sx={{
-              height: 60,
-              maxWidth: 350,
+              height: 50,
+              maxWidth: 300,
               objectFit: "contain",
-              filter: "grayscale(100%)",
-              opacity: 0.7,
+              filter: "brightness(0) saturate(100%)",
+              opacity: 0.6,
               transition: "all 0.3s ease",
               "&:hover": {
-                filter: "grayscale(0%)",
-                opacity: 1,
+                opacity: 0.9,
+                transform: "translateY(-2px)",
               },
             }}
           />

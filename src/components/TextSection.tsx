@@ -60,11 +60,18 @@ const TextSection: React.FC<ITextSectionProps> = ({
   >
     <TextSectionBase>
       <TextSectionHeading
-        sx={{ fontFamily: "Satoshi", fontWeight: 400, color: "#010532" }}
+        sx={{ 
+          fontFamily: "Satoshi", 
+          fontWeight: 500, 
+          background: "linear-gradient(135deg, #121212 0%, #286BDC 100%)",
+          backgroundClip: "text",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+        }}
       >
         {heading}
       </TextSectionHeading>
-      <Box marginRight={{ xs: 0, sm: "20%" }}>{children}</Box>
+      <Box marginRight={{ xs: 0, sm: "5%" }}>{children}</Box>
     </TextSectionBase>
   </Parallax>
 );

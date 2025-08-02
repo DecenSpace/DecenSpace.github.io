@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import PageGridContainer, { GridArea } from "components/PageGridContainer";
 import TextSection from "components/TextSection";
-import { ParallaxProvider } from "react-scroll-parallax";
+import { ParallaxProvider, Parallax } from "react-scroll-parallax";
 import MobileParallaxDishImage from "components/MobileParallaxDishImage";
 import AudienceButtons from "components/AudienceButtons";
 import InlineIconLink from "components/InlineIconLink";
@@ -12,93 +12,202 @@ import Typography from "@mui/material/Typography";
 import StartPageButton from "components/StartPageButton";
 import EmailIcon from "@mui/icons-material/Email";
 import SponsorsSection from "components/SponsorsSection";
-import DecenSpaceMainPageLogo from "components/DecenSpaceMainPageLogo";
+import AnimatedHeader from "components/AnimatedHeader";
+import EnumerationItem from "components/EnumerationItem";
 
 const Home: React.FC = () => (
   <ParallaxProvider>
-    <PageGridContainer>
-      <Box
-        gridArea={GridArea.above}
-        justifySelf="end"
-        marginBottom={10}
-        marginTop={{ xs: 6, sm: 0 }}
-        display="flex"
-        gap={3}
+    {/* Animated Header */}
+    <AnimatedHeader />
+    
+    {/* Contact Button */}
+    <Box
+      sx={{
+        position: 'fixed',
+        top: 30,
+        right: 30,
+        zIndex: 1000,
+      }}
+    >
+      <StartPageButton
+        size="large"
+        component="a"
+        href="mailto:info@decenspace.com"
+        sx={{
+          textDecoration: "none",
+          background: "linear-gradient(135deg, rgba(1, 5, 50, 0.7) 0%, rgba(40, 107, 220, 0.6) 100%)",
+          color: "#F5F5F5",
+          paddingX: 2.5,
+          paddingY: 1,
+          borderRadius: 8,
+          boxShadow: "0 2px 12px 0 rgba(1,5,50,0.08)",
+          fontFamily: "Satoshi",
+          fontWeight: 500,
+          fontSize: { xs: "0.875rem", sm: "0.9rem" },
+          display: "flex",
+          alignItems: "center",
+          gap: 1,
+          backdropFilter: "blur(12px)",
+          transition: "all 0.3s ease",
+          "&:hover": {
+            background: "linear-gradient(135deg, rgba(1, 5, 50, 0.8) 0%, rgba(40, 107, 220, 0.7) 100%)",
+            boxShadow: "0 4px 20px 0 rgba(40,107,220,0.15)",
+            transform: "translateY(-2px)",
+          },
+        }}
       >
-        <StartPageButton
-          size="large"
-          component="a"
-          href="https://decen-space-hack.vercel.app/"
+        <EmailIcon sx={{ mr: 1, fontSize: 20 }} /> Contact us
+      </StartPageButton>
+    </Box>
+
+    {/* Parallax dish image section */}
+    <Box
+      sx={{
+        width: '100vw',
+        height: '50vh',
+        position: 'relative',
+        overflow: 'hidden',
+        marginLeft: 'calc(-50vw + 50%)',
+        marginRight: 'calc(-50vw + 50%)',
+      }}
+    >
+      <Parallax speed={-10}>
+        <Box
+          component="img"
+          src="/assets/dish_hq.png"
+          alt="Ground station dish"
           sx={{
-            textDecoration: "none",
-            backgroundColor: "#252a6f",
-            color: "#fff",
-            paddingX: 4,
-            paddingY: 2,
-            borderRadius: 999,
-            boxShadow: "0 4px 24px 0 rgba(36,0,70,0.18)",
-            fontFamily: "Satoshi",
-            fontWeight: 700,
-            fontSize: { xs: "1.1rem", sm: "1.25rem" },
-            display: "flex",
-            alignItems: "center",
-            gap: 1.5,
-            backdropFilter: "blur(6px)",
-            transition: "all 0.2s cubic-bezier(.4,2,.6,1)",
-            "&:hover": {
-              boxShadow:
-                "0 0 16px 4px rgba(2, 24, 165, 0.2), 0 8px 32px 0 rgba(2, 24, 165, 0.2)",
-              borderColor: "#4169E1",
-              transform: "scale(1.04)",
-            },
+            width: '100%',
+            height: '200%',
+            objectFit: 'cover',
+            objectPosition: 'center',
+            transform: 'translateY(-33%)',
+            minHeight: '100vh',
+          }}
+        />
+      </Parallax>
+      {/* Subtle overlay */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'linear-gradient(135deg, rgba(245, 245, 245, 0.05) 0%, rgba(219, 229, 255, 0.02) 100%)',
+          zIndex: 1,
+        }}
+      />
+    </Box>
+
+    {/* Audience Buttons Section - Full Width */}
+    <Box
+      sx={{
+        width: '100vw',
+        paddingY: 8,
+        background:  'linear-gradient(10deg, #F5F5F5 0%, #DBE5FF 100%)',
+        marginLeft: 'calc(-50vw + 50%)',
+        marginRight: 'calc(-50vw + 50%)',
+        position: 'relative',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: '/assets/gradient-2.jpg',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 0.03,
+          zIndex: 0,
+        }
+      }}
+    >
+      <Container sx={{ position: 'relative', zIndex: 1 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: { xs: 4, sm: 8 },
+            maxWidth: '1200px',
+            mx: 'auto',
           }}
         >
-          Satellite Pass Scheduler Demo
-        </StartPageButton>
-        <StartPageButton
-          size="large"
-          component="a"
-          href="mailto:info@decenspace.com"
-          sx={{
-            textDecoration: "none",
-            backgroundColor: "#252a6f",
-            color: "#fff",
-            paddingX: 4,
-            paddingY: 2,
-            borderRadius: 999,
-            boxShadow: "0 4px 24px 0 rgba(36,0,70,0.18)",
-            fontFamily: "Satoshi",
-            fontWeight: 700,
-            fontSize: { xs: "1.1rem", sm: "1.25rem" },
-            display: "flex",
-            alignItems: "center",
-            gap: 1.5,
-            backdropFilter: "blur(6px)",
-            transition: "all 0.2s cubic-bezier(.4,2,.6,1)",
-            "&:hover": {
-              boxShadow:
-                "0 0 16px 4px rgba(2, 24, 165, 0.2), 0 8px 32px 0 rgba(2, 24, 165, 0.2)",
-              borderColor: "#4169E1",
-              transform: "scale(1.04)",
-            },
-          }}
-        >
-          <EmailIcon sx={{ mr: 1, fontSize: 28 }} /> Contact us
-        </StartPageButton>
-      </Box>
-      <Box component="header" gridArea={GridArea.head}>
-        <DecenSpaceMainPageLogo />
-        <Typography
-          variant="h2"
-          marginBottom={3}
-          sx={{ color: "#010532", fontFamily: "Satoshi", fontWeight: 500 }}
-        >
-          Powering the Future of Space Communications
-        </Typography>
-        <Box marginRight={{ xs: 0, sm: 6 }}>
+          <EnumerationItem
+            num={1}
+            label="Satellite operators"
+            linkLabel="get in touch with us"
+            href="mailto:satellites@decenspace.com"
+            sx={{ 
+              flexShrink: 0, 
+              fontFamily: "Satoshi",
+              flex: { xs: 'none', sm: '1' },
+              maxWidth: { xs: '100%', sm: '45%' },
+            }}
+          />
+          <EnumerationItem
+            num={2}
+            label="Ground station operators"
+            linkLabel="get in touch with us"
+            href="mailto:groundstation@decenspace.com"
+            sx={{ 
+              flexShrink: 0, 
+              fontFamily: "Satoshi",
+              flex: { xs: 'none', sm: '1' },
+              maxWidth: { xs: '100%', sm: '45%' },
+            }}
+          />
+        </Box>
+      </Container>
+    </Box>
+
+    {/* Main Content Section */}
+    <Box
+      sx={{
+        background: 'linear-gradient(135deg, #F5F5F5 0%, #DBE5FF 100%)',
+        position: 'relative',
+        overflow: 'hidden',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'url("/assets/gradient-2.jpg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 0.05,
+          zIndex: 0,
+        }
+      }}
+    >
+      <Container sx={{ 
+        maxWidth: '1400px', 
+        mx: 'auto', 
+        px: { xs: 3, sm: 6 },
+        position: 'relative',
+        zIndex: 1,
+      }}>
+        <Box sx={{ paddingTop: 8, paddingBottom: 8 }}>
+        <TextSection heading="About Our Mission" first>
           <Typography
             variant="h4"
-            sx={{ fontFamily: "Rubik", fontWeight: 400, color: "#010532" }}
+            sx={{ 
+              fontFamily: "Satoshi", 
+              fontWeight: 500, 
+              background: "linear-gradient(135deg, #121212 0%, #286BDC 100%)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              marginBottom: 6,
+              maxWidth: '100%',
+              lineHeight: 1.7,
+              fontSize: { xs: '1.5rem', sm: '2rem' },
+            }}
           >
             The Space Communications Revolution Starts Here. We're building the
             infrastructure backbone for the new space economy. As satellites
@@ -107,14 +216,18 @@ const Home: React.FC = () => (
             Space solves this with a decentralized marketplace that turns
             distributed ground stations into a unified, efficient network.
           </Typography>
-          <MobileParallaxDishImage marginTop={4} marginBottom={8} />
-        </Box>
-      </Box>
-      <Box gridArea={GridArea.main} paddingTop={{ xs: 8, sm: 16 }}>
-        <TextSection heading="The Problem We're Solving" first>
+        </TextSection>
+        
+        <TextSection heading="The Problem We're Solving">
           <Typography
             variant="body1"
-            sx={{ fontFamily: "Rubik", fontWeight: 400, color: "#010532" }}
+            sx={{ 
+              fontFamily: "Rubik", 
+              fontWeight: 400, 
+              color: "#121212",
+              fontSize: { xs: '1rem', sm: '1.1rem' },
+              lineHeight: 1.7,
+            }}
           >
             The space industry is hitting a wall. Traditional ground station
             infrastructure is expensive, centralized, and can't scale fast
@@ -125,18 +238,28 @@ const Home: React.FC = () => (
           <Typography
             variant="h3"
             sx={{
-              marginTop: 3,
-              marginBottom: 3,
-              color: "#286BDC",
+              marginTop: 4,
+              marginBottom: 4,
+              background: "linear-gradient(135deg, #121212 0%, #286BDC 100%)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
               fontFamily: "Satoshi",
-              fontWeight: 700,
+              fontWeight: 500,
+              fontSize: { xs: '2rem', sm: '2.5rem' },
             }}
           >
             28,000 satellites by 2030
           </Typography>
           <Typography
             variant="body1"
-            sx={{ fontFamily: "Rubik", fontWeight: 400, color: "#010532" }}
+            sx={{ 
+              fontFamily: "Rubik", 
+              fontWeight: 400, 
+              color: "#121212",
+              fontSize: { xs: '1rem', sm: '1.1rem' },
+              lineHeight: 1.7,
+            }}
           >
             By 2030, over 28,000 satellites will orbit Earth. Current ground
             station capacity simply won't meet this demand. The result? Higher
@@ -144,10 +267,17 @@ const Home: React.FC = () => (
             slow space innovation when we need it most.
           </Typography>
         </TextSection>
+
         <TextSection heading="Our Solution: A Decentralized Space Communications Network">
           <Typography
             variant="body1"
-            sx={{ fontFamily: "Rubik", fontWeight: 400, color: "#010532" }}
+            sx={{ 
+              fontFamily: "Rubik", 
+              fontWeight: 400, 
+              color: "#121212",
+              fontSize: { xs: '1rem', sm: '1.1rem' },
+              lineHeight: 1.7,
+            }}
           >
             Decen Space transforms scattered ground stations into a unified,
             efficient marketplace. Using blockchain technology and cryptographic
@@ -156,26 +286,31 @@ const Home: React.FC = () => (
           </Typography>
           <Typography
             variant="h6"
-            color="primary"
             sx={{
-              marginTop: 3,
-              marginBottom: 2,
-              color: "#286BDC",
+              marginTop: 4,
+              marginBottom: 3,
+              background: "linear-gradient(135deg, #121212 0%, #286BDC 100%)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
               fontFamily: "Satoshi",
-              fontWeight: 700,
+              fontWeight: 500,
+              fontSize: { xs: '1.1rem', sm: '1.25rem' },
             }}
           >
             Here's how it works:
           </Typography>
-          <Box component="ul" sx={{ marginLeft: 2 }}>
+          <Box component="ul" sx={{ marginLeft: 3, marginBottom: 4 }}>
             <Typography
               component="li"
               variant="body1"
               sx={{
-                marginBottom: 1,
+                marginBottom: 2,
                 fontFamily: "Rubik",
                 fontWeight: 400,
                 color: "#010532",
+                fontSize: { xs: '1rem', sm: '1.1rem' },
+                lineHeight: 1.7,
               }}
             >
               Automated scheduling matches satellites with optimal ground
@@ -185,10 +320,12 @@ const Home: React.FC = () => (
               component="li"
               variant="body1"
               sx={{
-                marginBottom: 1,
+                marginBottom: 2,
                 fontFamily: "Rubik",
                 fontWeight: 400,
                 color: "#010532",
+                fontSize: { xs: '1rem', sm: '1.1rem' },
+                lineHeight: 1.7,
               }}
             >
               Smart contracts handle payments automatically, eliminating
@@ -198,10 +335,12 @@ const Home: React.FC = () => (
               component="li"
               variant="body1"
               sx={{
-                marginBottom: 1,
+                marginBottom: 2,
                 fontFamily: "Rubik",
                 fontWeight: 400,
                 color: "#010532",
+                fontSize: { xs: '1rem', sm: '1.1rem' },
+                lineHeight: 1.7,
               }}
             >
               Cryptographic verification ensures service quality without
@@ -211,10 +350,12 @@ const Home: React.FC = () => (
               component="li"
               variant="body1"
               sx={{
-                marginBottom: 1,
+                marginBottom: 2,
                 fontFamily: "Rubik",
                 fontWeight: 400,
                 color: "#010532",
+                fontSize: { xs: '1rem', sm: '1.1rem' },
+                lineHeight: 1.7,
               }}
             >
               Economic incentives reward ground station operators for strategic
@@ -222,28 +363,34 @@ const Home: React.FC = () => (
             </Typography>
           </Box>
         </TextSection>
+
         <TextSection heading="The Benefits">
           <Typography
             variant="h6"
-            color="primary"
             sx={{
-              marginBottom: 2,
-              color: "#286BDC",
+              marginBottom: 3,
+              background: "linear-gradient(135deg, #121212 0%, #286BDC 100%)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
               fontFamily: "Satoshi",
-              fontWeight: 700,
+              fontWeight: 500,
+              fontSize: { xs: '1.1rem', sm: '1.25rem' },
             }}
           >
             For Satellite Operators:
           </Typography>
-          <Box component="ul" sx={{ marginLeft: 2, marginBottom: 3 }}>
+          <Box component="ul" sx={{ marginLeft: 3, marginBottom: 6 }}>
             <Typography
               component="li"
               variant="body1"
               sx={{
-                marginBottom: 1,
+                marginBottom: 2,
                 fontFamily: "Rubik",
                 fontWeight: 400,
                 color: "#010532",
+                fontSize: { xs: '1rem', sm: '1.1rem' },
+                lineHeight: 1.7,
               }}
             >
               Dramatically lower costs through competitive marketplace pricing
@@ -252,10 +399,12 @@ const Home: React.FC = () => (
               component="li"
               variant="body1"
               sx={{
-                marginBottom: 1,
+                marginBottom: 2,
                 fontFamily: "Rubik",
                 fontWeight: 400,
                 color: "#010532",
+                fontSize: { xs: '1rem', sm: '1.1rem' },
+                lineHeight: 1.7,
               }}
             >
               Global coverage with access to distributed ground stations
@@ -265,10 +414,12 @@ const Home: React.FC = () => (
               component="li"
               variant="body1"
               sx={{
-                marginBottom: 1,
+                marginBottom: 2,
                 fontFamily: "Rubik",
                 fontWeight: 400,
                 color: "#010532",
+                fontSize: { xs: '1rem', sm: '1.1rem' },
+                lineHeight: 1.7,
               }}
             >
               Transparent performance metrics with real-time quality
@@ -278,10 +429,12 @@ const Home: React.FC = () => (
               component="li"
               variant="body1"
               sx={{
-                marginBottom: 1,
+                marginBottom: 2,
                 fontFamily: "Rubik",
                 fontWeight: 400,
                 color: "#010532",
+                fontSize: { xs: '1rem', sm: '1.1rem' },
+                lineHeight: 1.7,
               }}
             >
               Scalable capacity that grows with your mission needs
@@ -289,25 +442,30 @@ const Home: React.FC = () => (
           </Box>
           <Typography
             variant="h6"
-            color="primary"
             sx={{
-              marginBottom: 2,
-              color: "#286BDC",
+              marginBottom: 3,
+              background: "linear-gradient(135deg, #121212 0%, #286BDC 100%)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
               fontFamily: "Satoshi",
-              fontWeight: 700,
+              fontWeight: 500,
+              fontSize: { xs: '1.1rem', sm: '1.25rem' },
             }}
           >
             For Ground Station Operators:
           </Typography>
-          <Box component="ul" sx={{ marginLeft: 2 }}>
+          <Box component="ul" sx={{ marginLeft: 3 }}>
             <Typography
               component="li"
               variant="body1"
               sx={{
-                marginBottom: 1,
+                marginBottom: 2,
                 fontFamily: "Rubik",
                 fontWeight: 400,
                 color: "#010532",
+                fontSize: { xs: '1rem', sm: '1.1rem' },
+                lineHeight: 1.7,
               }}
             >
               New revenue streams from existing or new infrastructure
@@ -316,10 +474,12 @@ const Home: React.FC = () => (
               component="li"
               variant="body1"
               sx={{
-                marginBottom: 1,
+                marginBottom: 2,
                 fontFamily: "Rubik",
                 fontWeight: 400,
                 color: "#010532",
+                fontSize: { xs: '1rem', sm: '1.1rem' },
+                lineHeight: 1.7,
               }}
             >
               Fair compensation based on contribution quality and strategic
@@ -329,10 +489,12 @@ const Home: React.FC = () => (
               component="li"
               variant="body1"
               sx={{
-                marginBottom: 1,
+                marginBottom: 2,
                 fontFamily: "Rubik",
                 fontWeight: 400,
                 color: "#010532",
+                fontSize: { xs: '1rem', sm: '1.1rem' },
+                lineHeight: 1.7,
               }}
             >
               Automated operations with minimal manual intervention required
@@ -341,20 +503,29 @@ const Home: React.FC = () => (
               component="li"
               variant="body1"
               sx={{
-                marginBottom: 1,
+                marginBottom: 2,
                 fontFamily: "Rubik",
                 fontWeight: 400,
                 color: "#010532",
+                fontSize: { xs: '1rem', sm: '1.1rem' },
+                lineHeight: 1.7,
               }}
             >
               Growing market opportunity as satellite demand accelerates
             </Typography>
           </Box>
         </TextSection>
+
         <TextSection heading="Why Decentralized Infrastructure Matters">
           <Typography
             variant="body1"
-            sx={{ fontFamily: "Rubik", fontWeight: 400, color: "#010532" }}
+            sx={{ 
+              fontFamily: "Rubik", 
+              fontWeight: 400, 
+              color: "#121212",
+              fontSize: { xs: '1rem', sm: '1.1rem' },
+              lineHeight: 1.7,
+            }}
           >
             Traditional centralized solutions create single points of failure
             and bottlenecks. Our decentralized approach distributes both risk
@@ -363,10 +534,12 @@ const Home: React.FC = () => (
           <Typography
             variant="body1"
             sx={{
-              marginTop: 2,
+              marginTop: 3,
               fontFamily: "Rubik",
               fontWeight: 400,
               color: "#010532",
+              fontSize: { xs: '1rem', sm: '1.1rem' },
+              lineHeight: 1.7,
             }}
           >
             Blockchain technology enables what wasn't possible before: trustless
@@ -376,12 +549,15 @@ const Home: React.FC = () => (
           </Typography>
           <Typography
             variant="h3"
-            color="primary"
             sx={{
-              marginTop: 3,
-              color: "#286BDC",
+              marginTop: 6,
+              background: "linear-gradient(135deg, #121212 0%, #286BDC 100%)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
               fontFamily: "Satoshi",
-              fontWeight: 700,
+              fontWeight: 500,
+              fontSize: { xs: '2rem', sm: '2.5rem' },
             }}
           >
             Join the Network
@@ -389,10 +565,12 @@ const Home: React.FC = () => (
           <Typography
             variant="body1"
             sx={{
-              marginTop: 2,
+              marginTop: 3,
               fontFamily: "Rubik",
               fontWeight: 400,
               color: "#010532",
+              fontSize: { xs: '1rem', sm: '1.1rem' },
+              lineHeight: 1.7,
             }}
           >
             The space economy is expanding rapidly. Companies and organizations
@@ -401,74 +579,186 @@ const Home: React.FC = () => (
             communications revolution?
           </Typography>
         </TextSection>
-        <StartPageButton
-          size="large"
-          component="a"
-          href="/#newsletter-signup-form"
-          sx={{
-            textDecoration: "none",
-            backgroundColor: "#252a6f",
-            color: "#fff",
-            paddingX: 4,
-            paddingY: 2,
-            borderRadius: 999,
-            boxShadow: "0 4px 24px 0 rgba(36,0,70,0.18)",
-            fontFamily: "Satoshi",
-            fontWeight: 700,
-            fontSize: { xs: "1.1rem", sm: "1.25rem" },
-            display: "flex",
-            alignItems: "center",
-            gap: 1.5,
-            backdropFilter: "blur(6px)",
-            transition: "all 0.2s cubic-bezier(.4,2,.6,1)",
-            "&:hover": {
-              boxShadow:
-                "0 0 16px 4px rgba(2, 24, 165, 0.2), 0 8px 32px 0 rgba(2, 24, 165, 0.2)",
-              borderColor: "#4169E1",
-              transform: "scale(1.04)",
-            },
-          }}
-        >
-          Subscribe to our newsletter
-        </StartPageButton>
-      </Box>
 
-      <Box gridArea={GridArea.aside}>
+        <Box sx={{ textAlign: 'center', marginTop: 8 }}>
+          <StartPageButton
+            size="large"
+            component="a"
+            href="/#newsletter-signup-form"
+            sx={{
+              textDecoration: "none",
+              background: "linear-gradient(135deg, rgba(1, 5, 50, 0.7) 0%, rgba(40, 107, 220, 0.6) 100%)",
+              color: "#F5F5F5",
+              paddingX: 4,
+              paddingY: 2,
+              borderRadius: 12,
+              boxShadow: "0 4px 16px 0 rgba(1,5,50,0.1)",
+              fontFamily: "Satoshi",
+              fontWeight: 500,
+              fontSize: { xs: "1.1rem", sm: "1.25rem" },
+              display: "flex",
+              alignItems: "center",
+              gap: 1.5,
+              transition: "all 0.3s ease",
+              "&:hover": {
+                background: "linear-gradient(135deg, rgba(1, 5, 50, 0.8) 0%, rgba(40, 107, 220, 0.7) 100%)",
+                boxShadow: "0 6px 24px 0 rgba(40,107,220,0.2)",
+                transform: "translateY(-2px)",
+              },
+            }}
+          >
+            Subscribe to our newsletter
+          </StartPageButton>
+        </Box>
+      </Box>
+    </Container>
+    </Box>
+
+    {/* Parallax close-up image section */}
+    <Box
+      sx={{
+        width: '100vw',
+        height: '50vh',
+        position: 'relative',
+        overflow: 'hidden',
+        marginLeft: 'calc(-50vw + 50%)',
+        marginRight: 'calc(-50vw + 50%)',
+      }}
+    >
+      <Parallax speed={-8}>
         <Box
           component="img"
-          display={{ xs: "none", sm: "block" }}
-          src="/assets/dish_vertical.jpg"
-          alt="placeholder"
-          width="100%"
-          sx={{ objectFit: "cover" }}
+          src="/assets/close-up-01.jpg"
+          alt="Ground station close-up"
+          sx={{
+            width: '100%',
+            height: '130%',
+            objectFit: 'cover',
+            objectPosition: 'center',
+            transform: 'translateY(-33%)',
+            minHeight: '100vh',
+          }}
         />
-        <AudienceButtons />
-      </Box>
-    </PageGridContainer>
+      </Parallax>
+      {/* Subtle overlay */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'linear-gradient(135deg, rgba(245, 245, 245, 0.05) 0%, rgba(219, 229, 255, 0.02) 100%)',
+          zIndex: 1,
+        }}
+      />
+    </Box>
+
     <SponsorsSection />
-    <Box component="footer" height={240}>
-      <Container sx={{ paddingTop: 6, paddingBottom: 6 }}>
-        <Typography variant="body1">© 2025 DecenSpace</Typography>
-        <Typography variant="body1">
-          Follow us
-          <Box component="span" marginTop={1} display="block">
-            <InlineIconLink
-              aria-label="X profile"
-              href="https://x.com/decenspace"
-              target="_blank"
+    
+    <Box 
+      component="footer" 
+      sx={{
+        background: 'linear-gradient(135deg, #F5F5F5 0%, #DBE5FF 100%)',
+        position: 'relative',
+        overflow: 'hidden',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'url("/assets/gradient-2.jpg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 0.05,
+          zIndex: 0,
+        }
+      }}
+    >
+      <Container sx={{ 
+        paddingTop: 8, 
+        paddingBottom: 8,
+        position: 'relative',
+        zIndex: 1,
+      }}>
+        <Box sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' },
+          justifyContent: 'space-between',
+          alignItems: { xs: 'flex-start', sm: 'center' },
+          gap: 3,
+        }}>
+          <Typography 
+            variant="body1" 
+            sx={{ 
+              color: '#010532',
+              opacity: 0.8,
+              fontSize: '0.875rem',
+            }}
+          >
+            © 2025 DecenSpace
+          </Typography>
+          
+          <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: { xs: 'flex-start', sm: 'flex-end' },
+            gap: 1,
+          }}>
+            <Typography 
+              variant="body2" 
+              sx={{ 
+                color: '#010532',
+                opacity: 0.7,
+                fontSize: '0.875rem',
+                marginBottom: 1,
+              }}
             >
-              <X />
-            </InlineIconLink>
-            <InlineIconLink
-              aria-label="LinkedIn profile"
-              href="https://www.linkedin.com/company/decen-space"
-              sx={{ transform: "scale(1.2)" }}
-              target="_blank"
-            >
-              <LinkedIn />
-            </InlineIconLink>
+              Follow us
+            </Typography>
+            <Box sx={{
+              display: 'flex',
+              gap: 2,
+            }}>
+              <InlineIconLink
+                aria-label="X profile"
+                href="https://x.com/decenspace"
+                target="_blank"
+                sx={{
+                  color: '#010532',
+                  opacity: 0.7,
+                  transition: 'all 0.2s ease',
+                  '&:hover': {
+                    color: '#286BDC',
+                    opacity: 1,
+                    transform: 'translateY(-1px)',
+                  }
+                }}
+              >
+                <X />
+              </InlineIconLink>
+              <InlineIconLink
+                aria-label="LinkedIn profile"
+                href="https://www.linkedin.com/company/decen-space"
+                target="_blank"
+                sx={{
+                  color: '#010532',
+                  opacity: 0.7,
+                  transition: 'all 0.2s ease',
+                  '&:hover': {
+                    color: '#286BDC',
+                    opacity: 1,
+                    transform: 'translateY(-1px)',
+                  }
+                }}
+              >
+                <LinkedIn />
+              </InlineIconLink>
+            </Box>
           </Box>
-        </Typography>
+        </Box>
       </Container>
     </Box>
   </ParallaxProvider>
