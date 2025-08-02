@@ -60,28 +60,29 @@ const AnimatedHeader: React.FC = () => {
           paddingBottom: '6rem', // Added padding to prevent overlap with scroll indicator
         }}
       >
-        <Parallax speed={-1}>
-          <Box
-            component="img"
-            src="/assets/icons/decenspacetitle.svg"
-            alt="DecenSpace"
-            sx={{
-              width: { xs: '280px', sm: '350px', md: '400px' },
-              height: 'auto',
-              marginBottom: 4,
-            }}
-          />
-        </Parallax>
+<Parallax speed={-1}>
+  <Box
+    component="img"
+    src="/assets/icons/decenspacetitle.svg"
+    alt="DecenSpace"
+    sx={{
+      width: 'clamp(200px, 40vw, 600px)', // Increased minimum size from 25px
+
+      height: 'auto',
+      marginBottom: 'clamp(1rem, 3vw, 5rem)',
+    }}
+  />
+</Parallax>
         <Parallax speed={-0.5}>
           <Typography
             variant="h1"
+            className="proportional-large"
             sx={{
               color: '#010532',
               fontFamily: 'Satoshi',
               fontWeight: 500,
-              fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' },
-              marginTop: 4,
-              marginBottom: 3,
+              marginTop: 'clamp(1rem, 3vw, 5rem)',
+              marginBottom: 'clamp(0.75rem, 2vw, 4rem)',
               lineHeight: 1.2,
             }}
           >
@@ -91,98 +92,101 @@ const AnimatedHeader: React.FC = () => {
           </Typography>
         </Parallax>
         <Parallax speed={-0.25}>
-          <Typography
-            variant="h4"
-            sx={{
-              fontFamily: 'Rubik',
-              fontWeight: 400,
-              color: '#010532',
-              maxWidth: '800px',
-              mx: 'auto',
-              lineHeight: 1.6,
-              opacity: 0.8,
-            }}
-          >
-            The Space Communications Revolution Starts Here. We're building the
-            infrastructure backbone for the new space economy.
-          </Typography>
-        </Parallax>
+  <Typography
+    variant="h4"
+    className="proportional-small"
+    sx={{
+      // --- FIX: Add a responsive font size ---
+      fontSize: 'clamp(0.9rem, 2vw, 1.25rem)',
+
+      fontFamily: 'Rubik',
+      fontWeight: 400,
+      color: '#010532',
+      maxWidth: 'clamp(250px, 60vw, 1000px)',
+      mx: 'auto',
+      lineHeight: 1.6,
+      opacity: 0.8,
+    }}
+  >
+    The Space Communications Revolution Starts Here. We're building the
+    infrastructure backbone for the new space economy.
+  </Typography>
+</Parallax>
       </Box>
 
-      {/* --- Scroll Indicator (Updated) --- */}
+      {/* --- Scroll Indicator (Fixed for proportional scaling) --- */}
       <Box
         sx={{
-          position: 'absolute', // Positioned absolutely at the bottom of the header
-          bottom: '2rem',
+          position: 'absolute',
+          bottom: 'clamp(1rem, 3vw, 4rem)', // Clamped bottom spacing
           left: '50%',
           transform: 'translateX(-50%)',
           zIndex: 4,
           color: '#010532',
           opacity: 0.8,
           textAlign: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 'clamp(0.5rem, 1vw, 1.5rem)', // Clamped gap
         }}
       >
-        <Typography variant="body2" sx={{ mb: 0.5, fontSize: '0.875rem', fontWeight: 500 }}>
+        <Typography 
+          variant="body2" 
+          sx={{ 
+            fontSize: 'clamp(0.6rem, 0.8vw, 1rem)', // Clamped font size
+            fontWeight: 500,
+            margin: 0,
+          }}
+        >
           Scroll to explore
         </Typography>
         
-        {/* New animated chevron indicator with gradient */}
+        {/* Combined arrow container for better grouping */}
         <Box
           sx={{
             '@keyframes bounce-animation': {
               '0%, 20%, 50%, 80%, 100%': { transform: 'translateY(0)' },
-              '40%': { transform: 'translateY(6px)' },
-              '60%': { transform: 'translateY(3px)' },
+              '40%': { transform: 'translateY(clamp(2px, 0.4vw, 8px))' }, // Clamped animation
+              '60%': { transform: 'translateY(clamp(1px, 0.2vw, 4px))' },
             },
             animation: 'bounce-animation 2.5s infinite',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            gap: 'clamp(0.1rem, 0.2vw, 0.4rem)', // Clamped gap
           }}
         >
-          {/* SVG with a gradient definition */}
+          {/* Single SVG with both arrows for better grouping */}
           <Box
             component="svg"
-            width="22"
-            height="22"
-            viewBox="0 0 22 22"
+            sx={{
+              width: 'clamp(12px, 1.5vw, 24px)', // Clamped arrow size
+              height: 'clamp(16px, 2vw, 32px)',
+            }}
+            viewBox="0 0 22 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            sx={{ marginTop: '-20px' }} >
+          >
             <defs>
               <linearGradient id="arrowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" style={{ stopColor: '#4C3B93' }} />
                 <stop offset="100%" style={{ stopColor: '#286BDC' }} />
               </linearGradient>
             </defs>
+            {/* First arrow */}
             <polyline 
-              points="6 9 12 15 18 9" 
+              points="6 6 11 11 16 6" 
               stroke="url(#arrowGradient)" 
-              strokeWidth="0.5" 
+              strokeWidth="1" 
               strokeLinecap="round" 
               strokeLinejoin="round"
             />
-          </Box>
-          <Box
-            component="svg"
-            width="22"
-            height="22"
-            viewBox="0 0 22 22"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            sx={{ marginTop: '-90px' }} // Keep arrows closely stacked
-          >
-            {/* The same gradient definition is needed here as it's a separate SVG */}
-            <defs>
-              <linearGradient id="arrowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style={{ stopColor: '#4C3B93' }} />
-                <stop offset="100%" style={{ stopColor: '#286BDC' }} />
-              </linearGradient>
-            </defs>
+            {/* Second arrow, positioned below */}
             <polyline 
-              points="6 9 12 15 18 9" 
+              points="6 18 11 23 16 18" 
               stroke="url(#arrowGradient)" 
-              strokeWidth="0.5" 
+              strokeWidth="1" 
               strokeLinecap="round" 
               strokeLinejoin="round"
             />

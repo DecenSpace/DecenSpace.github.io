@@ -29,35 +29,52 @@ const Home: React.FC = () => (
         zIndex: 1000,
       }}
     >
-      <StartPageButton
-        size="large"
-        component="a"
-        href="mailto:info@decenspace.com"
-        sx={{
-          textDecoration: "none",
-          background: "linear-gradient(135deg, rgba(1, 5, 50, 0.7) 0%, rgba(40, 107, 220, 0.6) 100%)",
-          color: "#F5F5F5",
-          paddingX: 2.5,
-          paddingY: 1,
-          borderRadius: 8,
-          boxShadow: "0 2px 12px 0 rgba(1,5,50,0.08)",
-          fontFamily: "Satoshi",
-          fontWeight: 500,
-          fontSize: { xs: "0.875rem", sm: "0.9rem" },
-          display: "flex",
-          alignItems: "center",
-          gap: 1,
-          backdropFilter: "blur(12px)",
-          transition: "all 0.3s ease",
-          "&:hover": {
-            background: "linear-gradient(135deg, rgba(1, 5, 50, 0.8) 0%, rgba(40, 107, 220, 0.7) 100%)",
-            boxShadow: "0 4px 20px 0 rgba(40,107,220,0.15)",
-            transform: "translateY(-2px)",
-          },
-        }}
-      >
-        <EmailIcon sx={{ mr: 1, fontSize: 20 }} /> Contact us
-      </StartPageButton>
+<StartPageButton
+  component="a"
+  href="mailto:info@decenspace.com"
+  sx={{
+    // --- KEY CHANGE: Remove all padding from the button itself ---
+    padding: 0,
+
+    // Set the base font size for the button
+    fontSize: 'clamp(0.9rem, 1.5vw, 1.1rem)',
+    
+    // Use a large border-radius for a guaranteed "pill" shape
+    borderRadius: '999px',
+
+    // Keep other necessary container styles
+    display: 'inline-flex',
+    textDecoration: "none",
+    overflow: 'hidden', // Important when removing padding
+    background: "linear-gradient(135deg, rgba(1, 5, 50, 0.7) 0%, rgba(40, 107, 220, 0.6) 100%)",
+    color: "#F5F5F5",
+    boxShadow: "0 2px 12px 0 rgba(1,5,50,0.08)",
+    fontFamily: "Satoshi",
+    fontWeight: 500,
+    backdropFilter: "blur(12px)",
+    transition: "all 0.3s ease",
+    "&:hover": {
+      background: "linear-gradient(135deg, rgba(1, 5, 50, 0.8) 0%, rgba(40, 107, 220, 0.7) 100%)",
+      boxShadow: "0 4px 20px 0 rgba(40,107,220,0.15)",
+      transform: "translateY(-2px)",
+    },
+  }}
+>
+  {/* This span is the inner wrapper. It holds the content and padding. */}
+  <Box
+    component="span"
+    sx={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      // --- Apply the scalable padding HERE instead of the button ---
+      padding: '0.75em 1.5em',
+    }}
+  >
+    <EmailIcon sx={{ fontSize: '1.2em', mr: '0.6em' }} />
+    Contact us
+  </Box>
+</StartPageButton>
     </Box>
 
     {/* Parallax dish image section */}
@@ -131,8 +148,9 @@ const Home: React.FC = () => (
             flexDirection: { xs: 'column', sm: 'row' },
             justifyContent: 'space-between',
             alignItems: 'center',
-            gap: { xs: 4, sm: 8 },
-            maxWidth: '1200px',
+            gap: 'clamp(1.5rem, 6vw, 12rem)', // Better gap scaling
+            maxWidth: 'none', // Remove fixed max width
+            width: 'clamp(250px, 80vw, 1600px)', // Better width scaling
             mx: 'auto',
           }}
         >
@@ -144,8 +162,8 @@ const Home: React.FC = () => (
             sx={{ 
               flexShrink: 0, 
               fontFamily: "Satoshi",
-              flex: { xs: 'none', sm: '1' },
-              maxWidth: { xs: '100%', sm: '45%' },
+              flex: 1,
+              maxWidth: 'clamp(150px, 40vw, 700px)', // Better max width
             }}
           />
           <EnumerationItem
@@ -156,8 +174,8 @@ const Home: React.FC = () => (
             sx={{ 
               flexShrink: 0, 
               fontFamily: "Satoshi",
-              flex: { xs: 'none', sm: '1' },
-              maxWidth: { xs: '100%', sm: '45%' },
+              flex: 1,
+              maxWidth: 'clamp(150px, 40vw, 700px)', // Better max width
             }}
           />
         </Box>
@@ -192,10 +210,11 @@ const Home: React.FC = () => (
         position: 'relative',
         zIndex: 1,
       }}>
-        <Box sx={{ paddingTop: 8, paddingBottom: 8 }}>
+        <Box sx={{ paddingTop: '6vw', paddingBottom: '6vw' }}>
         <TextSection heading="About Our Mission" first>
           <Typography
             variant="h4"
+            className="proportional-medium"
             sx={{ 
               fontFamily: "Satoshi", 
               fontWeight: 500, 
@@ -203,10 +222,9 @@ const Home: React.FC = () => (
               backgroundClip: "text",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              marginBottom: 6,
+              marginBottom: 'clamp(1rem, 4vw, 8rem)',
               maxWidth: '100%',
               lineHeight: 1.7,
-              fontSize: { xs: '1.5rem', sm: '2rem' },
             }}
           >
             The Space Communications Revolution Starts Here. We're building the
@@ -221,11 +239,11 @@ const Home: React.FC = () => (
         <TextSection heading="The Problem We're Solving">
           <Typography
             variant="body1"
+            className="proportional-small"
             sx={{ 
               fontFamily: "Rubik", 
               fontWeight: 400, 
               color: "#121212",
-              fontSize: { xs: '1rem', sm: '1.1rem' },
               lineHeight: 1.7,
             }}
           >
@@ -237,27 +255,27 @@ const Home: React.FC = () => (
           </Typography>
           <Typography
             variant="h3"
+            className="proportional-large"
             sx={{
-              marginTop: 4,
-              marginBottom: 4,
+              marginTop: '3vw',
+              marginBottom: '3vw',
               background: "linear-gradient(135deg, #121212 0%, #286BDC 100%)",
               backgroundClip: "text",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               fontFamily: "Satoshi",
               fontWeight: 500,
-              fontSize: { xs: '2rem', sm: '2.5rem' },
             }}
           >
             28,000 satellites by 2030
           </Typography>
           <Typography
             variant="body1"
+            className="proportional-small"
             sx={{ 
               fontFamily: "Rubik", 
               fontWeight: 400, 
               color: "#121212",
-              fontSize: { xs: '1rem', sm: '1.1rem' },
               lineHeight: 1.7,
             }}
           >
@@ -271,11 +289,11 @@ const Home: React.FC = () => (
         <TextSection heading="Our Solution: A Decentralized Space Communications Network">
           <Typography
             variant="body1"
+            className="proportional-small"
             sx={{ 
               fontFamily: "Rubik", 
               fontWeight: 400, 
               color: "#121212",
-              fontSize: { xs: '1rem', sm: '1.1rem' },
               lineHeight: 1.7,
             }}
           >
@@ -286,16 +304,16 @@ const Home: React.FC = () => (
           </Typography>
           <Typography
             variant="h6"
+            className="proportional-small"
             sx={{
-              marginTop: 4,
-              marginBottom: 3,
+              marginTop: '3vw',
+              marginBottom: '2vw',
               background: "linear-gradient(135deg, #121212 0%, #286BDC 100%)",
               backgroundClip: "text",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               fontFamily: "Satoshi",
               fontWeight: 500,
-              fontSize: { xs: '1.1rem', sm: '1.25rem' },
             }}
           >
             Here's how it works:
@@ -519,11 +537,11 @@ const Home: React.FC = () => (
         <TextSection heading="Why Decentralized Infrastructure Matters">
           <Typography
             variant="body1"
+            className="proportional-small"
             sx={{ 
               fontFamily: "Rubik", 
               fontWeight: 400, 
               color: "#121212",
-              fontSize: { xs: '1rem', sm: '1.1rem' },
               lineHeight: 1.7,
             }}
           >
@@ -595,7 +613,7 @@ const Home: React.FC = () => (
               boxShadow: "0 4px 16px 0 rgba(1,5,50,0.1)",
               fontFamily: "Satoshi",
               fontWeight: 500,
-              fontSize: { xs: "1.1rem", sm: "1.25rem" },
+              fontSize: 'clamp(0.9rem, 1.2vw, 1.5rem)',
               display: "flex",
               alignItems: "center",
               gap: 1.5,
@@ -678,8 +696,8 @@ const Home: React.FC = () => (
       }}
     >
       <Container sx={{ 
-        paddingTop: 8, 
-        paddingBottom: 8,
+        paddingTop: 'clamp(1.5rem, 6vw, 12rem)', 
+        paddingBottom: 'clamp(1.5rem, 6vw, 12rem)',
         position: 'relative',
         zIndex: 1,
       }}>
@@ -695,7 +713,7 @@ const Home: React.FC = () => (
             sx={{ 
               color: '#010532',
               opacity: 0.8,
-              fontSize: '0.875rem',
+              fontSize: '0.8vw',
             }}
           >
             © 2025 DecenSpace
@@ -712,7 +730,7 @@ const Home: React.FC = () => (
               sx={{ 
                 color: '#010532',
                 opacity: 0.7,
-                fontSize: '0.875rem',
+                fontSize: 'clamp(0.6rem, 0.8vw, 1rem)',
                 marginBottom: 1,
               }}
             >

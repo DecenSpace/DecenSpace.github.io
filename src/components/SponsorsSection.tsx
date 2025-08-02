@@ -4,7 +4,7 @@ const SponsorsSection = () => (
   <Box
     sx={{
       background: 'linear-gradient(135deg, #F5F5F5 0%, #DBE5FF 100%)',
-      paddingY: 8,
+      paddingY: 'clamp(1.5rem, 6vw, 12rem)',
       position: 'relative',
       overflow: 'hidden',
       '&::before': {
@@ -26,12 +26,12 @@ const SponsorsSection = () => (
       <Typography 
         variant="h3" 
         textAlign="center" 
-        marginBottom={6}
+        className="proportional-medium"
         sx={{
+          marginBottom: 'clamp(1rem, 4vw, 8rem)',
           color: '#010532',
           fontFamily: 'Satoshi',
           fontWeight: 500,
-          fontSize: { xs: '1.75rem', sm: '2rem' },
           opacity: 0.9,
         }}
       >
@@ -42,7 +42,7 @@ const SponsorsSection = () => (
         flexDirection={{ xs: "column", sm: "row" }}
         justifyContent="center"
         alignItems="center"
-        gap={6}
+        gap={'clamp(1rem, 4vw, 10rem)'}
         flexWrap="wrap"
       >
         <a
@@ -55,7 +55,7 @@ const SponsorsSection = () => (
             src="/assets/1kx-logo.png"
             alt="1kx"
             sx={{
-              height: 50,
+              height: 'clamp(25px, 4vw, 120px)',
               objectFit: "contain",
               opacity: 0.7,
               transition: "all 0.3s ease",
@@ -76,7 +76,7 @@ const SponsorsSection = () => (
             src="/assets/ov-logo.png"
             alt="OV"
             sx={{
-              height: 50,
+              height: 'clamp(25px, 4vw, 120px)',
               objectFit: "contain",
               opacity: 0.7,
               transition: "all 0.3s ease",
@@ -97,7 +97,7 @@ const SponsorsSection = () => (
             src="/assets/euspa-logo.png"
             alt="EUSPA"
             sx={{
-              height: 50,
+              height: 'clamp(25px, 4vw, 120px)',
               objectFit: "contain",
               filter: "brightness(0) saturate(100%)",
               opacity: 0.6,
@@ -115,7 +115,7 @@ const SponsorsSection = () => (
             src="/assets/ESA_BIC_NG_White.png"
             alt="ESA BIC Northern Germany"
             sx={{
-              height: 50,
+              height: 'clamp(25px, 4vw, 120px)',
               maxWidth: 300,
               objectFit: "contain",
               filter: "brightness(0) saturate(100%)",
