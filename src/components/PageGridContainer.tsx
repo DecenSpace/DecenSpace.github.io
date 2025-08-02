@@ -26,43 +26,31 @@ const PageGridContainer = styled(Box)(({ theme }) => ({
         "${GridArea.aside}"
         "${GridArea.above}"
     `,
-  backgroundColor: "#DBE5FF", // base bg color
+  backgroundColor: "#F5F5F5",
   position: "relative",
   overflow: "hidden",
 
-  "&::before, &::after": {
+  "&::before": {
     content: '""',
     position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: 'url("/assets/gradient-2.jpg")',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    opacity: 0.1,
     zIndex: 0,
-    borderRadius: "50%",
-    filter: "blur(100px)",
   },
 
-  // top-left blob
-  "&::before": {
-    width: "1000px",
-    height: "800px",
-    backgroundColor: "rgba(2, 24, 165, 0.2)",
-    top: "-150px",
-    left: "-200px",
-  },
-
-  // bottom-right blob
-  "&::after": {
-    width: "900px",
-    height: "1000px",
-    backgroundColor: "rgba(2, 24, 165, 0.2)",
-    bottom: "-250px",
-    right: "-200px",
-  },
   [theme.breakpoints.up("sm")]: {
     paddingTop: theme.spacing(6),
     gridTemplateColumns: "repeat(6,  minmax(0, 1fr))",
     gridTemplateAreas: `
-            "${GridArea.head} ${GridArea.head} ${GridArea.head} ${GridArea.head} ${GridArea.above} ${GridArea.above}"
-            "${GridArea.head} ${GridArea.head} ${GridArea.head} ${GridArea.head} ${GridArea.aside} ${GridArea.aside}"
-            "${GridArea.main} ${GridArea.main} ${GridArea.main} . ${GridArea.aside} ${GridArea.aside}"
-            "${GridArea.below} ${GridArea.below} ${GridArea.below} . ${GridArea.aside} ${GridArea.aside}"
+            "${GridArea.head} ${GridArea.head} ${GridArea.head} ${GridArea.head} ${GridArea.head} ${GridArea.head}"
+            "${GridArea.main} ${GridArea.main} ${GridArea.main} ${GridArea.main} ${GridArea.aside} ${GridArea.aside}"
+            "${GridArea.below} ${GridArea.below} ${GridArea.below} ${GridArea.below} ${GridArea.aside} ${GridArea.aside}"
         `,
   },
 }));

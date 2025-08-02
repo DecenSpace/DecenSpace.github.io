@@ -21,7 +21,7 @@ import {
   Typography,
 } from "@mui/material";
 import SvgIcon from "components/SvgIcon";
-import DecenSpaceLogoReuse from "icons/DecenSpaceLogoReuse";
+import DecenSpaceLogo from "icons/DecenSpaceLogo";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA4zLn2sm3n629lOUhM0LTqLS6xH0Va7q4",
@@ -140,7 +140,7 @@ const NewsletterSignupForm: React.FC = () => {
       <Box marginBottom={10} position="relative">
         <a href="/">
           <SvgIcon
-            component={DecenSpaceLogoReuse}
+            component={DecenSpaceLogo}
             color="text.primary"
             sx={{
               opacity: 0.6,

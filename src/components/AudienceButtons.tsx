@@ -23,8 +23,11 @@ const AudienceButtons: React.FC = () => {
       ref={ref}
     >
       <Stack
-        gap={8}
-        direction={{ xs: "row", sm: "column" }}
+        gap={4}
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        flexWrap="wrap"
         marginLeft={{ xs: 4, sm: 0 }}
       >
         <EnumerationItem
