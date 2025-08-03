@@ -16,6 +16,7 @@ const MissionSection = () => (
           fontWeight: 500,
           ...gradientText,
           marginBottom: "clamp(1rem, 4rem, 8rem)",
+          marginTop: "clamp(1rem, 4rem, 8rem)",
           maxWidth: "100%",
           lineHeight: 1.7,
           fontSize: { xs: "1.2rem", sm: "1.5rem" },
@@ -38,10 +39,14 @@ const MissionSection = () => (
           fontWeight: 400,
           color: "#121212",
           lineHeight: 1.7,
+          marginTop: "3rem",
           fontSize: { xs: "1rem", sm: "1.1rem" },
         }}
       >
-        Ground station bottlenecks are limiting the space economy. Satellite operators need more coverage options at competitive prices. Meanwhile, ground stations of all sizes, from major service providers to individual operators, need better ways to maximize their infrastructure value.
+        Ground station bottlenecks are limiting the space economy. Satellite
+        operators need more coverage options at competitive prices. Meanwhile,
+        ground stations of all sizes, from major service providers to individual
+        operators, need better ways to maximize their infrastructure value.
       </Typography>
       <Typography
         variant="h3"
@@ -67,7 +72,8 @@ const MissionSection = () => (
           fontSize: { xs: "1rem", sm: "1.1rem" },
         }}
       >
-        Current capacity won't meet demand. Result: higher costs, delays, missed opportunities.
+        Current capacity won't meet demand. Result: higher costs, delays, missed
+        opportunities.
       </Typography>
     </TextSection>
 
@@ -80,10 +86,14 @@ const MissionSection = () => (
           fontWeight: 400,
           color: "#121212",
           lineHeight: 1.7,
+          marginTop: "3rem",
           fontSize: { xs: "1rem", sm: "1.1rem" },
         }}
       >
-        We orchestrate across all ground station types, from major telecom facilities, university stations, even to amateur radio operators, and everything in between. Intelligent coordination creates one seamless global network that amplifies everyone's capabilities.
+        We orchestrate across all ground station types, from major telecom
+        facilities, university stations, even to amateur radio operators, and
+        everything in between. Intelligent coordination creates one seamless
+        global network that amplifies everyone's capabilities.
       </Typography>
       <Typography
         variant="h6"
@@ -111,7 +121,8 @@ const MissionSection = () => (
             lineHeight: 1.7,
           }}
         >
-          Smart scheduling matches satellites with optimal ground stations regardless of size
+          Smart scheduling matches satellites with optimal ground stations
+          regardless of size
         </Typography>
         <Typography
           component="li"
@@ -125,7 +136,8 @@ const MissionSection = () => (
             lineHeight: 1.7,
           }}
         >
-          Automated coordination streamlines operations and reduces operational overhead
+          Automated coordination streamlines operations and reduces operational
+          overhead
         </Typography>
         <Typography
           component="li"
@@ -139,7 +151,8 @@ const MissionSection = () => (
             lineHeight: 1.7,
           }}
         >
-          Performance metrics ensure quality through transparency across all network participants
+          Performance metrics ensure quality through transparency across all
+          network participants
         </Typography>
         <Typography
           component="li"
@@ -166,6 +179,7 @@ const MissionSection = () => (
           variant="body1"
           sx={{
             marginBottom: 2,
+            marginTop: "3rem",
             fontFamily: "Rubik",
             fontWeight: 400,
             color: "#010532",
@@ -173,7 +187,8 @@ const MissionSection = () => (
             lineHeight: 1.7,
           }}
         >
-          Exanping revenue streams for all ground station operators, whether you're a telecom giant or individual operator
+          Exanping revenue streams for all ground station operators, whether
+          you're a telecom giant or individual operator
         </Typography>
         <Typography
           component="li"
@@ -215,7 +230,8 @@ const MissionSection = () => (
             lineHeight: 1.7,
           }}
         >
-          Access to broader customer base while maintaining your existing relationships
+          Access to broader customer base while maintaining your existing
+          relationships
         </Typography>
       </Box>
     </TextSection>
@@ -227,6 +243,7 @@ const MissionSection = () => (
           variant="body1"
           sx={{
             marginBottom: 2,
+            marginTop: "3rem",
             fontFamily: "Rubik",
             fontWeight: 400,
             color: "#010532",
@@ -248,7 +265,8 @@ const MissionSection = () => (
             lineHeight: 1.7,
           }}
         >
-          Global coverage connecting diverse ground station operators, including your current providers
+          Global coverage connecting diverse ground station operators, including
+          your current providers
         </Typography>
         <Typography
           component="li"
@@ -287,22 +305,25 @@ const MissionSection = () => (
         className="proportional-small"
         sx={{
           fontFamily: "Rubik",
+          marginTop: "3rem",
           fontWeight: 400,
           color: "#121212",
           lineHeight: 1.7,
           fontSize: { xs: "1rem", sm: "1.1rem" },
         }}
       >
-        Fragmented ground station access creates inefficiencies for everyone. Our network approach enhances what already exists, creating a rising tide that benefits all participants in the ecosystem.
+        Fragmented ground station access creates inefficiencies for everyone.
+        Our network approach enhances what already exists, creating a rising
+        tide that benefits all participants in the ecosystem.
       </Typography>
       <Typography
-        variant="h3"
+        variant="h2"
         sx={{
           marginTop: 6,
           ...gradientText,
           fontFamily: "Satoshi",
           fontWeight: 500,
-          fontSize: { xs: "2rem", sm: "2.5rem" },
+          fontSize: { xs: "4rem", sm: "4.5rem" },
         }}
       >
         Join the Network
@@ -318,7 +339,8 @@ const MissionSection = () => (
           lineHeight: 1.7,
         }}
       >
-        The space economy is expanding rapidly. Build tomorrow's infrastructure today. Ready to power the future of space communications?
+        The space economy is expanding rapidly. Build tomorrow's infrastructure
+        today. Ready to power the future of space communications?
       </Typography>
     </TextSection>
     <Box sx={{ textAlign: "center", marginTop: 8 }}>

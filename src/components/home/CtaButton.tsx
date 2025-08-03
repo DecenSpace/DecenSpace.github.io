@@ -19,7 +19,7 @@ const CtaButton = () => (
         padding: 0,
 
         // Set the base font size for the button
-        fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)",
+        fontSize: "clamp(0.5rem, 1vw, 0.7rem)",
 
         // Use a large border-radius for a guaranteed "pill" shape
         borderRadius: "999px",
@@ -52,7 +52,7 @@ const CtaButton = () => (
           alignItems: "center",
           justifyContent: "center",
           // --- Apply the scalable padding HERE instead of the button ---
-          padding: "0.75em 1.5em",
+          padding: "0.45em 1.2em",
         }}
       >
         <EmailIcon sx={{ fontSize: "1.2em", mr: "0.6em" }} />

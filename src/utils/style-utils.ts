@@ -5,6 +5,7 @@ export const gradientText: SxProps<Theme> = {
   backgroundClip: "text",
   WebkitBackgroundClip: "text",
   WebkitTextFillColor: "transparent",
+  backgroundAttachment: "fixed",
 };
 
 export const visuallyHidden: SxProps<Theme> = {
