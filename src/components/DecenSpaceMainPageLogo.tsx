@@ -1,12 +1,12 @@
 import { autocompleteClasses, Box } from "@mui/material";
 import React from "react";
 import SvgIcon from "./SvgIcon";
-import DecenSpaceLogo from "icons/DecenSpaceLogo";
+import SvgDecenspacelogo from "icons/Decenspacelogo";
 
 const DecenSpaceMainPageLogo: React.FC = () => (
   <Box marginBottom={10} position="relative">
     <SvgIcon
-      component={DecenSpaceLogo}
+      component={SvgDecenspacelogo}
       color="text.primary"
       sx={{
         opacity: 0.6,

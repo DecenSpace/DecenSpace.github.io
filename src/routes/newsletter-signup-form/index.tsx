@@ -137,20 +137,6 @@ const NewsletterSignupForm: React.FC = () => {
         },
       }}
     >
-      <Box marginBottom={10} position="relative">
-        <a href="/">
-          <SvgIcon
-            component={DecenSpaceLogo}
-            color="text.primary"
-            sx={{
-              opacity: 0.6,
-              position: "absolute",
-              left: 0,
-              top: 0,
-            }}
-          />
-        </a>
-      </Box>
       <Box
         sx={{
           height: "auto",
