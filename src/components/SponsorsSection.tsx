@@ -4,7 +4,7 @@ const SponsorsSection = () => (
   <Box
     sx={{
       background: 'linear-gradient(135deg, #F5F5F5 0%, #DBE5FF 100%)',
-      paddingY: 8,
+      paddingY: { xs: '3rem', sm: '4rem', md: '6rem' },
       position: 'relative',
       overflow: 'hidden',
       '&::before': {
@@ -26,12 +26,12 @@ const SponsorsSection = () => (
       <Typography 
         variant="h3" 
         textAlign="center" 
-        marginBottom={6}
+        className="proportional-medium"
         sx={{
+          marginBottom: { xs: '2rem', sm: '3rem', md: '4rem' },
           color: '#010532',
           fontFamily: 'Satoshi',
           fontWeight: 500,
-          fontSize: { xs: '1.75rem', sm: '2rem' },
           opacity: 0.9,
         }}
       >
@@ -42,7 +42,7 @@ const SponsorsSection = () => (
         flexDirection={{ xs: "column", sm: "row" }}
         justifyContent="center"
         alignItems="center"
-        gap={6}
+        gap={{ xs: '2rem', sm: '3rem', md: '4rem' }}
         flexWrap="wrap"
       >
         <a
@@ -55,7 +55,8 @@ const SponsorsSection = () => (
             src="/assets/1kx-logo.png"
             alt="1kx"
             sx={{
-              height: 50,
+              height: { xs: '40px', sm: '50px', md: '60px' },
+              maxWidth: { xs: '120px', sm: '150px' },
               objectFit: "contain",
               opacity: 0.7,
               transition: "all 0.3s ease",
@@ -76,7 +77,8 @@ const SponsorsSection = () => (
             src="/assets/ov-logo.png"
             alt="OV"
             sx={{
-              height: 50,
+              height: { xs: '40px', sm: '50px', md: '60px' },
+              maxWidth: { xs: '120px', sm: '150px' },
               objectFit: "contain",
               opacity: 0.7,
               transition: "all 0.3s ease",
@@ -97,7 +99,8 @@ const SponsorsSection = () => (
             src="/assets/euspa-logo.png"
             alt="EUSPA"
             sx={{
-              height: 50,
+              height: { xs: '40px', sm: '50px', md: '60px' },
+              maxWidth: { xs: '120px', sm: '150px' },
               objectFit: "contain",
               filter: "brightness(0) saturate(100%)",
               opacity: 0.6,
@@ -115,8 +118,8 @@ const SponsorsSection = () => (
             src="/assets/ESA_BIC_NG_White.png"
             alt="ESA BIC Northern Germany"
             sx={{
-              height: 50,
-              maxWidth: 300,
+              height: { xs: '40px', sm: '50px', md: '60px' },
+              maxWidth: { xs: '200px', sm: '250px', md: '300px' },
               objectFit: "contain",
               filter: "brightness(0) saturate(100%)",
               opacity: 0.6,

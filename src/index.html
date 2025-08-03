@@ -4,6 +4,82 @@
     <title>DecenSpace</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      /* Perfect proportional scaling - everything scales together */
+      html {
+        /* Base size that will scale everything proportionally */
+        font-size: 1vw; /* This makes everything scale with viewport width */
+        
+        /* Prevent browser from interfering with our scaling */
+        -webkit-text-size-adjust: none;
+        -moz-text-size-adjust: none;
+        text-size-adjust: none;
+      }
+      
+      /* Ensure body doesn't interfere with proportional scaling */
+      body {
+        margin: 0;
+        padding: 0;
+        /* All font sizes and spacing will now be proportional to viewport */
+        font-size: 1.6rem; /* This equals 1.6vw, scaling with viewport */
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+      
+      /* Override Material-UI's default font sizes to use our proportional system */
+      * {
+        box-sizing: border-box;
+      }
+      
+      /* Force ALL typography to scale proportionally */
+      h1, h2, h3, h4, h5, h6, p, span, div, a, button {
+        font-size: inherit !important;
+      }
+      
+      /* Override Material-UI Typography component specifically */
+      .MuiTypography-root {
+        font-size: inherit !important;
+      }
+      
+      /* Override Material-UI Container to scale with viewport */
+      .MuiContainer-root {
+        max-width: none !important;
+        width: 90vw !important;
+        margin: 0 auto !important;
+        padding-left: 2vw !important;
+        padding-right: 2vw !important;
+      }
+      
+      /* Make images scale proportionally */
+      img, svg {
+        max-width: 100%;
+        height: auto;
+      }
+      
+      /* Make the container scale proportionally */
+      #root {
+        width: 100vw;
+        min-height: 100vh;
+        font-size: 1.6rem; /* Base font size for everything */
+      }
+      
+      /* Mobile-friendly responsive typography */
+      .proportional-large {
+        font-size: clamp(1.75rem, 4vw, 3.5rem) !important; /* Mobile-first scaling */
+      }
+      
+      .proportional-medium {
+        font-size: clamp(1.25rem, 3vw, 2.25rem) !important; /* Better mobile scaling */
+      }
+      
+      .proportional-small {
+        font-size: clamp(1rem, 2.5vw, 1.5rem) !important; /* Mobile-optimized */
+      }
+      
+      .proportional-tiny {
+        font-size: clamp(0.875rem, 2vw, 1.125rem) !important; /* Mobile-friendly */
+      }
+    </style>
     <meta name="description" content="Bringing satellite companies and ground station operators together using DePIN technology.">
     <link rel="icon" href="/assets/app-icon.svg" type="image/svg+xml">
     <% if (define.NODE_ENV !== "production") { %>
