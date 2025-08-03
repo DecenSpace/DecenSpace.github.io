@@ -21,7 +21,7 @@ import {
   Typography,
 } from "@mui/material";
 import SvgIcon from "components/SvgIcon";
-import DecenSpaceLogo from "icons/decenspacelogo";
+import DecenSpaceLogo from "icons/decenspacelogo.svg";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA4zLn2sm3n629lOUhM0LTqLS6xH0Va7q4",
