@@ -105,7 +105,7 @@ const AnimatedHeader: React.FC = () => {
             }}
           >
             The Space Communications Revolution Starts Here. We're building the
-            infrastructure backbone for the new space economy.
+            network infrastructure backbone for the new space economy.
           </Typography>
         </Parallax>
       </Box>

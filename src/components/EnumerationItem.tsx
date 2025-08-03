@@ -15,7 +15,6 @@ const OuterCircle = styled("a")(({ theme }) => ({
     "linear-gradient(135deg, rgba(1, 5, 50, 0.7) 10%, rgba(40, 107, 220, 0.6) 80%)",
   color: "#F5F5F5",
   position: "relative",
-  border: "1px solid rgba(40, 107, 220, 0.2)",
   display: "flex",
   flexDirection: "column",
   alignItems: "start",
@@ -39,14 +38,14 @@ const InnerCircle = styled("div")(({ theme }) => ({
   height: theme.spacing(size),
   width: theme.spacing(size),
   borderRadius: theme.spacing(size / 2),
-  padding: theme.spacing(5),
+  padding: theme.spacing(4),
   position: "absolute",
   top: 0,
   left: 0,
   display: "flex",
   flexDirection: "column",
   alignItems: "start",
-  justifyContent: "start",
+  justifyContent: "center",
   textAlign: "left",
 
   // Glassmorphism styles
@@ -90,15 +89,23 @@ const EnumerationItem: React.FC<IEnumerationItemProps> = ({
       </Number>
       <Typography
         variant="body1"
-        sx={{ margin: 0, color: "#F5F5F5", fontSize: "0.875rem" }}
+        sx={{ margin: 0, color: "#F5F5F5", fontSize: "1rem" }}
       >
         {label}
       </Typography>
     </InnerCircle>
-    <SvgIcon component={SvgArrowRight} height={20} sx={{ color: "#F5F5F5" }} />
-    <Typography variant="body2" sx={{ color: "#F5F5F5", fontSize: "0.875rem" }}>
+    <Typography variant="body2" sx={{ color: "#F5F5F5", fontSize: "1.2rem" }}>
       {linkLabel}
     </Typography>
+    <SvgIcon
+      component={SvgArrowRight}
+      height={20}
+      sx={{
+        color: "#F5F5F5",
+        position: "absolute",
+        top: "60%",
+      }}
+    />
   </OuterCircle>
 );
 

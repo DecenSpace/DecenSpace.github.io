@@ -44,7 +44,7 @@ const Home: React.FC = () => (
           boxShadow: "0 2px 12px 0 rgba(1,5,50,0.08)",
           fontFamily: "Satoshi",
           fontWeight: 500,
-          fontSize: { xs: "0.875rem", sm: "0.9rem" },
+          fontSize: { xs: "0.875rem", sm: "1.5rem" },
           display: "flex",
           alignItems: "center",
           gap: 1,
@@ -58,7 +58,7 @@ const Home: React.FC = () => (
           },
         }}
       >
-        <EmailIcon sx={{ mr: 1, fontSize: 20 }} /> Contact us
+        <EmailIcon sx={{ mr: 1, fontSize: 30 }} /> Contact us
       </StartPageButton>
     </Box>
 
@@ -366,22 +366,70 @@ const Home: React.FC = () => (
             </Box>
           </TextSection>
 
-          <TextSection heading="The Benefits">
-            <Typography
-              variant="h6"
-              sx={{
-                marginBottom: 3,
-                background: "linear-gradient(135deg, #121212 0%, #286BDC 100%)",
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                fontFamily: "Satoshi",
-                fontWeight: 500,
-                fontSize: { xs: "1.1rem", sm: "1.25rem" },
-              }}
-            >
-              For Satellite Operators:
-            </Typography>
+          <TextSection heading="For Ground Station Operators">
+            <Box component="ul" sx={{ marginLeft: 3 }}>
+              <Typography
+                component="li"
+                variant="body1"
+                sx={{
+                  marginBottom: 2,
+                  fontFamily: "Rubik",
+                  fontWeight: 400,
+                  color: "#010532",
+                  fontSize: { xs: "1rem", sm: "1.1rem" },
+                  lineHeight: 1.7,
+                }}
+              >
+                Expanding revenue streams for all ground station operators,
+                whether you're a telecom giant or individual operator
+              </Typography>
+              <Typography
+                component="li"
+                variant="body1"
+                sx={{
+                  marginBottom: 2,
+                  fontFamily: "Rubik",
+                  fontWeight: 400,
+                  color: "#010532",
+                  fontSize: { xs: "1rem", sm: "1.1rem" },
+                  lineHeight: 1.7,
+                }}
+              >
+                Performance-based compensation scaled to your contribution
+              </Typography>
+              <Typography
+                component="li"
+                variant="body1"
+                sx={{
+                  marginBottom: 2,
+                  fontFamily: "Rubik",
+                  fontWeight: 400,
+                  color: "#010532",
+                  fontSize: { xs: "1rem", sm: "1.1rem" },
+                  lineHeight: 1.7,
+                }}
+              >
+                Enhanced operational efficiency through automated coordination
+              </Typography>
+              <Typography
+                component="li"
+                variant="body1"
+                sx={{
+                  marginBottom: 2,
+                  fontFamily: "Rubik",
+                  fontWeight: 400,
+                  color: "#010532",
+                  fontSize: { xs: "1rem", sm: "1.1rem" },
+                  lineHeight: 1.7,
+                }}
+              >
+                Access to broader customer base while maintaining your existing
+                relationships
+              </Typography>
+            </Box>
+          </TextSection>
+
+          <TextSection heading="For Satellite Operators">
             <Box component="ul" sx={{ marginLeft: 3, marginBottom: 6 }}>
               <Typography
                 component="li"
@@ -441,81 +489,6 @@ const Home: React.FC = () => (
                 }}
               >
                 Scalable capacity that grows with demand
-              </Typography>
-            </Box>
-            <Typography
-              variant="h6"
-              sx={{
-                marginBottom: 3,
-                background: "linear-gradient(135deg, #121212 0%, #286BDC 100%)",
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                fontFamily: "Satoshi",
-                fontWeight: 500,
-                fontSize: { xs: "1.1rem", sm: "1.25rem" },
-              }}
-            >
-              For Ground Station Operators:
-            </Typography>
-            <Box component="ul" sx={{ marginLeft: 3 }}>
-              <Typography
-                component="li"
-                variant="body1"
-                sx={{
-                  marginBottom: 2,
-                  fontFamily: "Rubik",
-                  fontWeight: 400,
-                  color: "#010532",
-                  fontSize: { xs: "1rem", sm: "1.1rem" },
-                  lineHeight: 1.7,
-                }}
-              >
-                Exanping revenue streams for all ground station operators,
-                whether you're a telecom giant or individual operator
-              </Typography>
-              <Typography
-                component="li"
-                variant="body1"
-                sx={{
-                  marginBottom: 2,
-                  fontFamily: "Rubik",
-                  fontWeight: 400,
-                  color: "#010532",
-                  fontSize: { xs: "1rem", sm: "1.1rem" },
-                  lineHeight: 1.7,
-                }}
-              >
-                Performance-based compensation scaled to your contribution
-              </Typography>
-              <Typography
-                component="li"
-                variant="body1"
-                sx={{
-                  marginBottom: 2,
-                  fontFamily: "Rubik",
-                  fontWeight: 400,
-                  color: "#010532",
-                  fontSize: { xs: "1rem", sm: "1.1rem" },
-                  lineHeight: 1.7,
-                }}
-              >
-                Enhanced operational efficiency through automated coordination
-              </Typography>
-              <Typography
-                component="li"
-                variant="body1"
-                sx={{
-                  marginBottom: 2,
-                  fontFamily: "Rubik",
-                  fontWeight: 400,
-                  color: "#010532",
-                  fontSize: { xs: "1rem", sm: "1.1rem" },
-                  lineHeight: 1.7,
-                }}
-              >
-                Access to broader customer base while maintaining your existing
-                relationships
               </Typography>
             </Box>
           </TextSection>
