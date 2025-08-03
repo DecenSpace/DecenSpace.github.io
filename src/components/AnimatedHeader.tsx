@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Parallax } from "react-scroll-parallax";
@@ -22,14 +22,14 @@ const AnimatedHeader: React.FC = () => {
       <Parallax speed={-5}>
         <Box
           sx={{
-            position: 'absolute',
+            position: "absolute",
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
             background: 'url("/assets/Close-up-gs-01.png")',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundSize: "cover",
+            backgroundPosition: "center",
             opacity: 0.2,
             zIndex: 1,
           }}
@@ -37,12 +37,13 @@ const AnimatedHeader: React.FC = () => {
       </Parallax>
       <Box
         sx={{
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'linear-gradient(135deg, rgba(245, 245, 245, 0.3) 0%, rgba(219, 229, 255, 0.2) 100%)',
+          background:
+            "linear-gradient(135deg, rgba(245, 245, 245, 0.3) 0%, rgba(219, 229, 255, 0.2) 100%)",
           zIndex: 2,
         }}
       />
@@ -50,14 +51,14 @@ const AnimatedHeader: React.FC = () => {
       {/* --- Main Content Wrapper --- */}
       <Box
         sx={{
-          position: 'relative',
+          position: "relative",
           zIndex: 4,
-          textAlign: 'center',
-          maxWidth: '1200px',
-          mx: 'auto',
+          textAlign: "center",
+          maxWidth: "1200px",
+          mx: "auto",
           px: 3,
-          width: '100%',
-          paddingBottom: '6rem', // Added padding to prevent overlap with scroll indicator
+          width: "100%",
+          paddingBottom: "6rem", // Added padding to prevent overlap with scroll indicator
         }}
       >
 <Parallax speed={-1}>
@@ -78,8 +79,8 @@ const AnimatedHeader: React.FC = () => {
             variant="h1"
             className="proportional-large"
             sx={{
-              color: '#010532',
-              fontFamily: 'Satoshi',
+              color: "#010532",
+              fontFamily: "Satoshi",
               fontWeight: 500,
               marginTop: 'clamp(1rem, 3vw, 5rem)',
               marginBottom: 'clamp(0.75rem, 2vw, 4rem)',
@@ -117,12 +118,13 @@ const AnimatedHeader: React.FC = () => {
       {/* --- Scroll Indicator (Fixed for proportional scaling) --- */}
       <Box
         sx={{
+
           position: 'absolute',
           bottom: { xs: '2rem', sm: '3rem' }, // Mobile-friendly bottom spacing
           left: '50%',
           transform: 'translateX(-50%)',
           zIndex: 4,
-          color: '#010532',
+          color: "#010532",
           opacity: 0.8,
           textAlign: 'center',
           display: 'flex',
@@ -169,9 +171,15 @@ const AnimatedHeader: React.FC = () => {
             xmlns="http://www.w3.org/2000/svg"
           >
             <defs>
-              <linearGradient id="arrowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style={{ stopColor: '#4C3B93' }} />
-                <stop offset="100%" style={{ stopColor: '#286BDC' }} />
+              <linearGradient
+                id="arrowGradient"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="0%"
+              >
+                <stop offset="0%" style={{ stopColor: "#4C3B93" }} />
+                <stop offset="100%" style={{ stopColor: "#286BDC" }} />
               </linearGradient>
             </defs>
             {/* First arrow */}
