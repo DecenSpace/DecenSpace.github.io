@@ -11,7 +11,8 @@ const OuterCircle = styled("a")(({ theme }) => ({
   borderRadius: theme.spacing(size / 2),
   padding: theme.spacing(5, 4, 5, size + 4),
   gap: theme.spacing(3),
-  background: "linear-gradient(135deg, rgba(1, 5, 50, 0.7) 10%, rgba(40, 107, 220, 0.6) 80%)",
+  background:
+    "linear-gradient(135deg, rgba(1, 5, 50, 0.7) 10%, rgba(40, 107, 220, 0.6) 80%)",
   color: "#F5F5F5",
   position: "relative",
   border: "1px solid rgba(40, 107, 220, 0.2)",
@@ -25,7 +26,8 @@ const OuterCircle = styled("a")(({ theme }) => ({
   textDecoration: "none",
   boxShadow: "0 4px 16px 0 rgba(1,5,50,0.1)",
   ":hover": {
-    background: "linear-gradient(135deg, rgba(1, 5, 50, 0.8) 0%, rgba(40, 107, 220, 0.7) 100%)",
+    background:
+      "linear-gradient(135deg, rgba(1, 5, 50, 0.8) 0%, rgba(40, 107, 220, 0.7) 100%)",
     borderColor: "rgba(1, 1, 1, 0.4)",
     transform: "translateX(4px)",
     boxShadow: "0 6px 24px 0 rgba(40,107,220,0.2)",
@@ -86,7 +88,10 @@ const EnumerationItem: React.FC<IEnumerationItemProps> = ({
         {num < 10 ? "0" : ""}
         {num}
       </Number>
-      <Typography variant="body1" sx={{ margin: 0, color: "#F5F5F5", fontSize: "0.875rem" }}>
+      <Typography
+        variant="body1"
+        sx={{ margin: 0, color: "#F5F5F5", fontSize: "0.875rem" }}
+      >
         {label}
       </Typography>
     </InnerCircle>
