@@ -39,6 +39,7 @@ const loader = [
   ".otf",
   ".woff",
   ".woff2",
+  ".ttf",
 ].reduce((loaders, ext) => ({ ...loaders, [ext]: "file" }), {});
 
 const buildOptions: BuildOptions = {
