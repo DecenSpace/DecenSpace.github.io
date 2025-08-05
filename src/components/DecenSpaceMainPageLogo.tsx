@@ -1,4 +1,4 @@
-import { autocompleteClasses, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
 import SvgIcon from "./SvgIcon";
 import SvgDecenspacelogo from "icons/Decenspacelogo";
