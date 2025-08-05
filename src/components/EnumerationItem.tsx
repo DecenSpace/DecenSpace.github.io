@@ -104,6 +104,7 @@ const EnumerationItem: React.FC<IEnumerationItemProps> = ({
         color: "#F5F5F5",
         position: "absolute",
         top: "60%",
+        right: { xs: "1rem", sm: "1.5rem" }, // 1rem from right on mobile, 1.5rem on larger screens
       }}
     />
   </OuterCircle>
